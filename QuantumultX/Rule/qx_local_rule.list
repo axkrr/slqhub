@@ -1,7 +1,7 @@
 # scripting
 HOST-SUFFIX,javbus.com
 HOST-SUFFIX,missav.ai
-HOST,bus.trigram-masques-8r.workers.dev
+HOST-SUFFIX,workers.dev
 # 小米刷步
 HOST,api-user.huami.com
 HOST,account.huami.com
