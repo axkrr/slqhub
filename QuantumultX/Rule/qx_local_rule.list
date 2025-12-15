@@ -1,12 +1,46 @@
-# Web
-HOST, ixlad.com
-# Emby
-HOST-SUFFIX, pub1.emby.wtf
-HOST-SUFFIX, pub1.term.wtf
+# scripting
+HOST-SUFFIX,javbus.com
+HOST-SUFFIX,missav.ai
+HOST,bus.trigram-masques-8r.workers.dev
+# 小米刷步
+HOST,api-user.huami.com
+HOST,account.huami.com
+# zlibrary
+HOST-SUFFIX,z-library.sk
+# shortcut
+HOST,routinehub.co
+# jisuyun
+HOST,905.jsy902.xyz
+# kelee
+HOST-SUFFIX,kelee.one
+# Local_macOS
+HOST-KEYWORD,brew
+HOST-KEYWORD,rust
+HOST-SUFFIX,ghcr.io
+# Single App
+HOST-KEYWORD,minepi
+# Web Utils
+HOST-SUFFIX,luolicon.ru
+HOST,i.lxlad.com
+HOST-SUFFIX,greasyfork.org
+HOST-SUFFIX,sleazyfork.org
+# Media
+HOST-SUFFIX,pub2.term.wtf
+HOST-SUFFIX,pub2.emby.wtf
+HOST-SUFFIX,pub1.emby.wtf
+HOST-SUFFIX,pub1.term.wtf
+HOST-SUFFIX,playz.mjji.de
+HOST-SUFFIX,heiliao.com
+HOST-KEYWORD,phncdn
+HOST-KEYWORD,pornhub
+HOST-SUFFIX,txh066.com
 # API Interface
+HOST,agent.curtin.top
+HOST-SUFFIX,ip-api.com
 HOST-SUFFIX, api.120399.xyz
 HOST-SUFFIX, vercel.app
 # Local Tools
+HOST-SUFFIX,dompling.github.io
 HOST-SUFFIX, script.hub
 HOST-SUFFIX, sub.store
 HOST-SUFFIX, boxjs.com
