@@ -3,6 +3,5 @@
   "description":"自用图标包",
   "icons":[
     {"name":"dzyj","url":"https:\/\/raw.githubusercontent.com\/axkrr\/open_config\/refs\/heads\/main\/Scripting\/icon\/dzyj.png"},
-    {"name":"trollhelper","url":"https:\/\/raw.githubusercontent.com\/axkrr\/open_config\/refs\/heads\/main\/Scripting\/icon\/trollhelper.png"}
   ]
 }
