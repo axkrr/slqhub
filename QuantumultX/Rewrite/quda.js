@@ -1,6 +1,6 @@
 /**
- * 趣达 (QuDa) 基础去广告脚本
- * 状态：之前测试成功（广告不弹，秒过，但会有瞬间白屏）
+ * @name qdpure_jsfile
+ * @description quda ad blocking script
  */
 
 let body = $response.body;
