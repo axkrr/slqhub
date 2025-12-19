@@ -2,17 +2,12 @@
 # Update: 2025-12-19
 
 [rewrite]
-# 解锁会员皮肤、灰色歌曲及播放权限（双向挂载以确保解密成功）
-^https:\/\/interface3?\.music\.163\.com\/eapi\/(playermode\/|v3\/song\/detail|song\/(chorus|enhance\/|play\/|type\/detail\/get)|v1\/artist\/top\/song|v3\/discovery\/recommend\/songs) url script-request-body https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/NeteaseCloudMusic/JS/JS-5/NeteaseCloud.js
-^https:\/\/interface3?\.music\.163\.com\/eapi\/(playermode\/|v3\/song\/detail|song\/(chorus|enhance\/|play\/|type\/detail\/get)|v1\/artist\/top\/song|v3\/discovery\/recommend\/songs) url script-response-body https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/NeteaseCloudMusic/JS/JS-5/NeteaseCloud.js
+# 使用分析模式确保请求与响应在同一上下文，解决解密失效问题
+^https:\/\/interface3?\.music\.163\.com\/eapi\/(playermode\/|v3\/song\/detail|song\/(chorus|enhance\/|play\/|type\/detail\/get)|v1\/artist\/top\/song|v3\/discovery\/recommend\/songs) url script-analyze-echoed-response https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/NeteaseCloudMusic/JS/JS-5/NeteaseCloud.js
 
-# 搜索结果与首页歌单内容
-^https?:\/\/interface3?\.music\.163\.com\/eapi\/(search\/complex\/(page|rec\/song\/get)|(homepage\/|v6\/)?playlist\/) url script-request-body https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/NeteaseCloudMusic/JS/JS-5/NeteaseCloud.js
-^https?:\/\/interface3?\.music\.163\.com\/eapi\/(search\/complex\/(page|rec\/song\/get)|(homepage\/|v6\/)?playlist\/) url script-response-body https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/NeteaseCloudMusic/JS/JS-5/NeteaseCloud.js
+^https?:\/\/interface3?\.music\.163\.com\/eapi\/(search\/complex\/(page|rec\/song\/get)|(homepage\/|v6\/)?playlist\/) url script-analyze-echoed-response https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/NeteaseCloudMusic/JS/JS-5/NeteaseCloud.js
 
-# 会员认证与个人中心
-^https?:\/\/interface3?\.music\.163\.com\/eapi\/(vipnewcenter\/app\/resource\/newaccountpage|vipauth\/app\/auth\/(soundquality\/)?query) url script-request-body https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/NeteaseCloudMusic/JS/JS-5/NeteaseCloud.js
-^https?:\/\/interface3?\.music\.163\.com\/eapi\/(vipnewcenter\/app\/resource\/newaccountpage|vipauth\/app\/auth\/(soundquality\/)?query) url script-response-body https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/NeteaseCloudMusic/JS/JS-5/NeteaseCloud.js
+^https?:\/\/interface3?\.music\.163\.com\/eapi\/(vipnewcenter\/app\/resource\/newaccountpage|vipauth\/app\/auth\/(soundquality\/)?query) url script-analyze-echoed-response https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/NeteaseCloudMusic/JS/JS-5/NeteaseCloud.js
 
 [mitm]
 hostname = %APPEND% interface*.music.163.com
