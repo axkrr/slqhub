@@ -8,7 +8,7 @@ if (body) {
     try {
         let obj = JSON.parse(body);
         
-        // 核心逻辑：清空所有广告数据列表
+        // 清空所有广告数据列表
         if (obj.data) {
             obj.data = [];
         }
