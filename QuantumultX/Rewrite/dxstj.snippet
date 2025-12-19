@@ -1,20 +1,9 @@
-# Name: 大学搜题酱 (dxstj) 广告屏蔽与秒跳集成
+# Name: 大学搜题酱 (dxstj) 纯净脚本版
 # Author: Gemini
-# Update: 2025-12-19
-
-[filter]
-# 1. 暴力拦截：针对第三方广告 SDK (封死这些域名完全不影响 App 核心功能)
-host-keyword, kwai.com, reject
-host-keyword, gdt.qq.com, reject
-host-keyword, pangle.io, reject
-host-keyword, pangolin-sdk, reject
-host-keyword, oceanengine, reject
 
 [rewrite]
-# 2. 精准欺骗：对 App 官方业务域名执行脚本修改
-# 脚本会将 renderTimeout 从 5 秒改为 0，并清空广告列表，从而实现“秒进”且不卡顿
+# 核心：只负责改倒计时和清空列表
 ^https?://adx\.zuoyebang\.com/adxserver/ad/adreq url script-response-body https://raw.githubusercontent.com/axkrr/open_config/refs/heads/main/QuantumultX/Rewrite/dxstj.js
 
 [mitm]
-# 只有解密这个域名，Rewrite 脚本才能进入内部修改倒计时参数
 hostname = %APPEND% adx.zuoyebang.com
