@@ -2,18 +2,18 @@
 #!update=2025-12-20
 
 [rewrite]
-# --- 1. 强力去除弹窗与 UI 干扰 (使用 Mock 直接拦截，不依赖脚本) ---
-^https?:\/\/interface\d?\.music\.163\.com\/eapi\/(?:vipnewcenter\/app\/resource\/newaccountpage|resniche\/tspopup\/show|mine\/applet\/redpoint|resource\/comments?\/musiciansaid\/) url mock-response-body data-type=text data="{}" status-code=200
-^https?:\/\/interface\d?\.music\.163\.com\/eapi\/(?:moment\/tab\/info\/|side-bar\/mini-program\/music-service\/account|yunbei\/account\/entrance\/) url mock-response-body data-type=text data="{}" status-code=200
+# --- 去除弹窗与 UI 干扰 (远程资源语法：正则 + 空格 + 策略) ---
+^https?:\/\/interface\d?\.music\.163\.com\/eapi\/(?:vipnewcenter\/app\/resource\/newaccountpage|resniche\/tspopup\/show|mine\/applet\/redpoint|resource\/comments?\/musiciansaid\/) mock-response-body data-type=text data="{}" status-code=200
+^https?:\/\/interface\d?\.music\.163\.com\/eapi\/(?:moment\/tab\/info\/|side-bar\/mini-program\/music-service\/account|yunbei\/account\/entrance\/) mock-response-body data-type=text data="{}" status-code=200
 
-# --- 2. 基础广告屏蔽 ---
-^https?://interface.*\.music\.163\.com/eapi/ad/(get|config/get|iyunIds|prefetch/select|loading/current) url reject
-^https?:\/\/interface\d?\.music\.163\.com\/w?eapi\/(?:activity\/bonus\/playpage\/time\/query|resource-exposure\/|search\/(?:chart\/|rcmd\/keyword\/|specialkeyword\/)) url mock-response-body data-type=text data="{}" status-code=200
-^https?:\/\/interface\d?\.music\.163\.com\/e?api\/(ocpc\/)?ad\/ url mock-response-body data-type=text data="{}" status-code=200
-^https?:\/\/interface\d?\.music\.163.com\/w?e?api\/search\/default url mock-response-body data-type=text data="{}" status-code=200
+# --- 基础广告屏蔽 ---
+^https?://interface.*\.music\.163\.com/eapi/ad/(get|config/get|iyunIds|prefetch/select|loading/current) reject
+^https?:\/\/interface\d?\.music\.163\.com\/w?eapi\/(?:activity\/bonus\/playpage\/time\/query|resource-exposure\/|search\/(?:chart\/|rcmd\/keyword\/|specialkeyword\/)) mock-response-body data-type=text data="{}" status-code=200
+^https?:\/\/interface\d?\.music\.163\.com\/e?api\/(ocpc\/)?ad\/ mock-response-body data-type=text data="{}" status-code=200
+^https?:\/\/interface\d?\.music\.163.com\/w?e?api\/search\/default mock-response-body data-type=text data="{}" status-code=200
 
 [script]
-# --- 3. 解锁核心逻辑 (保留原脚本，适配 QX 模块语法) ---
+# --- 解锁核心逻辑 ---
 http-request ^https?:\/\/interface\d?\.music\.163\.com\/eapi\/(?:playermode\/|v3\/song\/detail|v1\/artist\/top\/song|v3\/discovery\/recommend\/songs) script-path=https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js, tag=wyycrack_jsfile
 http-request ^https?:\/\/interface\d?\.music\.163\.com\/eapi\/song\/(?:chorus|enhance\/|play\/|type\/detail\/get) script-path=https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js, tag=wyycrack_jsfile
 http-request ^https?:\/\/interface\d?\.music\.163\.com\/eapi\/search\/(?:complex\/page|complex\/rec\/song\/get|song\/list\/page) script-path=https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js, tag=wyycrack_jsfile
