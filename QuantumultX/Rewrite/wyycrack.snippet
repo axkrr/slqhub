@@ -1,6 +1,5 @@
-# 网易云音乐重写
-# 对应 Surge 模块: wyy-surge.sgmodule
-# 修正：恢复了正确的脚本引用链接，解决了 404 问题
+# 网易云音乐功能增强
+# 严格按照原模块链接转换，修正 QX 语法错误
 
 [rewrite_local]
 # 1. 广告拒绝
@@ -10,27 +9,24 @@
 ^https?://interface.*\.music\.163\.com/eapi/ad/prefetch/select url reject
 ^https?://interface.*\.music\.163\.com/eapi/ad/loading/current url reject
 
-# 2. 模拟空 JSON (Surge: data="{}") -> QX: reject-dict
-^https?:\/\/interface\d?\.music\.163\.com\/eapi\/(?:delivery\/(?:batch-)?deliver|moment\/tab\/info\/|side-bar\/mini-program\/music-service\/account|yunbei\/account\/entrance\/) url reject-dict
+# 2. 模拟响应 (Surge data 转换为 QX 专用指令，解决 Invalid Line 问题)
+^https?:\/\/interface\d?\.music\.163\.com\/eapi\/(?:delivery\/(batch-)?deliver|moment\/tab\/info\/|side-bar\/mini-program\/music-service\/account|yunbei\/account\/entrance\/) url reject-dict
 ^https?:\/\/interface\d?\.music\.163\.com\/eapi\/(?:community\/friends\/fans-group\/artist\/group\/|mine\/applet\/redpoint|music\/songshare\/text\/recommend\/|resniche\/position\/play\/new\/|resniche\/tspopup\/show|resource\/comments?\/musiciansaid\/|user\/sub\/artist) url reject-dict
 ^https?:\/\/interface\d?\.music\.163\.com\/eapi\/(?:ios\/version|mlivestream\/entrance\/playpage\/|link\/position\/show\/strategy|link\/scene\/show\/resource|v1\/content\/exposure\/comment\/banner\/) url reject-dict
 ^https?:\/\/interface\d?\.music\.163\.com\/w?eapi\/(?:activity\/bonus\/playpage\/time\/query|resource-exposure\/|search\/(?:chart\/|rcmd\/keyword\/|specialkeyword\/)) url reject-dict
 ^https:\/\/interface\d\.music\.163\.com\/eapi\/my\/podcast\/tab\/recommend url reject-dict
-
-# 3. 模拟空文本 (Surge: data="") -> QX: reject-200
-^https?:\/\/interface\d?\.music\.163\.com\/e?api\/(?:ocpc\/)?ad\/ url reject-200
+^https?:\/\/interface\d?\.music\.163\.com\/e?api\/(ocpc\/)?ad\/ url reject-200
 ^https?:\/\/interface\d?\.music\.163.com\/w?e?api\/search\/default url reject-200
 
-# 4. 脚本部分
-# 修正：改回了原模块中指定的有效链接
+# 3. 核心脚本 (严格保留原链接 https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js)
 ^https?:\/\/interface\d?\.music\.163\.com\/eapi\/playermode\/ url script-request-body https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js
 ^https?:\/\/interface\d?\.music\.163\.com\/eapi\/search\/(?:complex\/page|complex\/rec\/song\/get|song\/list\/page) url script-request-body https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js
 ^https?:\/\/interface\d?\.music\.163\.com\/eapi\/v3\/song\/detail url script-request-body https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js
 ^https?:\/\/interface\d?\.music\.163\.com\/eapi\/song\/(?:chorus|enhance\/|play\/|type\/detail\/get) url script-request-body https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js
 ^https?:\/\/interface\d?\.music\.163\.com\/eapi\/(?:v1\/artist\/top\/song|v3\/discovery\/recommend\/songs) url script-request-body https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js
 ^https?:\/\/interface\d?\.music\.163\.com\/eapi\/vipnewcenter\/app\/resource\/newaccountpage url script-request-body https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js
-^https?:\/\/interface\d?\.music\.163\.com\/w?e?api\/(?:homepage\/|v6\/)?playlist\/(?!(?:delete|subscribe|unsubscribe)) url script-request-body https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js
-^https?:\/\/interface\d?\.music\.163\.com\/eapi\/vipauth\/app\/auth\/(?:soundquality\/)?query url script-request-body https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js
+^https?:\/\/interface\d?\.music\.163\.com\/w?e?api\/(homepage\/|v6\/)?playlist\/(?!(?:delete|subscribe|unsubscribe)) url script-request-body https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js
+^https?:\/\/interface\d?\.music\.163\.com\/eapi\/vipauth\/app\/auth\/(soundquality\/)?query url script-request-body https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js
 
 [mitm]
 hostname = interface*.music.163.com
