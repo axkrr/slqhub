@@ -1,0 +1,13 @@
+# Name: qdpure
+# Update: 2025-12-20
+
+[rewrite]
+# 拦截签到页广告配置及摇一摇跳转逻辑
+^https?:\/\/api\.qudaapp\.com\/api\/adv\/v2\/get url reject-200
+# 屏蔽通用广告弹窗与开屏
+^https?:\/\/api\.qudaapp\.com\/api\/adv\/v2\/list url reject-200
+# 屏蔽统计与追踪（防止摇一摇触发后续跳转）
+^https?:\/\/api\.qudaapp\.com\/api\/log\/v2\/report url reject-200
+
+[mitm]
+hostname = %APPEND% api.qudaapp.com
