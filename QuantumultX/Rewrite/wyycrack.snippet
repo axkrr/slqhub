@@ -1,8 +1,8 @@
 #!name=wyycrack
-#!update=2025-12-19
+#!update=2025-12-20
 
 [rewrite]
-# 屏蔽广告逻辑 (适配 QX 语法)
+# 屏蔽广告及无关域名
 ^https?://interface.*\.music\.163\.com/eapi/ad/get url reject
 ^https?://interface.*\.music\.163\.com/eapi/ad/config/get url reject
 ^https?://interface.*\.music\.163\.com/eapi/ad/iyunIds url reject
@@ -16,18 +16,17 @@
 ^https?:\/\/interface\d?\.music\.163\.com\/e?api\/(ocpc\/)?ad\/ url mock-response-body data-type=text data="{}" status-code=200
 ^https?:\/\/interface\d?\.music\.163.com\/w?e?api\/search\/default url mock-response-body data-type=text data="{}" status-code=200
 
-# 脚本逻辑 (适配 QX script-request-header 语法)
-^https?:\/\/interface\d?\.music\.163\.com\/eapi\/playermode\/ url script-request-header https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js
-^https?:\/\/interface\d?\.music\.163\.com\/eapi\/search\/(?:complex\/page|complex\/rec\/song\/get|song\/list\/page) url script-request-header https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js
-^https?:\/\/interface\d?\.music\.163\.com\/eapi\/v3\/song\/detail url script-request-header https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js
-^https?:\/\/interface\d?\.music\.163\.com\/eapi\/song\/(?:chorus|enhance\/|play\/|type\/detail\/get) url script-request-header https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js
-^https?:\/\/interface\d?\.music\.163\.com\/eapi\/(?:v1\/artist\/top\/song|v3\/discovery\/recommend\/songs) url script-request-header https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js
-^https?:\/\/interface\d?\.music\.163\.com\/eapi\/vipnewcenter\/app\/resource\/newaccountpage url script-request-header https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js
-^https?:\/\/interface\d?\.music\.163\.com\/w?e?api\/(homepage\/|v6\/)?playlist\/(?!(?:delete|subscribe|unsubscribe)) url script-request-header https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js
-^https?:\/\/interface\d?\.music\.163\.com\/eapi\/vipauth\/app\/auth\/(soundquality\/)?query url script-request-header https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js
+# 脚本逻辑适配 (将 url script-request-header 更改为兼容性更好的脚本引用方式)
+^https?:\/\/interface\d?\.music\.163\.com\/eapi\/playermode\/ url script-path=https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js, tag=wyycrack_jsfile
+^https?:\/\/interface\d?\.music\.163\.com\/eapi\/search\/(?:complex\/page|complex\/rec\/song\/get|song\/list\/page) url script-path=https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js, tag=wyycrack_jsfile
+^https?:\/\/interface\d?\.music\.163\.com\/eapi\/v3\/song\/detail url script-path=https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js, tag=wyycrack_jsfile
+^https?:\/\/interface\d?\.music\.163\.com\/eapi\/song\/(?:chorus|enhance\/|play\/|type\/detail\/get) url script-path=https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js, tag=wyycrack_jsfile
+^https?:\/\/interface\d?\.music\.163\.com\/eapi\/(?:v1\/artist\/top\/song|v3\/discovery\/recommend\/songs) url script-path=https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js, tag=wyycrack_jsfile
+^https?:\/\/interface\d?\.music\.163\.com\/eapi\/vipnewcenter\/app\/resource\/newaccountpage url script-path=https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js, tag=wyycrack_jsfile
+^https?:\/\/interface\d?\.music\.163\.com\/w?e?api\/(homepage\/|v6\/)?playlist\/(?!(?:delete|subscribe|unsubscribe)) url script-path=https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js, tag=wyycrack_jsfile
+^https?:\/\/interface\d?\.music\.163\.com\/eapi\/vipauth\/app\/auth\/(soundquality\/)?query url script-path=https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js, tag=wyycrack_jsfile
 
 [filter]
-# 保留分流模块
 DOMAIN,iadmat.nosdn.127.net,REJECT
 DOMAIN,iadmatapk.nosdn.127.net,REJECT
 DOMAIN,iadmusicmat.music.126.net,REJECT
