@@ -13,8 +13,8 @@
 ^https?:\/\/interface\d?\.music\.163\.com\/eapi\/(?:ios\/version|mlivestream\/entrance\/playpage\/|link\/position\/show\/strategy|link\/scene\/show\/resource|v1\/content\/exposure\/comment\/banner\/) url mock-response-body data-type=text data="{}" status-code=200
 ^https?:\/\/interface\d?\.music\.163\.com\/w?eapi\/(?:activity\/bonus\/playpage\/time\/query|resource-exposure\/|search\/(?:chart\/|rcmd\/keyword\/|specialkeyword\/)) url mock-response-body data-type=text data="{}" status-code=200
 ^https:\/\/interface\d\.music\.163\.com\/eapi\/my\/podcast\/tab\/recommend url mock-response-body data-type=text data="{}" status-code=200
-^https?:\/\/interface\d?\.music\.163\.com\/e?api\/(ocpc\/)?ad\/ url mock-response-body data-type=text
-^https?:\/\/interface\d?\.music\.163.com\/w?e?api\/search\/default url mock-response-body data-type=text
+^https?:\/\/interface\d?\.music\.163\.com\/e?api\/(ocpc\/)?ad\/ url mock-response-body data-type=text data="{}" status-code=200
+^https?:\/\/interface\d?\.music\.163.com\/w?e?api\/search\/default url mock-response-body data-type=text data="{}" status-code=200
 
 # 脚本逻辑适配
 ^https?:\/\/interface\d?\.music\.163\.com\/eapi\/playermode\/ url script-request-header https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js
