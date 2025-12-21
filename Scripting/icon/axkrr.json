@@ -1,10 +1,10 @@
 {
   "name": "axkr 图标包",
-  "description": "自用图标包",
+  "description": "axkr icon library",
   "icons": [
     {
       "name": "dzyj",
-      "url": "https://raw.githubusercontent.com/axkrr/open_config/refs/heads/main/Scripting/icon/dzyj.png"
+      "url": "https://raw.githubusercontent.com/axkrr/open_config/main/Scripting/icon/dzyj.png"
     }
   ]
 }
