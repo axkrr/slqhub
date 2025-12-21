@@ -11,16 +11,18 @@ HOST-SUFFIX,z-library.sk
 HOST,routinehub.co
 # jisuyun
 HOST,905.jsy902.xyz
+# kitty su
+HOST-SUFFIX,luolicon.ru
 # kelee
 HOST-SUFFIX,kelee.one
 # Local_macOS
+HOST,huggingface.co
 HOST-KEYWORD,brew
 HOST-KEYWORD,rust
 HOST-SUFFIX,ghcr.io
-# Single App
+# Pi
 HOST-KEYWORD,minepi
 # Web Utils
-HOST-SUFFIX,luolicon.ru
 HOST,i.lxlad.com
 HOST-SUFFIX,greasyfork.org
 HOST-SUFFIX,sleazyfork.org
