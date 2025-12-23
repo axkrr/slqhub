@@ -5,17 +5,16 @@
 const url = $request.url;
 let body = $response.body;
 
-if (body) {
-    // 简练功能说明：处理初始化接口，使用安全替换防止破坏二进制结构
-    if (url.indexOf("/init") !== -1) {
-        let bodyString = body.toString();
-        // 仅修改数值，不改变字符串总长度，避免触发 GBP 错误
-        bodyString = bodyString.replace(/"advertTimeout":"\d+"/, '"advertTimeout":"0"')
-                               .replace(/"advertTotalTimeout":"\d+"/, '"advertTotalTimeout":"0"');
-        $done({ body: bodyString });
-    } else {
-        $done({ body });
-    }
+if (url.indexOf("/advert") !== -1) {
+    // 简练功能说明：直接模拟广告配置接口返回失败，让 App 跳过加载
+    $done({ status: "HTTP/1.1 404 Not Found", body: "" });
+} else if (body && url.indexOf("/init") !== -1) {
+    let bodyString = body.toString();
+    // 简练功能说明：仅修改超时字段，并开启黑名单逻辑
+    bodyString = bodyString.replace(/"advertTimeout":"\d+"/, '"advertTimeout":"0"')
+                           .replace(/"advertTotalTimeout":"\d+"/, '"advertTotalTimeout":"0"')
+                           .replace(/"adBlackList":"0"/, '"adBlackList":"1"');
+    $done({ body: bodyString });
 } else {
-    $done({});
+    $done({ body });
 }
