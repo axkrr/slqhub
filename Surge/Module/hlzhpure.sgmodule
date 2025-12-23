@@ -3,20 +3,20 @@
 #!system=ios
 
 [Rule]
-# 简练功能说明：拦截数据统计与第三方广告 SDK
+# 简练功能说明：拦截第三方 SDK 和航旅统计接口
 DOMAIN, analytics.umetrip.com, REJECT
 DOMAIN, adashbc.utdevice.apple.com, REJECT
 DOMAIN, sdk.open.talk.com, REJECT
 DOMAIN-SUFFIX, gdt.qq.com, REJECT
 DOMAIN-SUFFIX, ad.umetrip.com, REJECT
 
-# 简练功能说明：根据抓包数据，封死所有素材和广告位配置接口
+# 简练功能说明：拦截广告素材地址和广告配置 API
 URL-REGEX, ^https?:\/\/oss\.umetrip\.com\/fs\/advert\/, REJECT
 URL-REGEX, ^https?:\/\/.*\.umetrip\.com\/gateway\/api\/umetrip\/advert, REJECT
 
 [Script]
-# 简练功能说明：仅处理 init 接口，并采用脚本返回 404 的方式处理广告配置
-hlzh_pure = type=http-response,pattern=^https?:\/\/.*\.umetrip\.com\/gateway\/api\/umetrip\/init,requires-body=1,binary-body-mode=1,script-path=https://raw.githubusercontent.com/axkrr/open_config/refs/heads/main/Surge/Module/hlzh.js
+# 简练功能说明：针对 init 和 advert 接口返回空数据或报错，诱导 App 放弃显示广告
+hlzh_pure = type=http-response,pattern=^https?:\/\/.*\.umetrip\.com\/gateway\/api\/umetrip\/(init|advert),requires-body=1,binary-body-mode=1,script-path=https://raw.githubusercontent.com/axkrr/open_config/refs/heads/main/Surge/Module/hlzh.js
 
 [MITM]
 hostname = %APPEND% *.umetrip.com, adashbc.utdevice.apple.com
