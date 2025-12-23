@@ -1,43 +1,30 @@
 /*
-* 航旅纵横去广告脚本
+* 航旅纵横首页及启动去广告
 */
 
 let body = $response.body;
 
-try {
-    // 简练功能说明：处理混有二进制前缀的JSON数据
-    let startIndex = body.indexOf('{');
-    let endIndex = body.lastIndexOf('}') + 1;
+if (body) {
+    // 简练功能说明：处理二进制数据流中的JSON部分
+    let bodyString = body.toString();
     
-    if (startIndex !== -1 && endIndex !== -1) {
-        let jsonStr = body.substring(startIndex, endIndex);
-        let obj = JSON.parse(jsonStr);
+    // 1. 消除启动倒计时逻辑
+    bodyString = bodyString.replace(/"advertTimeout":"\d+"/, '"advertTimeout":"0"')
+                           .replace(/"advertTotalTimeout":"\d+"/, '"advertTotalTimeout":"0"');
 
-        // 简练功能说明：彻底删除广告相关字段
-        delete obj.advertTimeout;
-        delete obj.advertTotalTimeout;
-        delete obj.advertImageTimeout;
-        delete obj.advertLogBlacklist;
-        delete obj.advertSdkBlacklist;
-        
-        // 简练功能说明：置空广告黑名单并开启
-        obj.adBlackList = "1";
-        
-        // 简练功能说明：清理弹窗消息列表中的广告位
-        if (obj.msgList) {
-            let msg = JSON.parse(obj.msgList);
-            const keys = ["home", "homeWithoutJourney", "order", "flightstatus"];
-            keys.forEach(key => {
-                if (msg[key]) msg[key].popSwitch = "0";
-            });
-            obj.msgList = JSON.stringify(msg);
-        }
-
-        // 重新组合回原始格式
-        body = body.substring(0, startIndex) + JSON.stringify(obj) + body.substring(endIndex);
+    // 2. 针对首页混排广告 (Native 接口)
+    // 简练功能说明：识别并抹除包含ADVERT标识的服务块
+    if (bodyString.indexOf("ADVERT") !== -1 || bodyString.indexOf("adSign") !== -1) {
+        // 匹配包含 advert 信息的 JSON 结构并将其关键参数置空
+        bodyString = bodyString.replace(/"trackName":"advert"/g, '"trackName":"none"')
+                               .replace(/"adSign":"true"/g, '"adSign":"false"')
+                               .replace(/"department":"advert"/g, '"department":"none"');
+                               
+        // 简练功能说明：抹除图片链接防止加载
+        bodyString = bodyString.replace(/https:\/\/oss\.umetrip\.com\/fs\/advert\/[^\"]+/g, "");
     }
-} catch (e) {
-    console.log("hlzh script error: " + e);
-}
 
-$done({ body });
+    $done({ body: bodyString });
+} else {
+    $done({});
+}
