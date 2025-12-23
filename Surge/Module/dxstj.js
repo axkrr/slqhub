@@ -1,24 +1,26 @@
-/*
+/**
  * @name dxstjpure_jsfile
  * @description daxuesoutijiang ad blocking script
  */
 
-let obj = JSON.parse($response.body);
-
-// 移除开屏广告及首页弹窗
-if (obj.data && obj.data.common_config) {
-  delete obj.data.common_config.splash_screen;
-  delete obj.data.common_config.popup_window;
+let body = $response.body;
+if (body) {
+    try {
+        let obj = JSON.parse(body);
+        if (obj.data) {
+            // 将渲染超时设为 0，实现秒跳
+            if (obj.data.adPosConfig) {
+                obj.data.adPosConfig.renderTimeout = 0;
+            }
+            // 清空广告列表
+            if (obj.data.codePosList) {
+                obj.data.codePosList = [];
+            }
+        }
+        $done({ body: JSON.stringify(obj) });
+    } catch (e) {
+        $done({ body });
+    }
+} else {
+    $done({ body });
 }
-
-// 屏蔽各类推广及横幅
-if (obj.data && obj.data.banner_list) {
-  obj.data.banner_list = [];
-}
-
-// 净化个人中心入口
-if (obj.data && obj.data.mine_menu) {
-  obj.data.mine_menu = obj.data.mine_menu.filter(item => !item.title.includes("推荐") && !item.title.includes("活动"));
-}
-
-$done({body: JSON.stringify(obj)});
