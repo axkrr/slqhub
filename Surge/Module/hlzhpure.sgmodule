@@ -3,20 +3,19 @@
 #!system=ios
 
 [Rule]
-# 简练功能说明：封杀所有已知的航旅及第三方广告域名
+# 简练功能说明：拦截数据统计与第三方广告 SDK
 DOMAIN, analytics.umetrip.com, REJECT
 DOMAIN, adashbc.utdevice.apple.com, REJECT
 DOMAIN, sdk.open.talk.com, REJECT
-DOMAIN, amdc.m.taobao.com, REJECT
 DOMAIN-SUFFIX, gdt.qq.com, REJECT
 DOMAIN-SUFFIX, ad.umetrip.com, REJECT
 
-# 简练功能说明：封死广告素材路径（这是你抓包看到的关键点）
+# 简练功能说明：根据抓包数据，封死所有素材和广告位配置接口
 URL-REGEX, ^https?:\/\/oss\.umetrip\.com\/fs\/advert\/, REJECT
-URL-REGEX, ^https?:\/\/static\.umetrip\.com\/fs\/advert\/, REJECT
+URL-REGEX, ^https?:\/\/.*\.umetrip\.com\/gateway\/api\/umetrip\/advert, REJECT
 
 [Script]
-# 简练功能说明：仅处理初始化接口（这个接口对长度不敏感，较稳妥）
+# 简练功能说明：仅处理 init 接口，并采用脚本返回 404 的方式处理广告配置
 hlzh_pure = type=http-response,pattern=^https?:\/\/.*\.umetrip\.com\/gateway\/api\/umetrip\/init,requires-body=1,binary-body-mode=1,script-path=https://raw.githubusercontent.com/axkrr/open_config/refs/heads/main/Surge/Module/hlzh.js
 
 [MITM]
