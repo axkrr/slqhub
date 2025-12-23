@@ -1,0 +1,10 @@
+#!name=hlzhpure
+#!desc=umetrip ad blocking script
+#!system=ios
+
+[Script]
+# 简练功能说明：通过重写初始化接口参数去掉开屏广告
+hlzh_pure = type=http-response,pattern=^https?:\/\/.*\.umetrip\.com\/.*\/init,requires-body=1,binary-body-mode=1,script-path=https://raw.githubusercontent.com/axkrr/open_config/refs/heads/main/Surge/Module/hlzh.js
+
+[MITM]
+hostname = %APPEND% *.umetrip.com
