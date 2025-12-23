@@ -1,0 +1,20 @@
+#!name=hlzhpure
+#!desc=umetrip ad blocking script
+#!system=ios
+
+[Rule]
+# 简练功能说明：拦截第三方广告SDK及数据统计接口
+DOMAIN, analytics.umetrip.com, REJECT
+DOMAIN, adashbc.utdevice.apple.com, REJECT
+DOMAIN, sdk.open.talk.com, REJECT
+DOMAIN-SUFFIX, gdt.qq.com, REJECT
+DOMAIN-SUFFIX, ad.umetrip.com, REJECT
+# 简练功能说明：拦截抓包发现的广告素材存放路径
+URL-REGEX, ^https?:\/\/oss\.umetrip\.com\/fs\/advert\/, REJECT
+
+[Script]
+# 简练功能说明：处理初始化及首页混排广告接口
+hlzh_pure = type=http-response,pattern=^https?:\/\/.*\.umetrip\.com\/gateway\/api\/umetrip\/(native|init),requires-body=1,binary-body-mode=1,script-path=https://raw.githubusercontent.com/axkrr/open_config/refs/heads/main/Surge/Module/hlzh.js
+
+[MITM]
+hostname = %APPEND% *.umetrip.com, adashbc.utdevice.apple.com
