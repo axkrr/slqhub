@@ -3,23 +3,23 @@
 #!system=ios
 
 [Rule]
-# 简练功能说明：拦截图片素材，这是去广告最稳的方法
-URL-REGEX, ^https?:\/\/oss\.umetrip\.com\/fs\/advert\/, REJECT
-URL-REGEX, ^https?:\/\/static\.umetrip\.com\/fs\/advert\/, REJECT
-
-# 简练功能说明：拦截第三方SDK及站内广告域名
+# 简练功能说明：拦截第三方广告SDK及站内统计
 DOMAIN, analytics.umetrip.com, REJECT
 DOMAIN, adashbc.utdevice.apple.com, REJECT
 DOMAIN, sdk.open.talk.com, REJECT
+DOMAIN, amdc.m.taobao.com, REJECT
 DOMAIN-SUFFIX, gdt.qq.com, REJECT
 DOMAIN-SUFFIX, ad.umetrip.com, REJECT
 
-# 简练功能说明：拦截广告专有 API（防止拉取配置）
+# 简练功能说明：拦截核心广告素材，防止开屏及首页广告图加载
+URL-REGEX, ^https?:\/\/oss\.umetrip\.com\/fs\/advert\/, REJECT
+URL-REGEX, ^https?:\/\/static\.umetrip\.com\/fs\/advert\/, REJECT
+
+# 简练功能说明：拦截广告专有配置接口（防止拉取广告位清单）
 URL-REGEX, ^https?:\/\/.*\.umetrip\.com\/gateway\/api\/umetrip\/advert, REJECT
 
 [Script]
-# 简练功能说明：只处理 init 接口，跳过敏感的 native 接口以防 GBP 报错
-hlzh_pure = type=http-response,pattern=^https?:\/\/.*\.umetrip\.com\/gateway\/api\/umetrip\/init,requires-body=1,binary-body-mode=1,script-path=https://raw.githubusercontent.com/axkrr/open_config/refs/heads/main/Surge/Module/hlzh.js
+# 简练功能说明：完全移除对 native/init 接口的 Body 修改，仅保留对第三方广告请求的拦截（可选）
 
 [MITM]
 hostname = %APPEND% *.umetrip.com, adashbc.utdevice.apple.com
