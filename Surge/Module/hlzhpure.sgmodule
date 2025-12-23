@@ -11,15 +11,12 @@ DOMAIN, amdc.m.taobao.com, REJECT
 DOMAIN-SUFFIX, gdt.qq.com, REJECT
 DOMAIN-SUFFIX, ad.umetrip.com, REJECT
 
-# 简练功能说明：拦截核心广告素材，防止开屏及首页广告图加载
+# 简练功能说明：拦截所有广告素材（开屏图、首页焦点图）
 URL-REGEX, ^https?:\/\/oss\.umetrip\.com\/fs\/advert\/, REJECT
 URL-REGEX, ^https?:\/\/static\.umetrip\.com\/fs\/advert\/, REJECT
 
-# 简练功能说明：拦截广告专有配置接口（防止拉取广告位清单）
+# 简练功能说明：拦截广告配置 API 接口
 URL-REGEX, ^https?:\/\/.*\.umetrip\.com\/gateway\/api\/umetrip\/advert, REJECT
-
-[Script]
-# 简练功能说明：完全移除对 native/init 接口的 Body 修改，仅保留对第三方广告请求的拦截（可选）
 
 [MITM]
 hostname = %APPEND% *.umetrip.com, adashbc.utdevice.apple.com
