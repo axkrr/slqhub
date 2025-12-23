@@ -1,17 +1,10 @@
-#!name=dxstjpure
-#!desc=daxuesoutijiang ad blocking script
-#!category=Pure
-
-[Rule]
-# 屏蔽第三方广告 SDK 域名
-DOMAIN, adashbc.ut.taobao.com, REJECT
-DOMAIN, whale.m.jd.com, REJECT
-DOMAIN-SUFFIX, pangolin-sdk-toutiao.com, REJECT
-DOMAIN-SUFFIX, pglstatp-toutiao.com, REJECT
+#!name = dxstjpure
+#!desc = daxuesoutijiang ad blocking script
+#!system = ios
 
 [Script]
-# 大学搜题酱去广告
-dxstjpure_jsfile = type=http-response,pattern=^https?:\/\/.*dxstj.*\.com\/(config|home|user)\/get_info,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/open_config/refs/heads/main/Surge/Module/dxstj.js
+# 开屏广告请求拦截
+dxstjpure = type=http-response,pattern=^https?://adx\.zuoyebang\.com/adxserver/ad/adreq,requires-body=1,max-size=0,script-path=Https://raw.githubusercontent.com/axkrr/open_config/refs/heads/main/Surge/Module/dxstj.js
 
 [MITM]
-hostname = %APPEND% *.dxstj.com, *.soutijiang.com
+hostname = %APPEND% adx.zuoyebang.com
