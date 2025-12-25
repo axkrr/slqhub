@@ -1,5 +1,6 @@
 #!name = qdpure
 #!desc = quda ad blocking script
+#!category = 广告模块
 #!system = ios
 
 [Script]
