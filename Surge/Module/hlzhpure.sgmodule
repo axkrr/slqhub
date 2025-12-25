@@ -1,5 +1,6 @@
 #!name=hlzhpure
 #!desc=umetrip ad blocking script
+#!category=广告模块
 #!system=ios
 
 [Rule]
