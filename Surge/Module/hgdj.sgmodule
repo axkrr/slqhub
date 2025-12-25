@@ -1,12 +1,10 @@
-#!name=番茄短剧
-#!desc=自动处理番茄短剧账户信息接口响应。
-#!category=脚本转换
+#!name=hgdj
+#!desc=hgdj会员
+#!category=破解模块
 #!system=ios
 
 [Script]
-# 拦截账号信息接口，并交由指定脚本处理响应体
-番茄短剧处理 = type=script-response-body,pattern=^http:\/\/8\.149\.129\.124:3002\/api\/account\/v1,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/FanQieDuanJu/JS/FanQieDuanJu.js
+hgdj = type=script-response-body,pattern=^http:\/\/8\.149\.129\.124:3002\/api\/account\/v1,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/FanQieDuanJu/JS/FanQieDuanJu.js
 
 [MITM]
-# 必须包含该主机名才能解密流量
 hostname = %APPEND% 8.149.129.124
