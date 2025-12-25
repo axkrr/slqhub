@@ -1,7 +1,7 @@
 # scripting
 DOMAIN-SUFFIX,javbus.com
 DOMAIN-SUFFIX,missav.ai
-DOMAIN,bus.trigram-masques-8r.workers.dev
+DOMAIN-SUFFIX,workers.dev
 # 小米刷步
 DOMAIN,api-user.huami.com
 DOMAIN,account.huami.com
