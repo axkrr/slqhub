@@ -22,7 +22,7 @@
 5、[可莉插件中心适配](https://raw.githubusercontent.com/Yu9191/Rewrite/refs/heads/main/pluginhub.sgmodule)  
 6、[cookie合集](https://github.com/fmz200/wool_scripts/raw/main/Surge/module/cookies.module)  
 7、[Greasyfork油猴脚本转换器](https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/refs/heads/main/JS/GreasyFork/GreasyFork.sgmodule)  
-8、[TG QuickSend（草稿直达）](https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/refs/heads/main/JS/TGQuickSend/TG.sgmodule)  
+8、[TG QuickSend(草稿直达)](https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/refs/heads/main/JS/TGQuickSend/TG.sgmodule)  
 9、[应用安装](https://raw.githubusercontent.com/githubdulong/Script/master/Surge/ipaTool.sgmodule)  
 10、[用户访问Github私有仓库](https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/refs/heads/main/JS/Github_Private/Github_Private.sgmodule)  
 #### 增强模块
@@ -105,6 +105,7 @@
 5、[txxxxx](https://raw.githubusercontent.com/Yu9191/Rewrite/refs/heads/main/txxxxx.js)  
 6、[widget](https://raw.githubusercontent.com/89996462/Quantumult-X/main/ycdz/widgets.js)  
 7、[番茄短剧](https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/refs/heads/main/JS/FanQieDuanJu/FanQieDuanJu.conf)  
+8、[pornhub](https://raw.githubusercontent.com/ddgksf2013/Scripts/master/pornhub.js)  
 ### task收藏
 1、[task合集](https://raw.githubusercontent.com/fmz200/wool_scripts/refs/heads/main/QuantumultX/tasks/fmz200_tasks.json)  
 # icon
