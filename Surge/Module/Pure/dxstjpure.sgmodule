@@ -1,6 +1,6 @@
 #!name = dxstjpure
 #!desc = 大学搜题酱 ad blocking script
-#!category = 广告模块
+#!category = 广告拦截
 #!system = ios
 
 [Script]
