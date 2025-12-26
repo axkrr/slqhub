@@ -4,7 +4,7 @@
 #!system = ios
 
 [Script]
-qdpure = type=http-response,pattern=^https?://api\.shanghailingye\.cn/ad/map,requires-body=1,max-size=0,script-path=Https://raw.githubusercontent.com/axkrr/open_config/refs/heads/main/Surge/Module/JS/qd.js
+qdpure = type=http-response,pattern=^https?://api\.shanghailingye\.cn/ad/map,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/JS/qd.js
 
 [MITM]
 hostname = %APPEND% api.shanghailingye.cn
