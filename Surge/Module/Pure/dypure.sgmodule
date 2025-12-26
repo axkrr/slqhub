@@ -1,6 +1,6 @@
 #!name= dypure
 #!desc= 抖音 ad blocking script
-#!category= 广告模块
+#!category= 广告拦截
 #!system= macOS
 
 [Body Rewrite]
