@@ -1,10 +1,9 @@
-#!name=dypure
-#!desc=DouYinMac推荐流去广
-#!category=广告模块
-#!system=macOS
+#!name= dypure
+#!desc= 抖音Mac ad blocking script
+#!category= 广告模块
+#!system= macOS
 
 [Body Rewrite]
-# 抖音Mac版推荐流去广告
 http-response-jq ^https:\/\/www\.douyin\.com\/aweme\/v1\/web\/tab\/feed\/\? 'if has("aweme_list") then .aweme_list |= map(select(.is_ads != true)) else . end'
 
 [MITM]
