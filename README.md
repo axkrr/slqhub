@@ -82,7 +82,6 @@
 1、[cookie合集](https://github.com/fmz200/wool_scripts/raw/main/Loon/plugin/cookies.plugin)  
 2、[广告平台拦截器](https://kelee.one/Tool/Loon/Lpx/BlockAdvertisers.lpx)  
 3、[剪映](https://github.com/Moli-X/Resources/raw/main/Loon/JianYing.plugin)  
-## 
 ### script收藏
 1、[script合集](https://github.com/fmz200/wool_scripts/raw/main/Loon/script/tasks.scripts)  
 # Qx
@@ -106,9 +105,25 @@
 5、[txxxxx](https://raw.githubusercontent.com/Yu9191/Rewrite/refs/heads/main/txxxxx.js)  
 6、[widget](https://raw.githubusercontent.com/89996462/Quantumult-X/main/ycdz/widgets.js)  
 7、[番茄短剧](https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/refs/heads/main/JS/FanQieDuanJu/FanQieDuanJu.conf)  
-## 
 ### task收藏
 1、[task合集](https://raw.githubusercontent.com/fmz200/wool_scripts/refs/heads/main/QuantumultX/tasks/fmz200_tasks.json)  
 # icon
 [axkrr.json](https://raw.githubusercontent.com/axkrr/slqhub/main/icon/axkrr.json)  
+## 
+### icon收藏
+1、[图标数据集合](https://velvetcodeloom.github.io/icloud/icons.json)  
+2、[mini Alpha](https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/miniAlpha.json)  
+3、[mini Color](https://raw.githubusercontent.com/Orz-3/mini/master/miniColor.json)  
+4、[mini+](https://raw.githubusercontent.com/Orz-3/mini/refs/heads/master/mini%2B.json)  
+5、[mini icons](https://github.com/Orz-3/mini/raw/master/mini.json)  
+6、[Color+](https://raw.githubusercontent.com/Orz-3/mini/master/Color+.json)  
+7、[Qure mini](https://raw.githubusercontent.com/Koolson/Qure/master/Other/Quremini.json)  
+8、[Qure Light(All)](https://github.com/Koolson/Qure/raw/master/Other/QureLight-All.json)  
+9、[Hand Painted Icon](https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Semporia.json)  
+10、[自用图标库](https://raw.githubusercontent.com/chxm1023/Script_X/main/icon/icons.json)  
+11、[fmz200图标库](https://raw.githubusercontent.com/fmz200/wool_scripts/main/icons/icons-all.json)  
+12、[Cute](https://raw.githubusercontent.com/tugepaopao/Image-Storage/master/other/Cute.json)  
+13、[离歌图标包](https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/ligeicon.json)  
+#### emby专用
+1、[离歌emby专用](https://raw.githubusercontent.com/lige47/QuanX-icon-rule/refs/heads/main/lige-emby-icon.json)  
 
