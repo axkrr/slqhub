@@ -1,10 +1,9 @@
 #!name = dxstjpure
-#!desc = daxuesoutijiang ad blocking script
+#!desc = 大学搜题酱 ad blocking script
 #!category = 广告模块
 #!system = ios
 
 [Script]
-# 开屏广告请求拦截
 dxstjpure = type=http-response,pattern=^https?://adx\.zuoyebang\.com/adxserver/ad/adreq,requires-body=1,max-size=0,script-path=Https://raw.githubusercontent.com/axkrr/open_config/refs/heads/main/Surge/Module/JS/dxstj.js
 
 [MITM]
