@@ -24,7 +24,10 @@ bypass-tun = 10.0.0.0/8,100.64.0.0/10,127.0.0.0/8,169.254.0.0/16,172.16.0.0/12,1
 [Proxy]
 
 [Remote Proxy]
-
+Port = https://sub.store/download/JiSuYun,udp=true,block-quic=true,fast-open=default,vmess-aead=true,skip-cert-verify=true,enabled=false,flexible-sni=false,img-url=https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/sub.png
+Port1 = https://9rdOY3tkqblbKS.bessxmo.com/api/v1/client/subscribe?token=6987235a1767b3d25c1dcf96e39d58da&ttoken=d8cd98f00b204e980,parser-enabled = true,udp=true,block-quic=false,fast-open=default,vmess-aead=true,skip-cert-verify=true,enabled=false,flexible-sni=false,img-url=https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/wuyouyun(1).png
+port2 = https://2.luolicon.ru/oosaka/32a91ace3b210a29de879674b6be47b4,parser-enabled = true,udp=true,block-quic=false,fast-open=default,vmess-aead=true,skip-cert-verify=true,enabled=true,flexible-sni=false,img-url=https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Universal/KittyLink.png
+port3 = https://jsjc.cfd/api/v1/client/subscribe?token=6339ede624ba782c6f5655184014e60b,parser-enabled = true,udp=true,block-quic=false,fast-open=default,vmess-aead=true,skip-cert-verify=true,enabled=true,flexible-sni=false,img-url=https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/speedtest(3).png
 
 [Remote Filter]
 HK = NameRegex, FilterKey = "^(?=.*((?i)🇭🇰|香港|(\b(HK|HKG|Hong)(\d+)?\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$"
@@ -35,21 +38,21 @@ US = NameRegex, FilterKey = "^(?=.*((?i)🇺🇸|美国|波特兰|达拉斯|俄�
 
 [Proxy Group]
 # final_choice
-Final_Choice = select,DIRECT,US_Auto,SG_Auto,JP_Auto,HK_Auto,TW_Auto,img-url = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/Final.png
+final_choice = select,DIRECT,US_auto,SG_auto,JP_auto,HK_auto,TW_auto,img-url = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/Final.png
 # --------------------------------
 # auto_proxy_group
-HK_Auto = url-test,HK,interval = 60,tolerance = 50,img-url = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/HK.png
-TW_Auto = url-test,TW,interval = 60,tolerance = 50,img-url = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/TW.png
-JP_Auto = url-test,JP,interval = 60,tolerance = 50,img-url = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/JP.png
-SG_Auto = url-test,SG,interval = 60,tolerance = 50,img-url = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/SG.png
-US_Auto = url-test,US,interval = 60,tolerance = 50,img-url = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/US.png
+HK_auto = url-test,HK,interval = 60,tolerance = 50,img-url = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/HK.png
+TW_auto = url-test,TW,interval = 60,tolerance = 50,img-url = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/TW.png
+JP_auto = url-test,JP,interval = 60,tolerance = 50,img-url = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/JP.png
+SG_auto = url-test,SG,interval = 60,tolerance = 50,img-url = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/SG.png
+US_auto = url-test,US,interval = 60,tolerance = 50,img-url = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/US.png
 # --------------------------------
 # manual_proxy_group
-HK_Manual = select,HK,img-url = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/HK.png
-TW_Manual = select,TW,img-url = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/TW.png
-JP_Manual = select,JP,img-url = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/JP.png
-SG_Manual = select,SG,img-url = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/SG.png
-US_Manual = select,US,img-url = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/US.png
+HK_manual = select,HK,img-url = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/HK.png
+TW_manual = select,TW,img-url = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/TW.png
+JP_manual = select,JP,img-url = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/JP.png
+SG_manual = select,SG,img-url = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/SG.png
+US_manual = select,US,img-url = https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/qure/US.png
 
 [Rule]
 # Local Rule
@@ -63,28 +66,29 @@ US_Manual = select,US,img-url = https://raw.githubusercontent.com/blackmatrix7/i
 FINAL,DIRECT
 
 [Remote Rule]
-https://rule.kelee.one/Loon/Telegram.lsr, policy=US_Auto, tag=Telegram, enabled=true
-https://raw.githubusercontent.com/MistyKey/open_config/refs/heads/main/loon_local_rule.lsr, policy=Final_Choice, tag=LocalRule, enabled=true
-https://rule.kelee.one/Loon/Google.lsr, policy=US_Auto, tag=Google, enabled=true
-https://rule.kelee.one/Loon/GitHub.lsr, policy=HK_Auto, tag=GitHub, enabled=true
-https://rule.kelee.one/Loon/GitLab.lsr, policy=US_Auto, tag=GitLab, enabled=true
-https://rule.kelee.one/Loon/OpenAI.lsr, policy=US_Auto, tag=OpenAI, enabled=true
-https://rule.kelee.one/Loon/Spotify.lsr, policy=HK_Auto, tag=Spotify, enabled=true
-https://rule.kelee.one/Loon/Duckduckgo.lsr, policy=US_Auto, tag=Duckduckgo, enabled=true
-https://kelee.one/Tool/Loon/Lsr/SpeedtestInternational.lsr, policy=DIRECT, tag=Speedtest Intl, enabled=true
-https://kelee.one/Tool/Loon/Lsr/LAN_SPLITTER.lsr, policy=DIRECT, tag=LAN, enabled=true
-https://kelee.one/Tool/Loon/Lsr/REGION_SPLITTER.lsr, policy=DIRECT, tag=CN REGION, enabled=true
+https://raw.githubusercontent.com/axkrr/open_config/refs/heads/main/Loon/Rule/LocalAdBlock.lsr, policy=REJECT, tag=localadblock, enabled=true
+https://raw.githubusercontent.com/axkrr/open_config/refs/heads/main/Loon/Rule/loon_local_rule.lsr, policy=final_choice, tag=localrule, enabled=true
+https://rule.kelee.one/Loon/Telegram.lsr, policy=US_auto, tag=swiftgram, enabled=true
+https://rule.kelee.one/Loon/Google.lsr, policy=US_auto, tag=google, enabled=true
+https://rule.kelee.one/Loon/GitHub.lsr, policy=HK_auto, tag=github, enabled=true
+https://rule.kelee.one/Loon/GitLab.lsr, policy=US_auto, tag=gitlab, enabled=true
+https://rule.kelee.one/Loon/OpenAI.lsr, policy=US_manual, tag=openai, enabled=true
+https://rule.kelee.one/Loon/Spotify.lsr, policy=US_auto, tag=spotify, enabled=true
+https://kelee.one/Tool/Loon/Lsr/SpeedtestInternational.lsr, policy=DIRECT, tag=speedtestintl, enabled=true
+https://kelee.one/Tool/Loon/Lsr/LAN_SPLITTER.lsr, policy=DIRECT, tag=lan, enabled=true
+https://kelee.one/Tool/Loon/Lsr/REGION_SPLITTER.lsr, policy=DIRECT, tag=geoip_cn, enabled=true
 
 [Host]
 
 [Rewrite]
 
 [Script]
+cron "0 22 * * *" script-path=https://raw.githubusercontent.com/sub-store-org/Sub-Store/release/cron-sync-artifacts.min.js, timeout=60, enabled=false, tag=Sub-Store Sync, img-url=https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/sub.png
 cron "0 11 * * *" script-path=https://raw.githubusercontent.com/evilbutcher/Quantumult_X/master/check_in/wechatsubs/sydwzp.js, timeout=10, tag=事业单位招聘监控, img-url=https://raw.githubusercontent.com/evilbutcher/Quantumult_X/master/picture/sydw.png
-cron "0 21 * * *" script-path=https://raw.githubusercontent.com/evilbutcher/Quantumult_X/master/check_in/ssq/ssq.js, timeout=10, tag=彩票结果查询, img-url=https://raw.githubusercontent.com/58xinian/icon/master/Two_color_ball.png
-cron "0 18 * * *" script-path=https://raw.githubusercontent.com/deezertidal/private/main/rates.js, timeout=10, tag=今日汇率, img-url=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/task/exchangerate.png
-cron "30 17 * * *" script-path=https://raw.githubusercontent.com/deezertidal/private/main/histoday.js, timeout=10, tag=历史上的今天, img-url=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/task/historyToday.png
-cron "15 12 * * *" script-path=https://raw.githubusercontent.com/deezertidal/private/main/oil.js, timeout=10, tag=今日油价, img-url=https://raw.githubusercontent.com/fmz200/wool_scripts/main/icons/apps/oil.png, argument="重庆"
+cron "0 21 * * *" script-path=https://raw.githubusercontent.com/evilbutcher/Quantumult_X/master/check_in/ssq/ssq.js, timeout=10, enabled=false, tag=彩票结果查询, img-url=https://raw.githubusercontent.com/58xinian/icon/master/Two_color_ball.png
+cron "30 11 ? * MON" script-path=https://raw.githubusercontent.com/deezertidal/private/main/rates.js, timeout=10, enabled=false, tag=今日汇率, img-url=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/task/exchangerate.png
+cron "30 17 * * *" script-path=https://raw.githubusercontent.com/deezertidal/private/main/histoday.js, timeout=10, enabled=false, tag=历史上的今天, img-url=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/task/historyToday.png
+cron "30 2 ? * WED" script-path=https://raw.githubusercontent.com/deezertidal/private/main/oil.js, timeout=10, enabled=false, tag=今日油价, img-url=https://raw.githubusercontent.com/fmz200/wool_scripts/main/icons/apps/oil.png, argument="重庆"
 cron "0 19 * * *" script-path=https://raw.githubusercontent.com/dompling/Script/refs/heads/master/gist/restore.js, timeout=10, enabled=false, tag=GistRestore, img-url=https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/github(1).png
 cron "0 9 * * *" script-path=https://raw.githubusercontent.com/dompling/Script/refs/heads/master/gist/backup.js, timeout=10, enabled=false, tag=GistBackup, img-url=https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/github(1).png
 cron "17 20 * * *" script-path=https://raw.githubusercontent.com/Yuheng0101/X/main/Tasks/95598/95598.js, timeout=10, enabled=false, tag=网上国网, img-url=https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/wangshangguowang.png
@@ -93,37 +97,40 @@ cron "33 21 * * *" script-path=https://raw.githubusercontent.com/Yuheng0101/X/ma
 [Remote Script]
 https://github.com/fmz200/wool_scripts/raw/main/Loon/script/tasks.scripts, tag=Tasks, enabled=true
 [Plugin]
+http://script.hub/file/_start_/https://raw.githubusercontent.com/Yu9191/Rewrite/refs/heads/main/haijiaoshequ.js/_end_/haijiaoshequ.plugin?type=qx-rewrite&target=loon-plugin&del=true&jqEnabled=true, enabled=true
+http://script.hub/file/_start_/https://raw.githubusercontent.com/WeiGiegie/666/main/mgsp.js/_end_/mgsp.plugin?type=qx-rewrite&target=loon-plugin&del=true&jqEnabled=true, tag=mgsp, img-url=https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/migushipin.png, enabled=true
+http://script.hub/file/_start_/https://raw.githubusercontent.com/Yu9191/Rewrite/refs/heads/main/One.js/_end_/One.plugin?type=qx-rewrite&target=loon-plugin&del=true&jqEnabled=true, tag=one, enabled=true
 https://github.com/NSRingo/Maps/releases/latest/download/iRingo.Maps.plugin, enabled=true
 https://kelee.one/Tool/Loon/Lpx/Block_HTTPDNS.lpx, pin=true, enabled=true
 https://kelee.one/Tool/Loon/Lpx/BlockAdvertisers.lpx, pin=true, enabled=true
 https://raw.githubusercontent.com/fmz200/wool_scripts/refs/heads/main/Loon/plugin/blockAds.plugin, pin=true, enabled=true
 https://kelee.one/Tool/Loon/Lpx/WexinMiniPrograms_Remove_ads.lpx, pin=true, enabled=true
-https://raw.githubusercontent.com/fmz200/wool_scripts/refs/heads/main/Loon/plugin/cookies.plugin, pin=true, enabled=false
+https://raw.githubusercontent.com/fmz200/wool_scripts/refs/heads/main/Loon/plugin/cookies.plugin, pin=true, enabled=true
 https://kelee.one/Tool/Loon/Lpx/Weixin_Official_Accounts_remove_ads.lpx, enabled=true
 https://kelee.one/Tool/Loon/Lpx/Umetrip_remove_ads.lpx, enabled=true
 http://script.hub/file/_start_/https://raw.githubusercontent.com/ddgksf2013/Scripts/master/pornhub.js/_end_/pornhub.plugin?type=qx-rewrite&target=loon-plugin&del=true&jqEnabled=true, tag=PornHubPure, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Pornhub_2.png, enabled=true
 https://whatshub.top/plugin/bdwk.plugin, enabled=true
 https://github.com/Moli-X/Resources/raw/main/Loon/JianYing.plugin, enabled=true
 http://script.hub/file/_start_/https://raw.githubusercontent.com/89996462/Quantumult-X/main/ycdz/widgets.js/_end_/widgets.plugin?type=qx-rewrite&target=loon-plugin&del=true&jqEnabled=true, img-url=https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/topwidge.png, enabled=true
-http://script.hub/file/_start_/https://raw.githubusercontent.com/WeiGiegie/666/main/mgtv.js/_end_/mgtv.plugin?type=qx-rewrite&target=loon-plugin&del=true&jqEnabled=true, img-url=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/mini/mgtv.png, enabled=true
+http://script.hub/file/_start_/https://raw.githubusercontent.com/WeiGiegie/666/main/mgtv.js/_end_/mgtv.plugin?type=qx-rewrite&target=loon-plugin&del=true&jqEnabled=true, img-url=https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/icon/color/mgtv.png, enabled=true
 http://script.hub/file/_start_/https://github.com/ddgksf2013/Modules/raw/main/123pan.webEnhance.sgmodule/_end_/123pan.plugin?type=surge-module&target=loon-plugin&del=true&jqEnabled=true, tag=123PanWebEnhance, img-url=https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/123.png, enabled=true
 http://script.hub/file/_start_/https://raw.githubusercontent.com/Yu9191/Rewrite/refs/heads/main/dzyj.js/_end_/dzyj.plugin?type=qx-rewrite&target=loon-plugin&del=true&jqEnabled=true, tag=地震预警, enabled=true
-https://raw.githubusercontent.com/app2smile/rules/master/plugin/spotify.plugin, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Spotify.png, enabled=true
-http://script.hub/file/_start_/https://raw.githubusercontent.com/anyehttp/quantumult-x/main/headers/wyy-surge.sgmodule/_end_/wyy-surge.plugin?type=surge-module&target=loon-plugin&del=true&jqEnabled=true, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netease_Music.png, enabled=true
+https://raw.githubusercontent.com/app2smile/rules/master/plugin/spotify.plugin, tag=Spotify, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Spotify.png, enabled=true
+http://script.hub/file/_start_/https://raw.githubusercontent.com/anyehttp/quantumult-x/main/headers/wyy-surge.sgmodule/_end_/wyy-surge.plugin?type=surge-module&target=loon-plugin&del=true&jqEnabled=true, tag=网易云svip会员, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netease_Music.png, enabled=true
 http://script.hub/file/_start_/https://raw.githubusercontent.com/dompling/Script/master/wsgw/index.js/_end_/index.plugin?type=qx-rewrite&target=loon-plugin&del=true&jqEnabled=true, tag=网上国网, img-url=https://raw.githubusercontent.com/lige47/QuanX-icon-rule/main/icon/wangshangguowang.png, enabled=true
 https://whatshub.top/plugin/Price.plugin, enabled=true
 https://kelee.one/Tool/Loon/Lpx/QuickSearch.lpx, enabled=true
-https://kelee.one/Tool/Loon/Lpx/Prevent_DNS_Leaks.lpx, policy=Final_Choice, enabled=true
+https://kelee.one/Tool/Loon/Lpx/Prevent_DNS_Leaks.lpx, policy=final_choice, enabled=true
 https://kelee.one/Tool/Loon/Lpx/Node_detection_tool.lpx, enabled=true
 https://whatshub.top/plugin/GeoLocation.plugin, tag=节点信息查询, enabled=true
 https://whatshub.top/plugin/MediaChecker.plugin, enabled=true
-https://kelee.one/Tool/Loon/Lpx/BoxJs.lpx, policy=US_Auto, enabled=true
-https://kelee.one/Tool/Loon/Lpx/Sub-Store.lpx, policy=US_Auto, enabled=true
-https://kelee.one/Tool/Loon/Lpx/Script-Hub.lpx, policy=SG_Auto, enabled=true
+https://kelee.one/Tool/Loon/Lpx/BoxJs.lpx, policy=US_auto, enabled=true
+https://kelee.one/Tool/Loon/Lpx/Sub-Store.lpx, policy=US_auto, enabled=true
+https://kelee.one/Tool/Loon/Lpx/Script-Hub.lpx, policy=SG_auto, enabled=true
 
 [Mitm]
-ca-p12 = 
-ca-passphrase = 
+ca-p12 = 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
+ca-passphrase = 1WP89U02
 hostname =
 ca-p12=
 ca-passphrase=
