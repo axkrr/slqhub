@@ -1,22 +1,19 @@
-#!name=hlzhpure
-#!desc=umetrip ad blocking script
-#!category=广告模块
-#!system=ios
+#!name= hlzhpure
+#!desc= 航旅纵横 ad blocking script
+#!category= 广告模块
+#!system= ios
 
 [Rule]
-# 简练功能说明：拦截第三方广告SDK及站内统计
 DOMAIN, analytics.umetrip.com, REJECT
 DOMAIN, adashbc.utdevice.apple.com, REJECT
 DOMAIN, sdk.open.talk.com, REJECT
 DOMAIN, amdc.m.taobao.com, REJECT
 DOMAIN-SUFFIX, gdt.qq.com, REJECT
 DOMAIN-SUFFIX, ad.umetrip.com, REJECT
-
-# 简练功能说明：拦截所有广告素材（开屏图、首页焦点图）
+#
 URL-REGEX, ^https?:\/\/oss\.umetrip\.com\/fs\/advert\/, REJECT
 URL-REGEX, ^https?:\/\/static\.umetrip\.com\/fs\/advert\/, REJECT
-
-# 简练功能说明：拦截广告配置 API 接口
+#
 URL-REGEX, ^https?:\/\/.*\.umetrip\.com\/gateway\/api\/umetrip\/advert, REJECT
 
 [MITM]
