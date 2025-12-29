@@ -14,4 +14,4 @@ quda_ad_perfect = type=http-response, pattern=^https?:\/\/api\.shanghailingye\.c
 
 [MITM]
 # 必须包含广告域名
-hostname = %APPEND% api.shanghailingye.cn, qudaapi.8quan.com
+hostname = %APPEND% api.shanghailingye.cn
