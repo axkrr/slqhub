@@ -1,31 +1,10 @@
-#!name = qdpure (增强版)
-#!desc = 去哒 ad blocking script + 域名硬拦截
+#!name = qdpure
+#!desc = 去哒 ad blocking script
 #!category = 广告拦截
 #!system = ios
 
-[Rule]
-# --- [关键：封死第三方广告 SDK 的请求路径] ---
-# 拦截腾讯广点通 (GDT)
-DOMAIN-SUFFIX, gdt.qq.com, REJECT
-DOMAIN-SUFFIX, e.qq.com, REJECT
-
-# 拦截穿山甲 (CSJ/字节)
-DOMAIN-KEYWORD, pglstatp-toutiao, REJECT
-DOMAIN-SUFFIX, ad.toutiao.com, REJECT
-
-# 拦截快手广告 (KS)
-DOMAIN-SUFFIX, adkwai.com, REJECT
-
-# 拦截华为云存储 (你最开始抓到的那个 123KB 图片域名)
-DOMAIN-SUFFIX, myhuaweicloud.com, REJECT-TINYGIF
-
-# --- [解决 UDP 绕过导致的白屏] ---
-# 许多广告 SDK 会尝试走 QUIC (UDP 443) 协议，Surge 默认无法处理
-AND, ((PROTOCOL, UDP), (DEST-PORT, 443)), REJECT
-
 [Script]
-# 保持你的脚本运行，确保 api 返回的是空列表
-qdpure = type=http-response, pattern=^https?://api\.shanghailingye\.cn/ad/map, requires-body=1, max-size=0, script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/JS/qd.js
+qdpure = type=http-response,pattern=^https?://api\.shanghailingye\.cn/ad/map,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/JS/qd.js
 
 [MITM]
 hostname = %APPEND% api.shanghailingye.cn
