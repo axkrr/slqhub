@@ -1,15 +1,14 @@
-/*
-去哒广告劫持脚本
-*/
-
 let obj = JSON.parse($response.body || "{}");
 
-// 强制清空所有可能存在的广告配置
+// 1. 清空所有广告列表
 obj.data = []; 
-obj.code = 1; // 1 通常代表成功
-obj.msg = "success";
+obj.bid = [];  // 你之前抓到的那个 JSON 里有这个字段
+obj.lns = 0;   // 很多聚合 SDK 用这个控制加载
+obj.load = 0;  // 设为 0 告诉 App 不要加载
+obj.code = 1;
+obj.message = "成功";
 
 $done({
     body: JSON.stringify(obj),
-    status: 200 // 必须返回 200，让 App 觉得请求成功了
+    status: 200
 });
