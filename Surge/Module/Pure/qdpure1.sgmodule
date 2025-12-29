@@ -1,27 +1,21 @@
-#!name=去哒App去广告(无损兼容版)
-#!desc=绕过证书检测，通过拦截广告链路实现去广告。
+#!name=去哒App去广告(脚本秒开版)
+#!desc=解决白屏等待问题，通过脚本伪造空广告响应实现秒进。
 #!system=ios
 
 [Rule]
-# 1. 对主域名直接放行 (不在 MITM 中劫持它，解决连不上服务器的问题)
-# 但我们可以在网络层直接拒绝掉那些明显的广告子路径（如果它是纯 HTTP）
-# 或者针对该域名使用简单拒绝策略
-# URL-REGEX, ^https?:\/\/qudaapi\.8quan\.com\/.*ad.*, REJECT
-
-# 2. 拦截广告映射接口 (这个域名如果没做证书固定，就留着)
-URL-REGEX, ^https?:\/\/api\.shanghailingye\.cn\/ad\/map, REJECT-TINYGIF
-
-# 3. 彻底封死 SDK 域名 (这是最有效的，因为 SDK 很少做证书固定)
-# 穿山甲、广点通、快手等
+# 封锁 SDK 域名，防止广告插件后台重试
 DOMAIN-KEYWORD, pglstatp-toutiao, REJECT
 DOMAIN-SUFFIX, gdt.qq.com, REJECT
 DOMAIN-SUFFIX, adkwai.com, REJECT
 DOMAIN-SUFFIX, mobads.baidu.com, REJECT
-
-# 4. 拦截图片素材存储
 DOMAIN-SUFFIX, myhuaweicloud.com, REJECT-TINYGIF
 
+[Script]
+# 【关键】对广告接口进行重写，不要直接 REJECT
+# 这里的脚本会给 App 一个“0广告”的 JSON，让它不需要等待下载图片
+quda_fix = type=http-response, pattern=^https?:\/\/api\.shanghailingye\.cn\/ad\/map, requires-body=1, max-size=0, script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/Pure/qd_ad.js
+
 [MITM]
-# 【关键】从这里删掉 qudaapi.8quan.com
-# 只保留没有证书检测的辅助广告域名
-hostname = %APPEND% api.shanghailingye.cn, *.myhuaweicloud.com
+# 绝对不要加 qudaapi.8quan.com
+# 只劫持这个广告分发域名
+hostname = %APPEND% api.shanghailingye.cn
