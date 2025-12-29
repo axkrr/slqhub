@@ -1,21 +1,40 @@
-#!name=去哒App去广告(脚本秒开版)
-#!desc=解决白屏等待问题，通过脚本伪造空广告响应实现秒进。
-#!system=ios
+#!name=去哒App去广告(最终强化版)
+#!desc=脚本劫持+域名斩断，彻底解决后跳广告。
 
 [Rule]
-# 封锁 SDK 域名，防止广告插件后台重试
-DOMAIN-KEYWORD, pglstatp-toutiao, REJECT
+# --- [精准拦截] ---
+# 劫持之前发现的映射接口
+URL-REGEX, ^https?:\/\/api\.shanghailingye\.cn\/ad\/map, REJECT-DICT
+
+# --- [斩断 SDK 链路] ---
+# 腾讯广点通 (GDT)
 DOMAIN-SUFFIX, gdt.qq.com, REJECT
+DOMAIN-SUFFIX, e.qq.com, REJECT
+DOMAIN-SUFFIX, mi.gdt.qq.com, REJECT
+
+# 字节跳动穿山甲 (CSJ)
+DOMAIN-KEYWORD, pglstatp-toutiao, REJECT
+DOMAIN-SUFFIX, ad.toutiao.com, REJECT
+DOMAIN-SUFFIX, byteimg.com, REJECT
+
+# 快手广告 (KS)
 DOMAIN-SUFFIX, adkwai.com, REJECT
+DOMAIN-SUFFIX, e.kuaishou.com, REJECT
+
+# 百度广告 (BD)
 DOMAIN-SUFFIX, mobads.baidu.com, REJECT
+DOMAIN-SUFFIX, mobads-pre-config.baidu.com, REJECT
+
+# 华为云图片素材存储 (之前抓到的 123KB 图片所在)
 DOMAIN-SUFFIX, myhuaweicloud.com, REJECT-TINYGIF
 
+# --- [禁止 QUIC 绕过] ---
+# 强制所有广告流量走 TCP，以便 Surge 拦截
+AND,((PROTOCOL,UDP),(DEST-PORT,443)),REJECT
+
 [Script]
-# 【关键】对广告接口进行重写，不要直接 REJECT
-# 这里的脚本会给 App 一个“0广告”的 JSON，让它不需要等待下载图片
+# 保持脚本运行，用于缩短白屏时间
 quda_fix = type=http-response, pattern=^https?:\/\/api\.shanghailingye\.cn\/ad\/map, requires-body=1, max-size=0, script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/Pure/qd_ad.js
 
 [MITM]
-# 绝对不要加 qudaapi.8quan.com
-# 只劫持这个广告分发域名
 hostname = %APPEND% api.shanghailingye.cn
