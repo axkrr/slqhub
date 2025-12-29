@@ -1,0 +1,18 @@
+#!name=去哒App开屏广告屏蔽(精准版)
+#!desc=拦截去哒App开屏广告映射接口，实现秒开。
+#!system=ios
+
+[Rule]
+# 1. 拦截广告映射接口，返回空数据或拒绝
+# 使用 REJECT-DICT 可以让 App 收到一个空字典，通常比直接 REJECT 更能防止启动卡顿
+URL-REGEX, ^https?:\/\/api\.shanghailingye\.cn\/ad\/map, REJECT-DICT
+
+# 2. 屏蔽你之前抓到的图片域名后缀 (华为云 OBS 特征)
+DOMAIN-SUFFIX, myhuaweicloud.com, REJECT-TINYGIF
+
+# 3. 辅助：拦截可能存在的其他广告域名
+DOMAIN, qudaapi.8quan.com, REJECT
+
+[MITM]
+# 必须包含此域名，否则无法拦截 HTTPS 请求
+hostname = %APPEND% api.shanghailingye.cn, qudaapi.8quan.com
