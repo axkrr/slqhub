@@ -1,17 +1,27 @@
-#!name=去哒App开屏广告屏蔽(完美版)
-#!desc=使用 JS 脚本劫持广告映射接口，实现零等待秒开。
+#!name=去哒App去广告(无损兼容版)
+#!desc=绕过证书检测，通过拦截广告链路实现去广告。
 #!system=ios
 
 [Rule]
-# 拦截图片素材，防止脚本失效时的兜底
-DOMAIN-SUFFIX, myhuaweicloud.com, REJECT-TINYGIF
+# 1. 对主域名直接放行 (不在 MITM 中劫持它，解决连不上服务器的问题)
+# 但我们可以在网络层直接拒绝掉那些明显的广告子路径（如果它是纯 HTTP）
+# 或者针对该域名使用简单拒绝策略
+# URL-REGEX, ^https?:\/\/qudaapi\.8quan\.com\/.*ad.*, REJECT
+
+# 2. 拦截广告映射接口 (这个域名如果没做证书固定，就留着)
+URL-REGEX, ^https?:\/\/api\.shanghailingye\.cn\/ad\/map, REJECT-TINYGIF
+
+# 3. 彻底封死 SDK 域名 (这是最有效的，因为 SDK 很少做证书固定)
+# 穿山甲、广点通、快手等
+DOMAIN-KEYWORD, pglstatp-toutiao, REJECT
+DOMAIN-SUFFIX, gdt.qq.com, REJECT
 DOMAIN-SUFFIX, adkwai.com, REJECT
 DOMAIN-SUFFIX, mobads.baidu.com, REJECT
 
-[Script]
-# 使用你提供的远程脚本路径，劫持广告逻辑
-quda_ad_perfect = type=http-response, pattern=^https?:\/\/api\.shanghailingye\.cn\/ad\/map, requires-body=1, max-size=0, script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/Pure/qd_ad.js
+# 4. 拦截图片素材存储
+DOMAIN-SUFFIX, myhuaweicloud.com, REJECT-TINYGIF
 
 [MITM]
-# 必须包含广告域名
-hostname = %APPEND% api.shanghailingye.cn
+# 【关键】从这里删掉 qudaapi.8quan.com
+# 只保留没有证书检测的辅助广告域名
+hostname = %APPEND% api.shanghailingye.cn, *.myhuaweicloud.com
