@@ -1,9 +1,9 @@
-#!name=m3u8extractor
-#!desc=视频流提取跳转senplayer
-#!category=工具模块
+#!name=视频流获取跳转 SenPlayer
+#!desc=移植自 Tampermonkey 原版内核。自动嗅探 m3u8，点击 Surge 通知直接跳转 SenPlayer 播放。
+#!category=工具类
 
 [Script]
-# 这里的 pattern 目前精准锁定两个域名，方便后期在括号内继续添加
+# 注入与信号处理，主要针对 PH 和 TXH
 Video_Sniff = type=http-response,pattern=^https?:\/\/(www|cn|m)\.(pornhub|txh067)\.com\/,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/JS/m3u8extractor.js
 
 [MITM]
