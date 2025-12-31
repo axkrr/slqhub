@@ -66,10 +66,11 @@
 8、[GitHubPro](https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/main/JS/Github/GitHubPro.sgmodule)  
 9、[咪咕视频Vip](https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/refs/heads/main/JS/MiGuShiPin/MiGuShiPin.sgmodule)  
 10、[Emby Premium](https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/refs/heads/main/JS/Emby/EmbyUnlock.sgmodule)  
-11、[iOSGods解锁VIP](https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/refs/heads/main/JS/iOSGods/iOSGods.sgmodule)  
-12、[Spotify(>=iOS15)](https://raw.githubusercontent.com/app2smile/rules/master/module/spotify.module)  
-13、[地震预警-倒计时警报](https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/refs/heads/main/JS/DiZhenYuJing/DiZhenYuJing.sgmodule)  
-14、[PornHub Unlock Premium](https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/refs/heads/main/JS/PornHubPremium/PornHubPremium.sgmodule)  
+11、[酷狗音乐会员解锁](https://raw.githubusercontent.com/Yu9191/Rewrite/refs/heads/main/KuGou.sgmodule)  
+12、[iOSGods解锁VIP](https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/refs/heads/main/JS/iOSGods/iOSGods.sgmodule)  
+13、[Spotify(>=iOS15)](https://raw.githubusercontent.com/app2smile/rules/master/module/spotify.module)  
+14、[地震预警-倒计时警报](https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/refs/heads/main/JS/DiZhenYuJing/DiZhenYuJing.sgmodule)  
+15、[PornHub Unlock Premium](https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/refs/heads/main/JS/PornHubPremium/PornHubPremium.sgmodule)  
 #### 面板模块
 1、[IP-Pure](https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/refs/heads/main/JS/IPPure/IPPure.sgmodule)  
 2、[Surge Pro](https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Surge-Pro/Moore/SurgePro.sgmodule)  
@@ -111,6 +112,7 @@
 7、[微信小程序](https://raw.githubusercontent.com/ddgksf2013/Rewrite/refs/heads/master/AdBlock/Applet.conf)  
 8、[cookie合集](https://github.com/fmz200/wool_scripts/raw/main/QuantumultX/rewrite/cookies.snippet)  
 9、[网上国网通用接口](https://raw.githubusercontent.com/dompling/Script/master/wsgw/index.js)  
+10、[酷狗音乐mac端脚本](https://raw.githubusercontent.com/chmg2025/script/refs/heads/main/kugouvip.js)  
 ### task收藏
 1、[task合集](https://raw.githubusercontent.com/fmz200/wool_scripts/refs/heads/main/QuantumultX/tasks/fmz200_tasks.json)  
 # icon
