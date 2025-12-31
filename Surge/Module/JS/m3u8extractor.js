@@ -1,82 +1,67 @@
 /**
- * @name 视频流提取跳转器 (Surge 注入版)
- * @desc 适配 PH/TXH，监控动态请求，一键跳转 SenPlayer
+ * @name 全网视频流嗅探 (Surge 通知版)
+ * @desc 适配全网 m3u8，无网页 UI，点击 Surge 通知跳转 SenPlayer
  */
 
 const body = $response.body;
+const url = $request.url;
 
-if (body && body.includes('</head>')) {
+// 1. Surge 处理阶段：如果发现是脚本发出的信号，弹出通知
+if (url.includes('surge_m3u8_sniff=')) {
+    let videoUrl = decodeURIComponent(url.split('surge_m3u8_sniff=')[1]);
+    let senUrl = "senplayer://play?url=" + Data.fromUTF8(videoUrl).toBase64();
+    
+    $notification.post(
+        "🎬 发现视频源",
+        "点击此通知跳转 SenPlayer 播放",
+        videoUrl.split('?')[0], // 显示简化后的 URL
+        { "open-url": senUrl }
+    );
+    $done({ status: "HTTP/1.1 204 No Content" }); // 终止信号请求，不产生实际流量
+} 
+
+// 2. 注入阶段：向网页注入 Tampermonkey 级别的监控钩子
+else if (body && body.includes('</head>')) {
     const injectCode = `
-    <style>
-        .m3u8-detector {
-            position: fixed; top: 10vh; right: 10px; background: rgba(28, 28, 28, 0.95);
-            color: #ffffff; padding: 15px; border-radius: 8px; z-index: 999999;
-            max-width: 300px; font-size: 13px; box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-            backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .m3u8-list { list-style: none; padding: 0; margin: 0; max-height: 40vh; overflow-y: auto; }
-        .m3u8-item { margin: 8px 0; background: rgba(255, 255, 255, 0.05); padding: 8px; border-radius: 4px; }
-        .sen-btn {
-            background: #ff9900; border: none; color: white; padding: 8px;
-            cursor: pointer; border-radius: 4px; width: 100%; font-weight: bold;
-        }
-    </style>
-
-    <div id="m3u8-panel" class="m3u8-detector" style="display:none;">
-        <h3 style="margin:0 0 10px 0; color:#4CAF50; font-size:15px;">检测到视频流</h3>
-        <ul id="m3u8-list" class="m3u8-list"></ul>
-    </div>
-
     <script>
     (function() {
         const foundUrls = new Set();
-        const panel = document.getElementById('m3u8-panel');
-        const list = document.getElementById('m3u8-list');
-
-        function addUrl(url) {
-            if (url && url.includes('.m3u8') && !foundUrls.has(url)) {
-                foundUrls.add(url);
-                panel.style.display = 'block';
-                const li = document.createElement('li');
-                li.className = 'm3u8-item';
-                li.innerHTML = '<div style="word-break:break-all;margin-bottom:5px;font-size:11px;opacity:0.7;">' + url.split('?')[0] + '</div>';
-                
-                const btn = document.createElement('button');
-                btn.className = 'sen-btn';
-                btn.textContent = 'SenPlayer 播放';
-                btn.onclick = function() {
-                    window.location.href = 'senplayer://play?url=' + btoa(url);
-                };
-                
-                li.appendChild(btn);
-                list.appendChild(li);
+        
+        // 发送信号给 Surge 的函数
+        function notifySurge(m3u8Url) {
+            if (!foundUrls.has(m3u8Url)) {
+                foundUrls.add(m3u8Url);
+                // 构造一个特殊的图片请求或 fetch，让 Surge 拦截
+                fetch('/surge_m3u8_sniff=' + encodeURIComponent(m3u8Url)).catch(()=>{});
             }
         }
 
-        // --- Hook 核心：拦截 XHR ---
+        // --- Hook XHR ---
         const originalXHR = window.XMLHttpRequest.prototype.open;
         window.XMLHttpRequest.prototype.open = function(method, url) {
-            addUrl(url);
+            if (url && url.includes('.m3u8')) notifySurge(url);
             return originalXHR.apply(this, arguments);
         };
 
-        // --- Hook 核心：拦截 Fetch ---
+        // --- Hook Fetch ---
         const originalFetch = window.fetch;
         window.fetch = function(url, options) {
-            if (typeof url === 'string') addUrl(url);
+            let targetUrl = (typeof url === 'string') ? url : (url.url || "");
+            if (targetUrl.includes('.m3u8')) notifySurge(targetUrl);
             return originalFetch.apply(this, arguments);
         };
 
-        // --- 定期扫描 Video 标签 ---
+        // --- 扫描 Video 标签 ---
         setInterval(() => {
             const videos = document.querySelectorAll('video, source');
-            videos.forEach(v => { if (v.src) addUrl(v.src); });
+            videos.forEach(v => {
+                const src = v.src || v.getAttribute('src');
+                if (src && src.includes('.m3u8')) notifySurge(src);
+            });
         }, 2000);
     })();
     </script>
     `;
-
-    // 注入代码
     $done({ body: body.replace('</head>', injectCode + '</head>') });
 } else {
     $done({});
