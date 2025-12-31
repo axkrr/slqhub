@@ -1,9 +1,11 @@
-#!name=视频提取跳转 SenPlayer (PH & TXH)
-#!desc=在senplayer播放。
+#!name=m3u8extractor
+#!desc=视频流提取跳转senplayer
 #!category=工具模块
 
 [Script]
-VideoSniffer = type=http-response,pattern=^https?:\/\/(www|cn|m)\.(pornhub|txh067)\.com\/,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/JS/m3u8extractor.js
+# 这里的 pattern 目前精准锁定两个域名，方便后期在括号内继续添加
+Video_Sniff = type=http-response,pattern=^https?:\/\/(www|cn|m)\.(pornhub|txh067)\.com\/,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/JS/m3u8extractor.js
 
 [MITM]
+# 必须解密这两个域名及其子域名
 hostname = %APPEND% *.pornhub.com, *.txh067.com
