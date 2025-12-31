@@ -51,9 +51,10 @@
 5、[芒果TV](https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/refs/heads/main/JS/MGTV/MGTV_AD.sgmodule)  
 6、[南方航空](https://github.com/fmz200/wool_scripts/raw/main/Surge/module/split/partN/ChinaSouthernAirlines.sgmodule)  
 7、[滴滴出行](https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/refs/heads/main/JS/DiDi/DiDi.sgmodule)  
-8、[高德地图](https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/refs/heads/main/JS/Amap/Amap.sgmodule)  
-9、[网易云音乐](https://github.com/fmz200/wool_scripts/raw/main/Surge/module/split/partW/NetEaseCloudMusic.sgmodule)  
-10、[毒奶网页广告拦截](https://limbopro.com/Adblock4limbo.sgmodule)  
+8、[微信公众号](https://github.com/fmz200/wool_scripts/raw/main/Surge/module/split/partW/WeChatOfficialAccount.sgmodule)  
+9、[高德地图](https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/refs/heads/main/JS/Amap/Amap.sgmodule)  
+10、[网易云音乐](https://github.com/fmz200/wool_scripts/raw/main/Surge/module/split/partW/NetEaseCloudMusic.sgmodule)  
+11、[毒奶网页广告拦截](https://limbopro.com/Adblock4limbo.sgmodule)  
 #### 破解模块
 1、[芒果TV](https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/refs/heads/main/JS/MGTV/MGTV.sgmodule)  
 2、[123云盘](https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/refs/heads/main/JS/123Pan/123Pan.sgmodule)  
