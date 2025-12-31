@@ -4,17 +4,8 @@
 
 // 当前请求 URL
 const url = $request.url;
+if (!url) $done({});
 
-// 只处理指定站点的视频流
-if (
-  !url.includes('txh067') &&
-  !url.includes('txh066') &&
-  !url.includes('pornhub') &&
-  !url.includes('phncdn') &&
-  !url.includes('p3.unpljks.top')
-) {
-  $done({});
-}
 // ==== 1️⃣ 基础过滤 ====
 if (
   url.includes('.ts') ||
