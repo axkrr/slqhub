@@ -1,22 +1,20 @@
 /**
- * @name 视频嗅探回退版 (复制+跳转)
- * @desc 逻辑简单，只负责嗅探、复制链接、弹出通知并唤起播放器
+ * @name 视频嗅探回退版 (精简修复)
+ * @desc 去掉不稳定的 $copy，恢复通知核心功能
  */
 
 const isRes = typeof $response !== "undefined";
 
-// --- A. 如果是信号请求：执行通知和复制 ---
-if ($request.url.indexOf('surge_click_to_play=') != -1) {
+// --- A. 如果是信号请求：直接弹出通知 ---
+if ($request && $request.url && $request.url.indexOf('surge_click_to_play=') != -1) {
     const videoUrl = decodeURIComponent($request.url.split('surge_click_to_play=')[1]);
-    
-    // 执行复制
-    $copy(videoUrl);
 
-    // 弹出通知 (只负责唤起，不负责自动播放，确保跳转成功)
+    // 重点：删除了会导致报错的 $copy 指令
+    // 我们把地址放在通知的描述里，方便你长按通知手动复制
     $notification.post(
-        "🎬 视频流捕获成功",
-        "链接已复制，点击打开播放器",
-        "源: " + videoUrl.split('?')[0].split('/').pop(),
+        "🎬 发现视频流",
+        "点击跳转播放器 | 长按可拷贝地址",
+        videoUrl, // 这里显示完整地址，方便拷贝
         { "open-url": "senplayer://" }
     );
 
@@ -39,14 +37,14 @@ else if (isRes && $response.body && $response.body.indexOf('</head>') != -1) {
         // XHR 钩子
         var open = XMLHttpRequest.prototype.open;
         XMLHttpRequest.prototype.open = function() {
-            send(arguments[1]);
+            if(arguments[1]) send(arguments[1]);
             return open.apply(this, arguments);
         };
         // Fetch 钩子
         var oldFetch = window.fetch;
         window.fetch = function(t) {
-            var u = (typeof t === 'string') ? t : (t.url || "");
-            send(u);
+            var u = (typeof t === 'string') ? t : (t && t.url ? t.url : "");
+            if(u) send(u);
             return oldFetch.apply(this, arguments);
         };
         // 标签扫描
