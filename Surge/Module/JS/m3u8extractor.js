@@ -1,66 +1,75 @@
 /**
- * @name 视频嗅探回退版 (精简修复)
- * @desc 去掉不稳定的 $copy，恢复通知核心功能
+ * @name 视频嗅探 (兼容复制版)
+ * @desc 尝试多种方式复制到剪贴板，若失败则通过通知展示
  */
 
-const isRes = typeof $response !== "undefined";
+const req = (typeof $request !== 'undefined') ? $request : null;
+const res = (typeof $response !== 'undefined') ? $response : null;
 
-// --- A. 如果是信号请求：直接弹出通知 ---
-if ($request && $request.url && $request.url.indexOf('surge_click_to_play=') != -1) {
-    const videoUrl = decodeURIComponent($request.url.split('surge_click_to_play=')[1]);
+if (req && req.url.indexOf('surge_click_to_play=') != -1) {
+    const videoUrl = decodeURIComponent(req.url.split('surge_click_to_play=')[1]);
+    
+    // --- 尝试复制逻辑 (带容错) ---
+    let copySuccess = false;
+    try {
+        if (typeof $copy !== 'undefined') {
+            $copy(videoUrl);
+            copySuccess = true;
+        } else if (typeof $util !== 'undefined' && $util.copyToClipboard) {
+            $util.copyToClipboard(videoUrl);
+            copySuccess = true;
+        }
+    } catch (e) {
+        console.log("复制指令执行失败: " + e);
+    }
 
-    // 重点：删除了会导致报错的 $copy 指令
-    // 我们把地址放在通知的描述里，方便你长按通知手动复制
+    // --- 发送通知 (无论复制成功与否都发送) ---
     $notification.post(
-        "🎬 发现视频流",
-        "点击跳转播放器 | 长按可拷贝地址",
-        videoUrl, // 这里显示完整地址，方便拷贝
+        copySuccess ? "✅ 链接已复制到剪贴板" : "🎬 发现视频流 (复制失败)",
+        "点击打开播放器 | 长按可手动复制",
+        videoUrl, 
         { "open-url": "senplayer://" }
     );
 
     $done({ response: { status: 204, body: "" } });
 } 
 
-// --- B. 如果是网页响应：注入嗅探代码 ---
-else if (isRes && $response.body && $response.body.indexOf('</head>') != -1) {
+else if (res && res.body && res.body.indexOf('</head>') != -1) {
+    // --- 网页注入内核 ---
     const injectCode = `
     <script>
     (function() {
-        var found = new Set();
-        function send(url) {
-            if (url && url.indexOf('.m3u8') != -1 && !found.has(url)) {
-                found.add(url);
+        var seen = new Set();
+        function emit(url) {
+            if (url && url.indexOf('.m3u8') != -1 && !seen.has(url)) {
+                seen.add(url);
                 var i = new Image();
                 i.src = '/surge_click_to_play=' + encodeURIComponent(url);
             }
         }
-        // XHR 钩子
-        var open = XMLHttpRequest.prototype.open;
+        var _open = XMLHttpRequest.prototype.open;
         XMLHttpRequest.prototype.open = function() {
-            if(arguments[1]) send(arguments[1]);
-            return open.apply(this, arguments);
+            if(arguments[1]) emit(arguments[1]);
+            return _open.apply(this, arguments);
         };
-        // Fetch 钩子
-        var oldFetch = window.fetch;
+        var _fetch = window.fetch;
         window.fetch = function(t) {
             var u = (typeof t === 'string') ? t : (t && t.url ? t.url : "");
-            if(u) send(u);
-            return oldFetch.apply(this, arguments);
+            if(u) emit(u);
+            return _fetch.apply(this, arguments);
         };
-        // 标签扫描
         setInterval(function() {
-            var el = document.querySelectorAll('video, source');
-            for (var j=0; j<el.length; j++) {
-                send(el[j].src || el[j].getAttribute('src'));
+            var tags = document.querySelectorAll('video, source');
+            for (var i=0; i<tags.length; i++) {
+                emit(tags[i].src || tags[i].getAttribute('src'));
             }
         }, 3000);
     })();
     </script>
     `;
-    $done({ body: $response.body.replace('</head>', injectCode + '</head>') });
+    $done({ body: res.body.replace('</head>', injectCode + '</head>') });
 } 
 
-// --- C. 兜底 ---
 else {
     $done({});
 }
