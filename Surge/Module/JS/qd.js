@@ -1,29 +1,32 @@
 /**
  * @name qdpure_jsfile
- * @description quda ad blocking script
+ * @desc 广告屏蔽脚本修正版
  */
 
-let body = $response.body;
-if (body) {
+// 检查是否有 body 数据
+if (typeof $response !== "undefined" && $response.body) {
+    let body = $response.body;
     try {
         let obj = JSON.parse(body);
         
-        // 清空所有广告数据列表
-        if (obj.data) {
+        // 清空可能的广告列表数据
+        if (obj.data && Array.isArray(obj.data)) {
             obj.data = [];
         }
-        if (obj.bid) {
+        if (obj.bid && Array.isArray(obj.bid)) {
             obj.bid = [];
         }
         
-        // 保持状态码为成功
+        // 确保状态码正常，防止因数据为空导致客户端逻辑报错
         obj.code = 1;
-        obj.message = "成功";
+        obj.message = "success";
         
         $done({ body: JSON.stringify(obj) });
     } catch (e) {
+        // 如果不是 JSON 格式，直接返回原数据
         $done({ body });
     }
 } else {
-    $done({ body });
+    // 无数据时直接结束
+    $done({});
 }
