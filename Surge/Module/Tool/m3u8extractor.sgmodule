@@ -1,10 +1,6 @@
 #!name=视频提取跳转 SenPlayer (PH & TXH)
 #!desc=在 PornHub 和 TXH067 页面右下角添加悬浮按钮，一键提取 m3u8 并跳转 SenPlayer 播放。
-#!category=工具类
-
-[Rule]
-# 确保解析脚本能正常加载
-DOMAIN-SET,https://raw.githubusercontent.com,DIRECT
+#!category=工具模块
 
 [Script]
 # 针对指定的两个网站进行 JS 注入
