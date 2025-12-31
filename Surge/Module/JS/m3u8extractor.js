@@ -1,34 +1,34 @@
 /**
- * @name 视频流提取器 (修复版)
- * @desc 修复 Data 变量未定义报错，使用原生 Base64 转换
+ * @name 视频流提取器 (跳转修复版)
+ * @desc 修复点击通知跳转 Surge 而非播放器的问题
  */
 
 const body = $response.body;
 const url = $request.url;
 
-// --- 第一部分：Surge 处理信号并弹出通知 ---
+// --- 第一部分：处理信号并弹出通知 ---
 if (url.includes('surge_click_to_play=')) {
     const videoUrl = decodeURIComponent(url.split('surge_click_to_play=')[1]);
     
-    // 修复点：使用原生方式处理 Base64 编码，避免使用可能未定义的 Data 变量
-    // 先将特殊字符转义，再进行 Base64 编码，确保 URL 安全
-    const base64Url = btoa(encodeURIComponent(videoUrl).replace(/%([0-9A-F]{2})/g, function(match, p1) {
-        return String.fromCharCode('0x' + p1);
-    }));
-    
+    // 方案 A：使用 SenPlayer 标准的 Base64 协议
+    // 注意：不再使用复杂的正则，直接进行标准的 Base64 转换
+    const base64Url = btoa(unescape(encodeURIComponent(videoUrl)));
     const senUrl = "senplayer://play?url=" + base64Url;
     
+    // 如果点击后依然只跳 Surge，请尝试【方案 B】(取消下面一行的注释，并注释掉上面的 senUrl)
+    // const senUrl = "senplayer://" + videoUrl;
+
     $notification.post(
-        "🎬 检测到视频流",
-        "点击此通知立即跳转 SenPlayer 播放",
-        "源地址: " + videoUrl.split('?')[0],
+        "🎬 视频提取成功",
+        "点击此通知，立即跳转 SenPlayer 播放",
+        "文件: " + videoUrl.split('?')[0].split('/').pop(),
         { "open-url": senUrl }
     );
     
     $done({ status: "HTTP/1.1 204 No Content" });
 } 
 
-// --- 第二部分：注入 Tampermonkey 监控内核 ---
+// --- 第二部分：注入监控内核 ---
 else if (body && body.includes('</head>')) {
     const injectCode = `
     <script>
@@ -39,31 +39,26 @@ else if (body && body.includes('</head>')) {
         function sendToSurge(mUrl) {
             if (mUrl && mUrl.includes('.m3u8') && !foundUrls.has(mUrl)) {
                 foundUrls.add(mUrl);
-                // 使用 Image 发送信号，不干扰页面原本的 Fetch 逻辑
                 const img = new Image();
                 img.src = '/surge_click_to_play=' + encodeURIComponent(mUrl);
             }
         }
 
-        // 监听 XHR
         const originalXHR = window.XMLHttpRequest.prototype.open;
         window.XMLHttpRequest.prototype.open = function(method, url) {
             if (typeof url === 'string' && url.includes('.m3u8')) sendToSurge(url);
             return originalXHR.apply(this, arguments);
         };
 
-        // 监听 Fetch
         const originalFetch = window.fetch;
         window.fetch = function(url, options) {
             const tUrl = (typeof url === 'string') ? url : (url && url.url ? url.url : "");
-            if (tUrl.includes('.m3u8')) sendToSurge(tUrl);
+            if (tUrl && tUrl.includes('.m3u8')) sendToSurge(tUrl);
             return originalFetch.apply(this, arguments);
         };
 
-        // 定期检查标签
         setInterval(() => {
-            const tags = document.querySelectorAll('video, source');
-            tags.forEach(t => {
+            document.querySelectorAll('video, source').forEach(t => {
                 const s = t.src || t.getAttribute('src');
                 if (s && s.includes('.m3u8')) sendToSurge(s);
             });
