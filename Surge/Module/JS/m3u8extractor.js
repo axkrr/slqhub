@@ -1,41 +1,69 @@
 /**
- * @name 视频流提取器 (跳转修复版)
- * @desc 修复点击通知跳转 Surge 而非播放器的问题
+ * @name 全网视频嗅探 (BoxJs 适配版)
+ * @desc 监控全网 m3u8，读取 BoxJs 配置实现动态播放器跳转
  */
 
 const body = $response.body;
 const url = $request.url;
 
-// --- 第一部分：处理信号并弹出通知 ---
+// --- 阶段 A: 处理信号并读取 BoxJs 配置触发跳转 ---
 if (url.includes('surge_click_to_play=')) {
     const videoUrl = decodeURIComponent(url.split('surge_click_to_play=')[1]);
     
-    // 方案 A：使用 SenPlayer 标准的 Base64 协议
-    // 注意：不再使用复杂的正则，直接进行标准的 Base64 转换
-    const base64Url = btoa(unescape(encodeURIComponent(videoUrl)));
-    const senUrl = "senplayer://play?url=" + base64Url;
-    
-    // 如果点击后依然只跳 Surge，请尝试【方案 B】(取消下面一行的注释，并注释掉上面的 senUrl)
-    // const senUrl = "senplayer://" + videoUrl;
+    // 1. 读取 BoxJs 配置 (对应 ID: scheme)
+    let boxData = $persistentStore.read("scheme");
+    let playerSelect = "SenPlayer"; // 默认值
+    let customScheme = "";
 
+    if (boxData) {
+        try {
+            let obj = JSON.parse(boxData);
+            playerSelect = obj.scheme_select || "SenPlayer";
+            customScheme = obj.scheme_custom || "";
+        } catch (e) {
+            console.log("BoxJs 配置解析失败，使用默认播放器");
+        }
+    }
+
+    // 2. 根据 BoxJs 选择构造跳转协议
+    let finalScheme = "";
+    switch (playerSelect) {
+        case "nPlayer":
+            finalScheme = "nplayer-" + videoUrl;
+            break;
+        case "Infuse":
+            finalScheme = "infuse://x-callback-url/play?url=" + encodeURIComponent(videoUrl);
+            break;
+        case "Safari":
+            finalScheme = videoUrl;
+            break;
+        case "自定义":
+            finalScheme = customScheme + videoUrl;
+            break;
+        case "SenPlayer":
+        default:
+            finalScheme = "senplayer://" + videoUrl;
+            break;
+    }
+
+    // 3. 发送 Surge 通知
     $notification.post(
         "🎬 视频提取成功",
-        "点击此通知，立即跳转 SenPlayer 播放",
-        "文件: " + videoUrl.split('?')[0].split('/').pop(),
-        { "open-url": senUrl }
+        `已适配播放器: ${playerSelect} (点击播放)`,
+        "URL: " + videoUrl.split('?')[0],
+        { "open-url": finalScheme }
     );
     
     $done({ status: "HTTP/1.1 204 No Content" });
 } 
 
-// --- 第二部分：注入监控内核 ---
+// --- 阶段 B: 注入 Tampermonkey 监控内核 (保持不变) ---
 else if (body && body.includes('</head>')) {
     const injectCode = `
     <script>
     (function() {
         'use strict';
         const foundUrls = new Set();
-        
         function sendToSurge(mUrl) {
             if (mUrl && mUrl.includes('.m3u8') && !foundUrls.has(mUrl)) {
                 foundUrls.add(mUrl);
@@ -43,20 +71,17 @@ else if (body && body.includes('</head>')) {
                 img.src = '/surge_click_to_play=' + encodeURIComponent(mUrl);
             }
         }
-
         const originalXHR = window.XMLHttpRequest.prototype.open;
         window.XMLHttpRequest.prototype.open = function(method, url) {
             if (typeof url === 'string' && url.includes('.m3u8')) sendToSurge(url);
             return originalXHR.apply(this, arguments);
         };
-
         const originalFetch = window.fetch;
         window.fetch = function(url, options) {
             const tUrl = (typeof url === 'string') ? url : (url && url.url ? url.url : "");
             if (tUrl && tUrl.includes('.m3u8')) sendToSurge(tUrl);
             return originalFetch.apply(this, arguments);
         };
-
         setInterval(() => {
             document.querySelectorAll('video, source').forEach(t => {
                 const s = t.src || t.getAttribute('src');
