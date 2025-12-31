@@ -1,6 +1,6 @@
-#!name=PornHub 净化模块
-#!desc=去除广告、注入净化 CSS。修复脚本空响应报错。
-#!category=去广告
+#!name=phpure
+#!desc=pornhub去除广告、注入净化CSS。
+#!category=广告拦截
 
 [Rule]
 # 拒绝广告接口
