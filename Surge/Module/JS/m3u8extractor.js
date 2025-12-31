@@ -1,50 +1,27 @@
 /**
- * @name 视频流嗅探提取跳转器 (BoxJs 兼容强化版)
+ * @name 视频流嗅探 (复制+跳转版)
+ * @desc 嗅探 m3u8，点击通知复制链接并唤起 SenPlayer
  */
 
-const isResponse = typeof $response !== "undefined";
-const requestUrl = $request.url;
+const req = (typeof $request !== 'undefined') ? $request : null;
+const res = (typeof $response !== 'undefined') ? $response : null;
 
-if (requestUrl.indexOf('surge_click_to_play=') != -1) {
-    const videoUrl = decodeURIComponent(requestUrl.split('surge_click_to_play=')[1]);
+// --- 阶段 A: 处理信号，复制地址并弹出通知 ---
+if (req && req.url && req.url.indexOf('surge_click_to_play=') != -1) {
+    const videoUrl = decodeURIComponent(req.url.split('surge_click_to_play=')[1]);
     
-    // --- 1. 读取 BoxJs 配置 ---
-    let playerSelect = "SenPlayer"; 
-    let customScheme = "";
-    const boxData = $persistentStore.read("scheme");
+    // 1. 复制视频流地址到系统剪贴板
+    const copySuccess = $copy(videoUrl);
     
-    if (boxData) {
-        try {
-            const obj = JSON.parse(boxData);
-            playerSelect = obj.scheme_select || "SenPlayer";
-            customScheme = obj.scheme_custom || "";
-        } catch (e) { }
-    }
+    // 2. 构造通知
+    // 唤起协议使用最基础的 senplayer:// 确保一定能打开 App
+    const senUrl = "senplayer://";
 
-    // --- 2. 构造跳转协议 (强制校准 SenPlayer 格式) ---
-    let finalScheme = "";
-    
-    // 如果选择的是 SenPlayer，或者因为 BoxJs 报错没读到设置，都走这个逻辑
-    if (playerSelect === "SenPlayer" || !playerSelect) {
-        // 核心：btoa 编码必须配合 unescape(encodeURIComponent) 处理中文和特殊字符
-        const b64 = btoa(unescape(encodeURIComponent(videoUrl)));
-        finalScheme = `senplayer://play?url=${b64}`;
-    } else if (playerSelect === "nPlayer") {
-        finalScheme = `nplayer-${videoUrl}`;
-    } else if (playerSelect === "Infuse") {
-        finalScheme = `infuse://x-callback-url/play?url=${encodeURIComponent(videoUrl)}`;
-    } else if (playerSelect === "自定义" && customScheme) {
-        finalScheme = customScheme + videoUrl;
-    } else {
-        finalScheme = videoUrl; // Safari
-    }
-
-    // --- 3. 推送通知 ---
     $notification.post(
-        "🎬 视频提取成功",
-        `模式: ${playerSelect} (点击跳转播放)`,
-        "文件: " + videoUrl.split('?')[0].split('/').pop(),
-        { "open-url": finalScheme }
+        "🎬 视频地址已复制",
+        "链接已入剪贴板，点击打开播放器",
+        "地址: " + videoUrl.split('?')[0].split('/').pop() + (copySuccess ? " (复制成功)" : ""),
+        { "open-url": senUrl }
     );
     
     $done({
@@ -57,7 +34,7 @@ if (requestUrl.indexOf('surge_click_to_play=') != -1) {
 } 
 
 // --- 阶段 B: 注入内核 (保持不变) ---
-else if (isResponse && $response.body && $response.body.indexOf('</head>') != -1) {
+else if (res && res.body && res.body.indexOf('</head>') != -1) {
     const injectCode = `
     <script>
     (function() {
@@ -85,13 +62,16 @@ else if (isResponse && $response.body && $response.body.indexOf('</head>') != -1
             const tags = document.querySelectorAll('video, source');
             tags.forEach(t => {
                 const s = t.src || t.getAttribute('src');
-                if (s && s.indexOf('.m3u8') != -1) sendToSurge(s);
+                if (s && s.includes('.m3u8')) sendToSurge(s);
             });
         }, 2000);
     })();
     </script>
     `;
-    $done({ body: $response.body.replace('</head>', injectCode + '</head>') });
-} else {
+    $done({ body: res.body.replace('</head>', injectCode + '</head>') });
+} 
+
+// --- 阶段 C: 兜底退出 ---
+else {
     $done({});
 }
