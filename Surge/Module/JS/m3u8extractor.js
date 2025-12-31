@@ -1,68 +1,85 @@
 /**
- * @name 全网视频流嗅探 (Surge 纯通知版)
- * @desc 适配 PH/TXH 及全网，捕获 m3u8 后通过通知跳转 SenPlayer
+ * @name 视频流提取器 (Surge 通知版)
+ * @desc 移植自御清弦原版 Tampermonkey 脚本，移除 UI，改为 Surge 通知跳转
  */
 
 const body = $response.body;
 const url = $request.url;
 
-// --- 阶段 A: 拦截内部信号并弹出 Surge 通知 ---
-if (url.includes('surge_m3u8_sniff=')) {
-    let videoUrl = decodeURIComponent(url.split('surge_m3u8_sniff=')[1]);
-    // 过滤掉重复或无效的链接片段
-    if (videoUrl.startsWith('http')) {
-        let senUrl = "senplayer://play?url=" + Data.fromUTF8(videoUrl).toBase64();
-        
-        $notification.post(
-            "🎬 发现视频源", 
-            "点击跳转 SenPlayer 播放", 
-            "链接: " + videoUrl.split('?')[0], 
-            { "open-url": senUrl }
-        );
-    }
+// --- 第一部分：Surge 处理信号并弹出通知 ---
+if (url.includes('surge_click_to_play=')) {
+    const videoUrl = decodeURIComponent(url.split('surge_click_to_play=')[1]);
+    // 转换为 SenPlayer 协议
+    const senUrl = "senplayer://play?url=" + Data.fromUTF8(videoUrl).toBase64();
+    
+    $notification.post(
+        "🎬 检测到视频流",
+        "点击此通知立即跳转 SenPlayer 播放",
+        videoUrl.split('?')[0],
+        { "open-url": senUrl }
+    );
+    // 204 No Content 确保不干扰网页业务
     $done({ status: "HTTP/1.1 204 No Content" });
 } 
 
-// --- 阶段 B: 向网页注入全网通用的监控钩子 ---
+// --- 第二部分：将 Tampermonkey 内核注入网页 ---
 else if (body && body.includes('</head>')) {
     const injectCode = `
     <script>
     (function() {
+        'use strict';
         const foundUrls = new Set();
-        function notifySurge(m3u8Url) {
-            if (!m3u8Url || typeof m3u8Url !== 'string') return;
-            // 确保是 m3u8 且未通知过
-            if (m3u8Url.includes('.m3u8') && !foundUrls.has(m3u8Url)) {
-                foundUrls.add(m3u8Url);
-                // 借用当前域名发送信号，确保不触发跨域限制
-                fetch('/surge_m3u8_sniff=' + encodeURIComponent(m3u8Url)).catch(()=>{});
+        
+        // 核心：信号发射器 (替换原版的 addUrl UI 逻辑)
+        function sendToSurge(url) {
+            if (url && url.includes('.m3u8') && !foundUrls.has(url)) {
+                foundUrls.add(url);
+                // 借用 Image 对象发送信号给 Surge，不干扰网页原有 Fetch/XHR 逻辑
+                const img = new Image();
+                img.src = '/surge_click_to_play=' + encodeURIComponent(url);
             }
         }
 
-        // 1. Hook XHR (Tampermonkey 核心逻辑)
+        // 1. 监听 XHR 请求 (原版内核)
         const originalXHR = window.XMLHttpRequest.prototype.open;
         window.XMLHttpRequest.prototype.open = function(method, url) {
-            notifySurge(url);
+            if (typeof url === 'string') sendToSurge(url);
             return originalXHR.apply(this, arguments);
         };
 
-        // 2. Hook Fetch
+        // 2. 监听 Fetch 请求 (原版内核)
         const originalFetch = window.fetch;
         window.fetch = function(url, options) {
-            let t = (typeof url === 'string') ? url : (url.url || "");
-            notifySurge(t);
+            const targetUrl = (typeof url === 'string') ? url : (url && url.url ? url.url : "");
+            sendToSurge(targetUrl);
             return originalFetch.apply(this, arguments);
         };
 
-        // 3. 扫描标签兜底
+        // 3. 检查 video 标签 (原版内核)
+        function checkVideoTags() {
+            const videos = document.getElementsByTagName('video');
+            for (const video of videos) {
+                if (video.src) sendToSurge(video.src);
+            }
+        }
+
+        // 4. 检查 source 标签 (原版内核)
+        function checkSourceTags() {
+            const sources = document.getElementsByTagName('source');
+            for (const source of sources) {
+                if (source.src) sendToSurge(source.src);
+            }
+        }
+
+        // 定期检查标签 (原版 2000ms 频率)
         setInterval(() => {
-            document.querySelectorAll('video, source').forEach(v => {
-                notifySurge(v.src || v.getAttribute('src'));
-            });
+            checkVideoTags();
+            checkSourceTags();
         }, 2000);
     })();
     </script>
     `;
+    // 注入脚本到 head 中
     $done({ body: body.replace('</head>', injectCode + '</head>') });
 } else {
     $done({});
