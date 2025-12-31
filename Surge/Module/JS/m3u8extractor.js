@@ -1,70 +1,79 @@
 /**
- * @name 视频嗅探 (通知+跳转 最终版)
- * @desc 修复跳转问题，直接唤起播放器
+ * @name 网页视频流嗅探 (UI 交互版)
+ * @desc 网页右下角浮窗显示，点击实现复制与跳转
  */
 
-const req = (typeof $request !== 'undefined') ? $request : null;
-const res = (typeof $response !== 'undefined') ? $response : null;
+const isRes = typeof $response !== "undefined";
 
-if (req && req.url.indexOf('surge_click_to_play=') != -1) {
-    const videoUrl = decodeURIComponent(req.url.split('surge_click_to_play=')[1]);
-
-    // 弹出通知：直接跳转 SenPlayer
-    // 放弃复杂的快捷指令跳转，回归最稳的 senplayer://
-    $notification.post(
-        "🎬 发现视频流",
-        "长按通知可拷贝地址，点击打开播放器",
-        videoUrl, 
-        { "open-url": "senplayer://" }
-    );
-
-    $done({ response: { status: 204, body: "" } });
-} 
-
-else if (res && res.body && res.body.indexOf('</head>') != -1) {
-    // 注入代码：尝试在网页端就地复制 (针对支持的浏览器)
+if (isRes && $response.body && $response.body.indexOf('</head>') != -1) {
     const injectCode = `
+    <style>
+        #surge-sniff-btn {
+            position: fixed; bottom: 20px; right: 20px; z-index: 999999;
+            background: rgba(0, 0, 0, 0.8); color: #fff; padding: 10px;
+            border-radius: 8px; font-size: 12px; text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3); display: none;
+            border: 1px solid #444; backdrop-filter: blur(5px);
+        }
+        #surge-sniff-btn:active { background: #333; }
+    </style>
+    <div id="surge-sniff-btn">
+        <div style="font-weight:bold; color:#ff9000; margin-bottom:4px;">🎥 发现视频流</div>
+        <div id="surge-sniff-info">点击复制并跳转</div>
+    </div>
     <script>
     (function() {
-        var seen = new Set();
-        function emit(url) {
-            if (url && url.indexOf('.m3u8') != -1 && !seen.has(url)) {
-                seen.add(url);
-                // 尝试在网页端自动复制 (部分网站有效)
-                try {
-                    const el = document.createElement('textarea');
-                    el.value = url;
-                    document.body.appendChild(el);
-                    el.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(el);
-                } catch(e) {}
-                
-                var i = new Image();
-                i.src = '/surge_click_to_play=' + encodeURIComponent(url);
+        var foundUrl = "";
+        var btn = document.getElementById('surge-sniff-btn');
+        
+        function showBtn(url) {
+            if (url && url.indexOf('.m3u8') != -1 && url !== foundUrl) {
+                foundUrl = url;
+                btn.style.display = 'block';
             }
         }
+
+        // 点击逻辑：复制 + 跳转
+        btn.onclick = function() {
+            var el = document.createElement('textarea');
+            el.value = foundUrl;
+            document.body.appendChild(el);
+            el.select();
+            if(document.execCommand('copy')) {
+                document.getElementById('surge-sniff-info').innerText = "✅ 已复制，跳转中...";
+            }
+            document.body.removeChild(el);
+            
+            // 延迟一点点跳转，确保复制动作完成
+            setTimeout(function() {
+                window.location.href = "senplayer://";
+            }, 500);
+        };
+
+        // 监控 XHR
         var _open = XMLHttpRequest.prototype.open;
         XMLHttpRequest.prototype.open = function() {
-            if(arguments[1]) emit(arguments[1]);
+            if(arguments[1]) showBtn(arguments[1]);
             return _open.apply(this, arguments);
         };
+        // 监控 Fetch
         var _fetch = window.fetch;
         window.fetch = function(t) {
             var u = (typeof t === 'string') ? t : (t && t.url ? t.url : "");
-            if(u) emit(u);
+            if(u) showBtn(u);
             return _fetch.apply(this, arguments);
         };
+        // 监控 标签
         setInterval(function() {
-            var tags = document.querySelectorAll('video, source');
-            for (var i=0; i<tags.length; i++) {
-                emit(tags[i].src || tags[i].getAttribute('src'));
+            var vs = document.querySelectorAll('video, source');
+            for (var i=0; i<vs.length; i++) {
+                showBtn(vs[i].src || vs[i].getAttribute('src'));
             }
         }, 3000);
     })();
     </script>
     `;
-    $done({ body: res.body.replace('</head>', injectCode + '</head>') });
+    $done({ body: $response.body.replace('</head>', injectCode + '</head>') });
 } else {
     $done({});
 }
