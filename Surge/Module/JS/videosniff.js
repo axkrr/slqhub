@@ -1,8 +1,7 @@
 /*************************
- * SenPlayer 视频嗅探（防抖修复版）
+ * SenPlayer 视频嗅探（网页单次触发版）
  *************************/
 
-// 当前请求 URL
 const url = $request.url;
 if (!url) $done({});
 
@@ -21,9 +20,8 @@ if (!/\.m3u8|\.mp4/i.test(url)) {
   $done({});
 }
 
-// ==== 3️⃣ 主流判断（权重） ====
+// ==== 3️⃣ 主流判断 ====
 let score = 0;
-
 if (url.endsWith('.mp4')) score += 3;
 if (url.includes('master')) score += 3;
 if (url.includes('index')) score += 2;
@@ -35,17 +33,26 @@ if (score < 2) {
   $done({});
 }
 
-// ==== 4️⃣ 防抖修复（解决并发重复通知） ====
-const key = 'senplayer_last_url';
-const last = $persistentStore.read(key);
+// ==== 4️⃣ 强化防抖（网页级锁定） ====
+const now = Date.now();
+const lastTimeKey = 'senplayer_last_time';
+const lastUrlKey = 'senplayer_last_url';
 
-// 如果当前 URL 与上次相同，或者与上次极短时间内的记录相同则跳过
-if (last === url) {
+const lastTime = $persistentStore.read(lastTimeKey) || 0;
+const lastUrl = $persistentStore.read(lastUrlKey) || "";
+
+// 提取 URL 的前 60 个字符进行比对（过滤动态参数影响）
+// 或者通过时间差拦截（6秒内只准弹一个视频流）
+const urlFingerprint = url.substring(0, 60);
+const lastFingerprint = lastUrl.substring(0, 60);
+
+if (urlFingerprint === lastFingerprint || (now - lastTime < 6000)) {
   $done({});
 }
 
-// 【修复点】立即写入缓存，防止后续并发请求穿透
-$persistentStore.write(url, key);
+// 立即写入当前状态，锁定后续请求
+$persistentStore.write(now.toString(), lastTimeKey);
+$persistentStore.write(url, lastUrlKey);
 
 // ==== 5️⃣ 发送通知 ====
 const encoded = encodeURIComponent(url);
