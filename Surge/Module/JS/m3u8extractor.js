@@ -1,6 +1,6 @@
 /**
- * @name 视频嗅探 (兼容复制版)
- * @desc 尝试多种方式复制到剪贴板，若失败则通过通知展示
+ * @name 视频嗅探 (快捷指令中转版)
+ * @desc 解决 $copy 报错，通过快捷指令实现复制并打开播放器
  */
 
 const req = (typeof $request !== 'undefined') ? $request : null;
@@ -8,34 +8,25 @@ const res = (typeof $response !== 'undefined') ? $response : null;
 
 if (req && req.url.indexOf('surge_click_to_play=') != -1) {
     const videoUrl = decodeURIComponent(req.url.split('surge_click_to_play=')[1]);
-    
-    // --- 尝试复制逻辑 (带容错) ---
-    let copySuccess = false;
-    try {
-        if (typeof $copy !== 'undefined') {
-            $copy(videoUrl);
-            copySuccess = true;
-        } else if (typeof $util !== 'undefined' && $util.copyToClipboard) {
-            $util.copyToClipboard(videoUrl);
-            copySuccess = true;
-        }
-    } catch (e) {
-        console.log("复制指令执行失败: " + e);
-    }
+    const fileName = videoUrl.split('?')[0].split('/').pop();
 
-    // --- 发送通知 (无论复制成功与否都发送) ---
+    // --- 构造快捷指令跳转链接 ---
+    // 快捷指令名称必须叫: PlayVideo
+    const shortcutName = "PlayVideo";
+    const openUrl = "shortcuts://run-shortcut?name=" + encodeURIComponent(shortcutName) + "&input=" + encodeURIComponent(videoUrl);
+
     $notification.post(
-        copySuccess ? "✅ 链接已复制到剪贴板" : "🎬 发现视频流 (复制失败)",
-        "点击打开播放器 | 长按可手动复制",
-        videoUrl, 
-        { "open-url": "senplayer://" }
+        "🎬 视频提取成功",
+        "点击此通知：复制链接并打开播放器",
+        "视频: " + fileName,
+        { "open-url": openUrl }
     );
 
     $done({ response: { status: 204, body: "" } });
 } 
 
 else if (res && res.body && res.body.indexOf('</head>') != -1) {
-    // --- 网页注入内核 ---
+    // --- 注入内核逻辑 (保持不变) ---
     const injectCode = `
     <script>
     (function() {
@@ -68,8 +59,6 @@ else if (res && res.body && res.body.indexOf('</head>') != -1) {
     </script>
     `;
     $done({ body: res.body.replace('</head>', injectCode + '</head>') });
-} 
-
-else {
+} else {
     $done({});
 }
