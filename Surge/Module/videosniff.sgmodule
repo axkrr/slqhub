@@ -1,4 +1,4 @@
-#!name=SenPlayer 视频嗅探（主流·防抖）
+#!name=SenPlayer视频嗅探
 #!desc=捕获主 m3u8/mp4，防重复通知，点击直接使用 SenPlayer 播放
 #!author=axkr
 #!homepage=https://github.com/axkrr/slqhub
@@ -9,4 +9,4 @@
 senplayer-video-sniff = type=http-response,pattern=\.(m3u8|mp4),requires-body=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Tool/videosniff.js
 
 [MITM]
-hostname = %APPEND% *
+hostname = %APPEND% txh066.com txh067.com pornhub.com
