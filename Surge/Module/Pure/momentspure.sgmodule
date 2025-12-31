@@ -1,10 +1,10 @@
-#!name=微信朋友圈广告拦截
-#!desc=针对性拦截微信朋友圈信息流广告图片及资源。
-#!category=广告拦截
+#!name= momentspure
+#!desc= 微信朋友圈广告净化
+#!category= 广告拦截
 
-https://ahrefs.com/writing-tools/paragraph-rewriter
-# 匹配逻辑：匹配路径中包含 snscosdownload 且含有广告特征字符的请求
-^https?:\/\/wximg\.wxs\.qq\.com\/.*\/snscosdownload\/.* - reject
+[Script]
+# 微信朋友圈信息流 JSON 去广告
+script-response-body ^https:\/\/(mp|sns)\.weixin\.qq\.com\/.*timeline script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/JS/momentspure.js, requires-body=true, timeout=10
 
 [MITM]
-hostname = %APPEND% wximg.wxs.qq.com
+hostname = %APPEND% mp.weixin.qq.com, sns.weixin.qq.com
