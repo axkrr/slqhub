@@ -108,8 +108,9 @@
 4、[地震预警](https://raw.githubusercontent.com/Yu9191/Rewrite/refs/heads/main/dzyj.js)  
 5、[番茄短剧](https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/refs/heads/main/JS/FanQieDuanJu/FanQieDuanJu.conf)  
 6、[pornhub](https://raw.githubusercontent.com/ddgksf2013/Scripts/master/pornhub.js)  
-7、[cookie合集](https://github.com/fmz200/wool_scripts/raw/main/QuantumultX/rewrite/cookies.snippet)  
-8、[网上国网通用接口](https://raw.githubusercontent.com/dompling/Script/master/wsgw/index.js)  
+7、[微信小程序](https://raw.githubusercontent.com/ddgksf2013/Rewrite/refs/heads/master/AdBlock/Applet.conf)  
+8、[cookie合集](https://github.com/fmz200/wool_scripts/raw/main/QuantumultX/rewrite/cookies.snippet)  
+9、[网上国网通用接口](https://raw.githubusercontent.com/dompling/Script/master/wsgw/index.js)  
 ### task收藏
 1、[task合集](https://raw.githubusercontent.com/fmz200/wool_scripts/refs/heads/main/QuantumultX/tasks/fmz200_tasks.json)  
 # icon
