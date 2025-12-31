@@ -9,9 +9,11 @@
 3、[hlzhpure.sgmodule](https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/Pure/hlzhpure.sgmodule)  
 4、[dxstjpure.sgmodule](https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/Pure/dxstjpure.sgmodule)  
 5、[pkocrack.sgmodule](https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/Crack/pkocrack.sgmodule)  
+6、[videosniff.sgmodule](https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/Tool/videosniff.sgmodule)  
 #### js
 1、[qd.js](https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/JS/qd.js)  
 2、[dxstj.js](https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/JS/dxstj.js)  
+3、[videosniff.js](https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/JS/videosniff.js)  
 ## 
 ### 模块收藏
 #### 工具模块
