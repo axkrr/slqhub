@@ -1,11 +1,12 @@
 #!name=SenPlayer视频嗅探
-#!desc=仅对指定站点捕获 m3u8/mp4，点击直接使用 SenPlayer 播放
+#!desc=对指定站点捕获 m3u8/mp4,使用 SenPlayer 播放
 #!author=axkr
+#!category=工具模块
 #!homepage=https://github.com/axkrr/slqhub
 #!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Video.png
 
 [Script]
-senplayer-video-sniff = type=http-response,pattern=\.(m3u8|mp4),requires-body=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Tool/videosniff.js
+senplayer-video-sniff = type=http-response,pattern=\.(m3u8|mp4),requires-body=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/JS/videosniff.js
 
 [MITM]
 hostname = %APPEND% txh066.com, txh067.com, pornhub.com, *.pornhub.com, p3.unpljks.top
