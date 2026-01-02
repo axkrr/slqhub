@@ -1,0 +1,10 @@
+#!name=ecpure
+#!desc=EdifierConnect跳过开屏广告
+#!author=axkr
+#!category=广告拦截
+
+[Script]
+EC_跳过开屏广告 = type=http-response,pattern=^https:\/\/dypnsapi\.aliyuncs\.com\/$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/JS/ec.js
+
+[MITM]
+hostname = %APPEND% dypnsapi.aliyuncs.com
