@@ -1,34 +1,56 @@
+/**
+ * @name qdpure_jsfile_v2_final
+ * @desc 强力去广告修正版 - 修复语法错误及缓存失效问题
+ */
+
+// 1. 获取基础数据
 let body = $response.body;
+let headers = $response.headers;
+const url = $request.url;
+
+// 2. 预处理：防止缓存导致脚本失效
+// 删除缓存标记，强制服务器返回 200 而非 304
+if (headers) {
+    delete headers['ETag'];
+    delete headers['Last-Modified'];
+    headers['Cache-Control'] = 'no-cache, no-store, must-revalidate';
+    headers['Pragma'] = 'no-cache';
+    headers['Expires'] = '0';
+}
 
 if (body) {
     try {
         let obj = JSON.parse(body);
 
-        // 增加判断：确保 obj 是个对象且不为 null
+        // 3. 核心逻辑：清空广告字段
+        // 增加了一些常见的广告字段 key
+        const adKeys = ["data", "bid", "list", "ad_list", "ads", "items", "banners", "advertisement"];
+        
         if (obj && typeof obj === 'object') {
-            // 1. 自动定位并清空常见的广告/列表字段
-            const adKeys = ["data", "bid", "list", "ad_list", "ads", "items"];
             adKeys.forEach(key => {
-                // 安全起见，只修改存在的 key
                 if (Object.prototype.hasOwnProperty.call(obj, key)) {
-                    obj[key] = [];
+                    // 保持原数据结构类型（数组或对象）
+                    obj[key] = Array.isArray(obj[key]) ? [] : {};
                 }
             });
 
-            // 2. 强制返回成功状态
+            // 4. 状态修正（确保 App 逻辑正常通行）
             if (obj.code !== undefined) obj.code = 1;
             if (obj.status !== undefined) obj.status = 1;
             if (obj.message) obj.message = "success";
+            if (obj.msg) obj.msg = "success";
 
-            $done({ body: JSON.stringify(obj) });
+            $done({ body: JSON.stringify(obj), headers: headers });
         } else {
-            // 解析出来不是对象，原样返回
-            $done({});
+            // 解析后不是对象，直接返回原 body 和修改后的 headers
+            $done({ body, headers });
         }
     } catch (e) {
-        console.log("Script Error: " + e); // 方便在日志看具体错误
-        $done({});
+        // 如果解析失败（如图片、二进制或非 JSON 文本），直接返回
+        console.log(`[qdpure] 解析跳过: ${url}`);
+        $done({ body, headers });
     }
 } else {
-    $done({});
+    // 处理 Body 为空的情况
+    $done({ headers });
 }
