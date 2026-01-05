@@ -23,7 +23,7 @@ if (body) {
                 obj.data.codePosList = [];
             }
 
-            // 3. 额外清理可能存在的其他广告字段 (参考之前的成功经验)
+            // 3. 额外清理可能存在的其他广告字段
             const extraKeys = ["adList", "bannerList", "configList"];
             extraKeys.forEach(k => {
                 if (obj.data[k]) obj.data[k] = [];
@@ -33,6 +33,7 @@ if (body) {
         $done({ body: JSON.stringify(obj) });
     } catch (e) {
         // 解析失败则返回原体
+        console.log("dxstjpure script error: " + e);
         $done({ body });
     }
 } else {
