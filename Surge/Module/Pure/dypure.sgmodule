@@ -1,10 +1,8 @@
 #!name=dypure
-#!desc=抖音 Web 版广告拦截脚本，移除 Feed 流中的广告推广内容。
+#!desc=抖音网页版去广告。
 #!category=广告拦截
-#!system=macOS
 
 [Body Rewrite]
-# 拦截抖音 Web 端 Feed 接口中的广告
 http-response-jq ^https:\/\/www\.douyin\.com\/aweme\/v1\/web\/tab\/feed\/\? 'if .aweme_list then .aweme_list |= map(select(.is_ads != true)) else . end'
 
 [MITM]
