@@ -113,8 +113,9 @@
 6、[pornhub](https://raw.githubusercontent.com/ddgksf2013/Scripts/master/pornhub.js)  
 7、[微信小程序](https://raw.githubusercontent.com/ddgksf2013/Rewrite/refs/heads/master/AdBlock/Applet.conf)  
 8、[cookie合集](https://github.com/fmz200/wool_scripts/raw/main/QuantumultX/rewrite/cookies.snippet)  
-9、[网上国网通用接口](https://raw.githubusercontent.com/dompling/Script/master/wsgw/index.js)  
-10、[酷狗音乐mac端脚本](https://raw.githubusercontent.com/chmg2025/script/refs/heads/main/kugouvip.js)  
+9、[10010_cookie](https://raw.githubusercontent.com/Nanako718/Scripting/refs/heads/main/Quantumult%20X/10010_cookie.conf)  
+10、[网上国网通用接口](https://raw.githubusercontent.com/dompling/Script/master/wsgw/index.js)  
+11、[酷狗音乐mac端脚本](https://raw.githubusercontent.com/chmg2025/script/refs/heads/main/kugouvip.js)  
 ### task收藏
 1、[task合集](https://raw.githubusercontent.com/fmz200/wool_scripts/refs/heads/main/QuantumultX/tasks/fmz200_tasks.json)  
 # icon
