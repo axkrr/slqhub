@@ -27,6 +27,7 @@
 8、[用户访问Github私有仓库](https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/refs/heads/main/JS/Github_Private/Github_Private.sgmodule)  
 9、[TG QuickSend(草稿直达)](https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/refs/heads/main/JS/TGQuickSend/TG.sgmodule)  
 10、[Greasyfork油猴脚本转换器](https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/refs/heads/main/JS/GreasyFork/GreasyFork.sgmodule)  
+11、[12123_cookie](https://raw.githubusercontent.com/Nanako718/Scripting/main/Quantumult%20X/12123.sgmodule)  
 #### 增强模块
 1、[Ali-DoH](https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Spec/DoH/Moore/Ali-DoH.sgmodule)  
 2、[FlushDNS](https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Flush-DNS/Moore/Flush-DNS.sgmodule)  
