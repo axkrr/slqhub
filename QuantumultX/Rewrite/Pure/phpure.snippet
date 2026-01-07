@@ -1,0 +1,13 @@
+#!name=phpure
+#!desc=pornhub 去除广告、注入净化 CSS
+#!category=广告拦截
+
+[rewrite]
+# 拒绝广告接口
+^https?:\/\/(cn|www)\.pornhub\.com\/_xa\/ads url reject
+
+# 注入净化 CSS
+^https?:\/\/(cn|www)\.pornhub\.com\/($|(view|video).*$) url script-response-body https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/JS/phpure.js
+
+[mitm]
+hostname = %APPEND% cn.pornhub.com, www.pornhub.com
