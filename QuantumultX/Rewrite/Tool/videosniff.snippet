@@ -1,10 +1,19 @@
-#!name=SenPlayer 视频嗅探（QX · 修正版）
-#!desc=仅嗅探 m3u8 主播放列表，适配 QX
+#!name=SenPlayer 视频嗅探（QX 稳定版）
+#!desc=嗅探 m3u8 并使用 SenPlayer 播放，支持私有仓库脚本
 #!author=axkr
 #!category=工具模块
 
 [rewrite]
+# entry.js 调度视频嗅探 + 私有脚本
 ^https?:\/\/.*\.m3u8(\?.*)?$ url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/entry.js requires-body=1
 
 [mitm]
-hostname = %APPEND% *.phncdn.com, *.cloudfront.net, www.pornhub.com, cn.pornhub.com, txh066.com, txh067.com, p3.unpljks.top, long.gfuhubh.cn
+hostname = %APPEND% \
+*.phncdn.com, \
+*.cloudfront.net, \
+www.pornhub.com, \
+cn.pornhub.com, \
+txh066.com, \
+txh067.com, \
+p3.unpljks.top, \
+long.gfuhubh.cn
