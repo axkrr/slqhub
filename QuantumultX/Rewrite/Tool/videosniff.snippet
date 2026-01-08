@@ -1,12 +1,10 @@
-#!name=SenPlayer 视频嗅探（QX · Private）
-#!desc=捕获 m3u8/mp4，经 entry.js 调度私有仓库脚本
+#!name=SenPlayer 视频嗅探（QX · 修正版）
+#!desc=仅嗅探 m3u8 主播放列表，适配 QX
 #!author=axkr
 #!category=工具模块
-#!homepage=https://github.com/axkrr/slqhub
-#!icon=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Video.png
 
 [rewrite]
-^https?:\/\/.*\.(m3u8|mp4)(\?.*)?$ url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/entry.js
+^https?:\/\/.*\.m3u8(\?.*)?$ url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/entry.js requires-body=1
 
 [mitm]
 hostname = %APPEND% *.phncdn.com, *.cloudfront.net, www.pornhub.com, cn.pornhub.com, txh066.com, txh067.com, p3.unpljks.top, long.gfuhubh.cn
