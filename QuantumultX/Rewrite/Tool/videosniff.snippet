@@ -1,9 +1,8 @@
 # SenPlayer Video Sniff (QX)
 # 嗅探 m3u8 / mp4 并跳转 SenPlayer
-# videosniff.js 位于私有仓库 slqhub
 
 [rewrite]
-^https?:\/\/.*\.(m3u8|mp4)(\?.*)?$ url script-response-body videosniff.js requires-body=1
+^https?:\/\/.*\.(m3u8|mp4)(\?.*)?$ url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/entry.js
 
 [mitm]
 hostname = %APPEND% *.phncdn.com, *.cloudfront.net, www.pornhub.com, cn.pornhub.com
