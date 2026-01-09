@@ -1,10 +1,10 @@
-#!name = dxstjpure
-#!desc = 大学搜题酱 ad blocking script
-#!category = 广告拦截
-#!system = ios
+#!name=dxstjpure
+#!desc=大学搜题酱 ad blocking script
+#!category=广告拦截
+#!disable-cache=true
 
 [Script]
-dxstjpure = type=http-response,pattern=^https?://adx\.zuoyebang\.com/adxserver/ad/adreq,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/JS/dxstj.js
+dxstjpure = type=http-response,pattern=^https?:\/\/adx\.zuoyebang\.com\/adxserver\/ad\/adreq,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/JS/dxstj.js
 
 [MITM]
 hostname = %APPEND% adx.zuoyebang.com
