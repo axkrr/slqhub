@@ -1,110 +1,111 @@
 /*************************
- * SenPlayer 视频嗅探（QX 专用稳定版）
- * 1. 仅 Safari 生效
- * 2. 自动选择最高码率 m3u8
- * 3. 强防抖（同视频只弹一次）
- * 4. 解决 QX 多次 response 触发
+ * SenPlayer Video Sniff (QX FINAL)
+ * Author: axkr
+ * QX 专用，禁止 entry/core 包裹
  *************************/
 
-// ===== 基础对象 =====
 const url = $request.url || "";
 const headers = $request.headers || {};
 const body = $response && $response.body;
 
-// ===== 兜底 =====
-if (!url || !body) {
+// ---------- 基础校验 ----------
+if (!url) {
   $done({});
+  return;
 }
 
-// ===== Safari 判定 =====
+// 仅处理 m3u8 / mp4
+if (!/\.(m3u8|mp4)(\?.*)?$/i.test(url)) {
+  $done(body ? { body } : {});
+  return;
+}
+
+// ---------- Safari 判断 ----------
 const ua = (headers["User-Agent"] || headers["user-agent"] || "").toLowerCase();
 const referer = headers["Referer"] || headers["referer"] || "";
-
 const isSafari =
   ua.includes("safari") &&
-  !/micromessenger|qq|weibo|quark|ucbrowser|mqqbrowser/i.test(ua);
+  !/micromessenger|qq|quark|ucbrowser|mqqbrowser/i.test(ua);
 
-// 非 Safari 且无 Referer，直接放行
 if (!isSafari && !referer) {
-  $done({});
+  $done(body ? { body } : {});
+  return;
 }
 
-// ===== 仅处理 m3u8 =====
-if (!/\.m3u8(\?|$)/i.test(url)) {
-  $done({});
-}
-
-// ===== 必须是 master playlist =====
-if (!body.includes("#EXT-X-STREAM-INF")) {
-  $done({});
-}
-
-// ===== 解析最高码率 =====
+// ---------- m3u8 最高码率选择 ----------
 let finalUrl = url;
-let maxBandwidth = 0;
 
-const lines = body.split("\n");
+if (body && body.includes("#EXT-X-STREAM-INF")) {
+  const lines = body.split("\n");
+  let maxBw = 0;
+  let best = "";
 
-for (let i = 0; i < lines.length; i++) {
-  const line = lines[i];
+  for (let i = 0; i < lines.length; i++) {
+    if (lines[i].includes("BANDWIDTH=")) {
+      const m = lines[i].match(/BANDWIDTH=(\d+)/);
+      const bw = m ? parseInt(m[1]) : 0;
 
-  if (line.startsWith("#EXT-X-STREAM-INF")) {
-    const bwMatch = line.match(/BANDWIDTH=(\d+)/i);
-    const bw = bwMatch ? parseInt(bwMatch[1], 10) : 0;
+      let next = "";
+      for (let j = i + 1; j < lines.length; j++) {
+        if (lines[j] && !lines[j].startsWith("#")) {
+          next = lines[j].trim();
+          break;
+        }
+      }
 
-    // 找下一条非注释行
-    let next = "";
-    for (let j = i + 1; j < lines.length; j++) {
-      if (lines[j] && !lines[j].startsWith("#")) {
-        next = lines[j].trim();
-        break;
+      if (bw > maxBw && next) {
+        maxBw = bw;
+        best = next;
       }
     }
+  }
 
-    if (bw > maxBandwidth && next) {
-      maxBandwidth = bw;
-
-      if (next.startsWith("http")) {
-        finalUrl = next;
-      } else if (next.startsWith("/")) {
-        const origin = url.match(/^https?:\/\/[^/]+/)[0];
-        finalUrl = origin + next;
-      } else {
-        const base = url.substring(0, url.lastIndexOf("/") + 1);
-        finalUrl = base + next;
-      }
+  if (best) {
+    if (best.startsWith("http")) {
+      finalUrl = best;
+    } else if (best.startsWith("/")) {
+      const origin = url.match(/^https?:\/\/[^\/]+/)[0];
+      finalUrl = origin + best;
+    } else {
+      const base = url.substring(0, url.lastIndexOf("/") + 1);
+      finalUrl = base + best;
     }
   }
 }
 
-// ===== 强防抖（QX 核心） =====
-const DEDUP_KEY = "senplayer_video_fingerprint";
-const TIME_KEY = "senplayer_video_time";
-
+// ---------- 防重复 ----------
 const now = Date.now();
-const fingerprint = finalUrl.substring(0, 120);
+const TIME_KEY = "senplayer_last_time";
+const URL_KEY = "senplayer_last_url";
 
-const lastFp = $persistentStore.read(DEDUP_KEY);
-const lastTime = parseInt($persistentStore.read(TIME_KEY) || "0", 10);
+const lastTime = parseInt($prefs.valueForKey(TIME_KEY) || "0");
+const lastUrl = $prefs.valueForKey(URL_KEY) || "";
 
-// 同视频 or 10 秒内，直接拦截
-if (fingerprint === lastFp || now - lastTime < 10000) {
-  $done({});
+const fp = finalUrl.substring(0, 80);
+const lastFp = lastUrl.substring(0, 80);
+
+// 8 秒内或同链接不再触发
+if (fp === lastFp || now - lastTime < 8000) {
+  $done(body ? { body } : {});
+  return;
 }
 
-// 写入状态
-$persistentStore.write(fingerprint, DEDUP_KEY);
-$persistentStore.write(String(now), TIME_KEY);
+$prefs.setValueForKey(String(now), TIME_KEY);
+$prefs.setValueForKey(finalUrl, URL_KEY);
 
-// ===== SenPlayer 跳转 =====
-const encoded = encodeURIComponent(finalUrl);
-const playUrl = `senplayer://x-callback-url/play?url=${encoded}&t=${now}`;
+// ---------- SenPlayer 跳转 ----------
+const playUrl =
+  "senplayer://x-callback-url/play?url=" +
+  encodeURIComponent(finalUrl) +
+  "&t=" +
+  now;
 
 $notification.post(
-  "🎬 发现最高画质视频",
+  "🎬 发现视频资源",
   "点击使用 SenPlayer 播放",
   finalUrl,
   { url: playUrl }
 );
 
-$done({});
+// 必须原样放行响应
+$done(body ? { body } : {});
