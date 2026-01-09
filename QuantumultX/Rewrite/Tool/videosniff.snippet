@@ -3,7 +3,7 @@
 # videosniff.js 位于私有仓库 slqhub
 
 [rewrite]
-^https?:\/\/.*\.(m3u8|mp4)(\?.*)?$ url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/videosniff.js requires-body=1
+^https?:\/\/.*\.(m3u8|mp4)(\?.*)?$ url script-response-body videosniff.js requires-body=1
 
 [mitm]
-hostname = %APPEND% *.phncdn.com, *.cloudfront.net, www.pornhub.com, cn.pornhub.com, txh066.com, txh067.com, p3.unpljks.top, long.gfuhubh.cn
+hostname = %APPEND% *.phncdn.com, *.cloudfront.net, www.pornhub.com, cn.pornhub.com
