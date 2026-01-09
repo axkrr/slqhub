@@ -21,12 +21,40 @@ try {
 
   if (obj && obj.data && typeof obj.data === 'object') {
 
-    // 1. 开屏 / 启动广告
+    // 1. 开屏 / 启动广告 - 设置所有相关超时为 0
     if (obj.data.adPosConfig && typeof obj.data.adPosConfig === 'object') {
       obj.data.adPosConfig.renderTimeout = 0;
       obj.data.adPosConfig.requestTimeout = 0;
       obj.data.adPosConfig.waitTimeout = 0;
+      obj.data.adPosConfig.showTimeout = 0;
+      obj.data.adPosConfig.displayTime = 0;
+      obj.data.adPosConfig.delayTime = 0;
     }
+
+    // 清除开屏广告相关配置
+    const splashKeys = [
+      'splashConfig',
+      'splash',
+      'splashTimeout',
+      'splashTime',
+      'startAdConfig',
+      'startAd',
+      'launchAdConfig',
+      'launchAd'
+    ];
+
+    splashKeys.forEach(key => {
+      if (key in obj.data) {
+        if (typeof obj.data[key] === 'object' && obj.data[key] !== null) {
+          obj.data[key].timeout = 0;
+          obj.data[key].delay = 0;
+          obj.data[key].duration = 0;
+          obj.data[key].displayTime = 0;
+        } else {
+          obj.data[key] = null;
+        }
+      }
+    });
 
     if (Array.isArray(obj.data.codePosList)) {
       obj.data.codePosList = [];
