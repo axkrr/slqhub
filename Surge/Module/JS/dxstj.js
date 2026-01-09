@@ -1,20 +1,21 @@
 /**
  * @name dxstjpure_pro
- * @desc 大学搜题酱：去开屏广告 + 去首页弹窗 + 去横幅 (Pro版)
+ * @desc 大学搜题酱去开屏广告
  */
 
-// 安全兜底，防止非 Surge 环境或异常触发
-if (typeof $response === 'undefined') {
-  $done({});
-  return;
-}
+(function() {
+  // 安全兜底，防止非 Surge 环境或异常触发
+  if (typeof $response === 'undefined') {
+    $done({});
+    return;
+  }
 
-let body = $response.body;
+  let body = $response.body;
 
-if (!body) {
-  $done({});
-  return;
-}
+  if (!body) {
+    $done({});
+    return;
+  }
 
 try {
   let obj = JSON.parse(body);
@@ -91,11 +92,8 @@ try {
       }
     });
   }
-
-  $done({
-    body: JSON.stringify(obj)
-  });
 } catch (e) {
   console.log('[dxstjpure] parse error');
   $done({ body });
 }
+})();
