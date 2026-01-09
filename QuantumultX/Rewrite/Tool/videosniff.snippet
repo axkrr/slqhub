@@ -2,8 +2,8 @@
 # 嗅探 m3u8/mp4 并跳转 SenPlayer
 
 [rewrite]
-^https?:\/\/.*\.m3u8(\?.*)?$ url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/entry.js
-^https?:\/\/.*\.mp4(\?.*)?$  url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/entry.js
+^https?:\/\/.*\.m3u8(\?.*)?$ url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/videosniff.js
+^https?:\/\/.*\.mp4(\?.*)?$  url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/videosniff.js
 
 [mitm]
 hostname = %APPEND% *.phncdn.com, *.cloudfront.net, www.pornhub.com, cn.pornhub.com
