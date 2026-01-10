@@ -1,8 +1,8 @@
-[rewrite_local]
-# ===== 去哒 App JSON 广告（核心）=====
-^https?:\/\/.*\/(openAds|startPage|advertisement|ad_list|ads|banners).* url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/qdpure.js
+[rewrite]
+# —— JSON 广告接口（走脚本）——
+^https?:\/\/.*\/(openAds|startPage|advertisement|ad_list|ads|banners|splash).* url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/qdpure.js
 
-# ===== 去哒 开屏图片广告（必须 reject-200）=====
+# —— 图片类开屏广告（直接空返回）——
 ^https?:\/\/p0\.meituan\.net\/bizad\/.* url reject-200
 ^https?:\/\/static\.66mobi\.com\/creativeAudit\/.* url reject-200
 ^https?:\/\/qudaapi\.8quan\.com\/index\/source\/show\?filepath=.*advertisement.* url reject-200
