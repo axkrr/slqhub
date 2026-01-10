@@ -1,8 +1,8 @@
-# quda 开屏/插屏广告拦截
-# 屏蔽广告素材
+# quda开屏
+# 仅拦明确广告素材路径
 
 [rewrite]
-^https?:\/\/static\.66mobi\.com\/creativeAudit\/.*\.jpg url reject
+^https?:\/\/qudaapi\.8quan\.com\/index\/source\/show\?filepath=\/mnt\/Wmapp\/advertisement\/.*\.(png|jpg)$ url reject
 
 [mitm]
-hostname = %APPEND% static.66mobi.com
+hostname = %APPEND% qudaapi.8quan.com
