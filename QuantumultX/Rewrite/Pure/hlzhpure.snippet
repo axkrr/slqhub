@@ -9,9 +9,9 @@ DOMAIN-SUFFIX,gdt.qq.com,REJECT
 DOMAIN-SUFFIX,ad.umetrip.com,REJECT
 
 [rewrite]
-^https?:\/\/oss\.umetrip\.com\/fs\/advert\/.* url reject
-^https?:\/\/static\.umetrip\.com\/fs\/advert\/.* url reject
-^https?:\/\/.*\.umetrip\.com\/gateway\/api\/umetrip\/advert.* url reject
+^https?:\/\/oss\.umetrip\.com\/fs\/advert\/.* url reject-200
+^https?:\/\/static\.umetrip\.com\/fs\/advert\/.* url reject-200
+^https?:\/\/.*\.umetrip\.com\/gateway\/api\/umetrip\/advert.* url reject-200
 
 [mitm]
 hostname = %APPEND% *.umetrip.com, adashbc.utdevice.apple.com
