@@ -1,11 +1,15 @@
-[rewrite]
-# —— JSON 广告接口（走脚本）——
-^https?:\/\/.*\/(openAds|startPage|advertisement|ad_list|ads|banners|splash).* url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/qdpure.js
+# qdpure
+# 去哒开屏广告净化
 
-# —— 图片类开屏广告（直接空返回）——
+[rewrite]
+# —— 广告SDK上报接口——
+^https?:\/\/api\.shanghailingye\.cn\/rep\/start$ url reject-200
+^https?:\/\/api\.shanghailingye\.cn\/rep\/error$ url reject-200
+
+# —— 开屏图片广告CDN —— 
 ^https?:\/\/p0\.meituan\.net\/bizad\/.* url reject-200
 ^https?:\/\/static\.66mobi\.com\/creativeAudit\/.* url reject-200
 ^https?:\/\/qudaapi\.8quan\.com\/index\/source\/show\?filepath=.*advertisement.* url reject-200
 
 [mitm]
-hostname = %APPEND% p0.meituan.net, static.66mobi.com, qudaapi.8quan.com
+hostname = %APPEND% api.shanghailingye.cn, p0.meituan.net, static.66mobi.com, qudaapi.8quan.com
