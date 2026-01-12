@@ -1,17 +1,17 @@
-# ------------------------------------------
-# 名称: 大学搜题酱 - 开屏秒开 & 首页弹窗去除
-# 功能: 1.脚本改写初始化配置(去计时) 2.屏蔽弹窗 3.拦截日志上报
+#------------------------------------------
+# name: dxstjpure
+# desc: 大学搜题酱广告净化
 # ------------------------------------------
 
 [rewrite_local]
-# 1. 核心逻辑：拦截初始化和弹窗接口，交给你的远程脚本处理
+# 拦截初始化和弹窗接口，交给远程脚本处理
 ^https?:\/\/www\.daxuesoutijiang\.com\/init\/config\/(init|popupconfig) url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/dxstjpure.js
 
-# 2. 辅助逻辑：直接屏蔽广告统计与日志域名，减少启动时的同步等待
+# 直接屏蔽广告统计与日志域名，减少启动时的同步等待
 ^https?:\/\/stats\.cdnjtzy\.com\/stats\/PKD-DXST url reject-200
 ^https?:\/\/nlog\.daxuesoutijiang\.com\/log\/ url reject
 
-# 3. 资源拦截：屏蔽广告图片和 WebP 静态资源
+# 屏蔽广告图片和 WebP 静态资源
 ^https?:\/\/zyb-(vip|stats)\.cdnjtzy\.com\/.*\.webp url reject-img
 
 [mitm]
