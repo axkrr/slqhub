@@ -4,7 +4,7 @@
 #-----------------------------------------
 
 [rewrite]
-# 拦截广告配置接口，使用脚本修改响应体
+# 拦截广告配置接口
 ^https?:\/\/api\.shanghailingye\.cn\/ad\/map url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/qdpure.js
 
 # 拦截广告图片资源
