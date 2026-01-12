@@ -1,36 +1,33 @@
-/*************************
- * SenPlayer 视频嗅探终极版
- * 1. 仅 Safari 生效 
- * 2. 自动筛选最高分辨率 
- * 3. 网页单次触发防抖 
- * 4. 解决连续播放跳转问题
- *************************/
+/**
+ * @name senplayervideosniff
+ * @desc 获取网页视频流跳转SenPlayer播放
+ */
 
 const url = $request.url;
 const headers = $request.headers;
 const body = $response.body;
 
-// ==== 1️⃣ 基础环境过滤 ====
+// 基础环境过滤
 if (!url) $done({});
 
 const ua = (headers['User-Agent'] || headers['user-agent'] || "").toLowerCase();
 const referer = headers['Referer'] || headers['referer'] || "";
 
-// 判定是否为 Safari (排除常见内置浏览器)
+// 判定是否为Safari
 const isSafari = ua.includes("safari") && !/micromessenger|quark|ucbrowser|mqqbrowser/i.test(ua);
 
-// 限制：非 Safari 且无 Referer 的请求直接丢弃
+// 非Safari且无Referer的请求直接丢弃
 if (!isSafari && !referer) {
   $done({});
 }
 
-// ==== 2️⃣ 视频流初步过滤 ====
-// 排除碎片文件，只处理 m3u8 (mp4 逻辑由 response 决定是否进入)
+// 视频流初步过滤
+// 排除碎片文件只处理m3u8
 if (!/\.m3u8/i.test(url)) {
   $done(body ? { body } : {});
 }
 
-// ==== 3️⃣ 核心：寻找最高分辨率链接 ====
+// 寻找最高分辨率链接
 let finalUrl = url;
 
 if (body && body.includes("#EXT-X-STREAM-INF")) {
@@ -75,7 +72,7 @@ if (body && body.includes("#EXT-X-STREAM-INF")) {
   }
 }
 
-// ==== 4️⃣ 强化防抖（防止多弹窗） ====
+// 强化防抖
 const now = Date.now();
 const lastTimeKey = 'senplayer_last_time';
 const lastUrlKey = 'senplayer_last_url';
@@ -83,11 +80,11 @@ const lastUrlKey = 'senplayer_last_url';
 const lastTime = parseInt($persistentStore.read(lastTimeKey) || "0");
 const lastUrl = $persistentStore.read(lastUrlKey) || "";
 
-// 指纹取 URL 前 60 位，防止动态参数干扰
+// 指纹取URL前60位,防止动态参数干扰
 const urlFingerprint = finalUrl.substring(0, 60);
 const lastFingerprint = lastUrl.substring(0, 60);
 
-// 8秒冷却时间 OR URL 指纹一致，则拦截
+// 8秒冷却时间OR URL指纹一致则拦截
 if (urlFingerprint === lastFingerprint || (now - lastTime < 8000)) {
   $done({});
 }
@@ -96,13 +93,13 @@ if (urlFingerprint === lastFingerprint || (now - lastTime < 8000)) {
 $persistentStore.write(now.toString(), lastTimeKey);
 $persistentStore.write(finalUrl, lastUrlKey);
 
-// ==== 5️⃣ 发送通知 ====
+// 发送通知
 const encoded = encodeURIComponent(finalUrl);
-// 增加 t=${now} 强制 App 识别为新链接，解决连续点击不跳转 bug
+// 强制App识别新链接
 const playUrl = `senplayer://x-callback-url/play?url=${encoded}&t=${now}`;
 
 $notification.post(
-  '🎬 发现最高画质视频',
+  '🎬发现最高画质视频',
   '点击立即跳转 SenPlayer 播放',
   finalUrl,
   {
