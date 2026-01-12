@@ -1,10 +1,10 @@
 /**
- * @name dxstjpure_pro
- * @desc 大学搜题酱去开屏广告
+ * @name dxstjpure
+ * @desc 大学搜题酱广告净化
  */
 
 (function() {
-  // 安全兜底，防止非 Surge 环境或异常触发
+  // 防止非Surge环境或异常触发
   if (typeof $response === 'undefined') {
     $done({});
     return;
@@ -22,7 +22,7 @@ try {
 
   if (obj && obj.data && typeof obj.data === 'object') {
 
-    // 1. 开屏 / 启动广告 - 设置所有相关超时为 0
+    // 开屏/启动广告_设置所有相关超时为0
     if (obj.data.adPosConfig && typeof obj.data.adPosConfig === 'object') {
       obj.data.adPosConfig.renderTimeout = 0;
       obj.data.adPosConfig.requestTimeout = 0;
