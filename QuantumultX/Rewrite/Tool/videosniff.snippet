@@ -1,5 +1,7 @@
-# SenPlayer Video Sniff
-# 嗅探 m3u8/mp4 并跳转 SenPlayer
+#-----------------------------------------
+# name: senplayervideosniff
+# desc: 网页视频流跳转SenPlayer播放
+#-----------------------------------------
 
 [rewrite]
 ^https?:\/\/.*\.m3u8(\?.*)?$ url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/videosniff.js
