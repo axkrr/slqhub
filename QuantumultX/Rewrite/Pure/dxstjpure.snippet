@@ -4,14 +4,14 @@
 #-----------------------------------------
 
 [rewrite]
-# 拦截初始化和弹窗接口，交给远程脚本处理
+# 拦截初始化和弹窗接口
 ^https?:\/\/www\.daxuesoutijiang\.com\/init\/config\/(init|popupconfig) url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/dxstjpure.js
 
-# 直接屏蔽广告统计与日志域名，减少启动时的同步等待
+# 屏蔽广告统计与日志域名
 ^https?:\/\/stats\.cdnjtzy\.com\/stats\/PKD-DXST url reject-200
 ^https?:\/\/nlog\.daxuesoutijiang\.com\/log\/ url reject
 
-# 屏蔽广告图片和 WebP 静态资源
+# 屏蔽广告图片和WebP静态资源
 ^https?:\/\/zyb-(vip|stats)\.cdnjtzy\.com\/.*\.webp url reject-img
 
 [mitm]
