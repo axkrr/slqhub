@@ -1,9 +1,9 @@
-#------------------------------------------
+#----------------------------------------
 # name: dxstjpure
 # desc: 大学搜题酱广告净化
-# ------------------------------------------
+# ----------------------------------------
 
-[rewrite_local]
+[rewrite]
 # 拦截初始化和弹窗接口，交给远程脚本处理
 ^https?:\/\/www\.daxuesoutijiang\.com\/init\/config\/(init|popupconfig) url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/dxstjpure.js
 
