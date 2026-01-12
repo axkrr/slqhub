@@ -3,13 +3,7 @@
 # 功能: 1. 脚本消除 Banner 占位 2. 精准拦截广告图 3. 放行头像资源
 # ------------------------------------------
 
-[filter]
-# 屏蔽统计、三方 SDK 和广告追踪
-DOMAIN,analytics.umetrip.com,REJECT
-DOMAIN,adashbc.utdevice.apple.com,REJECT
-DOMAIN-SUFFIX,gdt.qq.com,REJECT
-
-[rewrite_local]
+[rewrite]
 # 1. 核心：通过脚本改写广告配置 JSON，消除首页/行程页 Banner 占位
 ^https?:\/\/.*\.umetrip\.com\/gateway\/api\/umetrip\/advert url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/hlzhpure.js
 
