@@ -1,20 +1,20 @@
 /**
- * @name qdpure_jsfile_v2_final
- * @desc 强力去广告修正版 - 修复语法错误及缓存失效问题
+ * @name qdpure
+ * @desc 去哒广告净化
  */
 
-// 安全兜底，防止非 Surge 执行环境炸模块
+// 防止非Surge执行环境炸模块
 if (typeof $response === 'undefined') {
   $done({});
   return;
 }
 
-// 1. 获取基础数据
+// 获取基础数据
 let body = $response.body;
 let headers = $response.headers || {};
 const url = $request.url;
 
-// 2. 预处理：防止缓存导致脚本失效
+// 防止缓存导致脚本失效
 delete headers['ETag'];
 delete headers['Last-Modified'];
 headers['Cache-Control'] = 'no-cache, no-store, must-revalidate';
@@ -25,7 +25,7 @@ if (body) {
   try {
     let obj = JSON.parse(body);
 
-    // 3. 核心逻辑：清空广告字段
+    // 清空广告字段
     const adKeys = [
       'data',
       'bid',
@@ -44,7 +44,7 @@ if (body) {
         }
       });
 
-      // 4. 状态修正
+      // 状态修正
       if (obj.code !== undefined) obj.code = 1;
       if (obj.status !== undefined) obj.status = 1;
       if (obj.message) obj.message = 'success';
