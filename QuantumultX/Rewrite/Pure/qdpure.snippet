@@ -1,14 +1,13 @@
-# ------------------------------------------
-# 名称: 去哒 App 开屏广告净化 (Script版)
-# 功能: 修改响应体(时间置0/清空列表) + 拦截静态资源
-# 脚本托管: GitHub (by User)
-# ------------------------------------------
+#-----------------------------------------
+# name: qdpure
+# desc: 去哒广告净化
+#-----------------------------------------
 
-[rewrite_local]
-# 1. 核心逻辑：拦截广告配置接口，使用脚本修改响应体 (秒开)
+[rewrite]
+# 拦截广告配置接口，使用脚本修改响应体
 ^https?:\/\/api\.shanghailingye\.cn\/ad\/map url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/qdpure.js
 
-# 2. 辅助逻辑：拦截广告图片资源 (防止兜底图片显示)
+# 拦截广告图片资源
 ^https?:\/\/qudaapi\.8quan\.com\/index\/source\/show\?filepath=\/mnt\/Wmapp\/advertisement url reject-img
 
 [mitm]
