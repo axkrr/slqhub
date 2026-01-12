@@ -1,7 +1,6 @@
-#!name= hlzhpure
-#!desc= 航旅纵横 ad blocking script
-#!category= 广告拦截
-#!system= ios
+#!name=hlzhpure
+#!desc=航旅纵横广告净化
+#!category=广告拦截
 
 [Rule]
 DOMAIN, analytics.umetrip.com, REJECT
