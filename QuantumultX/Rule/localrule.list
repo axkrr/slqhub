@@ -37,10 +37,7 @@ HOST-KEYWORD,phncdn
 HOST-KEYWORD,pornhub
 HOST-SUFFIX,txh067.com
 # API Interface
-HOST,agent.curtin.top
 HOST-SUFFIX,ip-api.com
-HOST-SUFFIX, api.120399.xyz
-HOST, api.wsgw-rewrite.com
 HOST-SUFFIX, vercel.app
 # Local Tools
 HOST-SUFFIX,dompling.github.io
