@@ -1,27 +1,14 @@
-#############################################
-# Name: qdpure_qx
-# Author: axkrr
-# Function: 去除 去哒 App 开屏 / 启动广告
-# Platform: Quantumult X
-# Feature:
-#  - 清空 ad/map 广告调度
-#  - 拒绝第三方广告 SDK 配置
-#  - 拒绝明确广告素材路径
-#  - 不影响 App 正常启动与图片加载
-#############################################
+# ------------------------------------------
+# 名称: 去哒 App 开屏广告屏蔽 (精简优化版)
+# 策略: 拦截广告列表接口并返回空数据，同时拦截广告图片请求
+# ------------------------------------------
 
+[rewrite_local]
+# 拦截广告位下发，返回 200 空内容
+^https?:\/\/api\.shanghailingye\.cn\/ad\/map url reject-200
 
-[rewrite]
-# 核心广告调度接口（只清空，不 reject，防止白屏）
-^https:\/\/api\.shanghailingye\.cn\/ad\/map$ url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/qdpure.js
-
-# 广告 SDK 配置（直接拒绝）
-^https:\/\/sdk\.adx\.adwangmai\.com\/sdk\/mediation\/config\.api$ url reject
-
-# 明确广告素材路径（图片类）
-^https?:\/\/static\.66mobi\.com\/creativeAudit\/ url reject
-^http:\/\/qudaapi\.8quan\.com\/index\/source\/show\?filepath=\/mnt\/Wmapp\/advertisement\/ url reject
-
+# 拦截具体广告图片资源
+^https?:\/\/qudaapi\.8quan\.com\/index\/source\/show\?filepath=\/mnt\/Wmapp\/advertisement url reject-img
 
 [mitm]
-hostname = %APPEND% api.shanghailingye.cn, sdk.adx.adwangmai.com, static.66mobi.com, qudaapi.8quan.com
+hostname = %APPEND% api.shanghailingye.cn, qudaapi.8quan.com
