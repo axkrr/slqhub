@@ -1,7 +1,6 @@
 #!name=qdpure
-#!desc=去哒 ad blocking script
+#!desc=去哒广告净化
 #!category=广告拦截
-#!disable-cache=true
 
 [Script]
 qdpure = type=http-response,pattern=^https?:\/\/api\.shanghailingye\.cn\/ad\/map,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/JS/qd.js
