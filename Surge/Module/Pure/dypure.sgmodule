@@ -1,6 +1,7 @@
 #!name=dypure
 #!desc=抖音网页版去广告
 #!category=广告拦截
+#!author=奶思,axkrr
 
 [Body Rewrite]
 http-response-jq ^https:\/\/www\.douyin\.com\/aweme\/v1\/web\/tab\/feed\/\? 'if .aweme_list then .aweme_list |= map(select(.is_ads != true)) else . end'
