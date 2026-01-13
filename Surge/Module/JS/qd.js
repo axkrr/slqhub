@@ -1,7 +1,8 @@
 /**
  * @name qdpure
  * @desc 去哒广告净化
- */
+ * @author axkrr
+*/
 
 // 防止非Surge执行环境炸模块
 if (typeof $response === 'undefined') {
