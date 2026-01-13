@@ -1,7 +1,7 @@
 /**
  * @name phpure
- * @desc PornHub广告净化
- * @author axkrr
+ * @desc PornHub净化
+ * @author ddgksf2013,axkrr
 */
 
 // 存在响应体时才处理
