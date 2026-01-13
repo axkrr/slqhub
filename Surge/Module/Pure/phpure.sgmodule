@@ -1,6 +1,7 @@
 #!name=phpure
 #!desc=PornHub广告净化
 #!category=广告拦截
+#!author=axkrr
 
 [Rule]
 # 拒绝广告接口
