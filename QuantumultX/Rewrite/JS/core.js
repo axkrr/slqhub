@@ -1,13 +1,19 @@
+/**
+ * @name slqhubcore
+ * @desc 适配qx重写私有仓库获取脚本
+ * @author axkrr
+*/
+
 console.log("private core loaded");
 
-// rewrite 场景
+// rewrite场景
 if (typeof $response !== "undefined") {
   let body = $response.body;
-  // 处理 body
+  // 处理body
   $done({ body });
 }
 
-// request 场景
+// request场景
 if (typeof $request !== "undefined") {
   // do something
   $done({});
