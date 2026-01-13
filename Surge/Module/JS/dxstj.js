@@ -1,7 +1,8 @@
 /**
  * @name dxstjpure
  * @desc 大学搜题酱广告净化
- */
+ * @author axkrr
+*/
 
 (function() {
   // 防止非Surge环境或异常触发
@@ -61,7 +62,7 @@ try {
       obj.data.codePosList = [];
     }
 
-    // 2. 首页弹窗 / 活动弹窗 / 浮窗
+    // 首页弹窗/活动弹窗/浮窗
     const popupKeys = [
       'dialogConfig',
       'activityConfig',
@@ -78,7 +79,7 @@ try {
       }
     });
 
-    // 3. 横幅 / 列表广告
+    // 横幅/列表广告
     const adKeys = [
       'adList',
       'bannerList',
