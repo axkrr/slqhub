@@ -1,7 +1,7 @@
 /**
  * @name slqhubcore
  * @desc 适配qx重写私有仓库获取脚本
- * @author axkrr
+ * @author axkrr,Peng-YM,dcpeng
 */
 
 console.log("private core loaded");
