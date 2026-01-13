@@ -1,33 +1,33 @@
-# chatgpt
+# > chatgpt
 IP-CIDR,104.18.39.85/32,no-resolve
 IP-CIDR,69.171.234.48/32,no-resolve
-# scripting
+# > scripting
 DOMAIN-SUFFIX,javbus.com
 DOMAIN-SUFFIX,missav.ai
 DOMAIN-SUFFIX,workers.dev
-# 小米刷步
+# > 小米刷步
 DOMAIN,api-user.huami.com
 DOMAIN,account.huami.com
-# zlibrary
+# > zlibrary
 DOMAIN-SUFFIX,z-library.sk
-# shortcut
+# > shortcut
 DOMAIN,routinehub.co
-# jisuyun
+# > jisuyun
 DOMAIN,905.jsy902.xyz
-# kelee
+# > kelee
 DOMAIN-SUFFIX,kelee.one
-# Local_macOS
+# > Local_macOS
 DOMAIN-KEYWORD,brew
 DOMAIN-KEYWORD,rust
 DOMAIN-SUFFIX,ghcr.io
-# Pi
+# > Pi
 DOMAIN-KEYWORD,minepi
-# Web Utils
+# > Web Utils
 DOMAIN-SUFFIX,luolicon.ru
 DOMAIN,i.lxlad.com
 DOMAIN-SUFFIX,greasyfork.org
 DOMAIN-SUFFIX,sleazyfork.org
-# API Interface
+# > API Interface
 DOMAIN-SUFFIX,dompling.github.io
 DOMAIN,agent.curtin.top
 DOMAIN-SUFFIX,vercel.app
@@ -36,7 +36,7 @@ DOMAIN-SUFFIX,boxjs.com
 DOMAIN-SUFFIX,script.hub
 DOMAIN-SUFFIX,sub.store
 DOMAIN-SUFFIX,jsdelivr.net
-# Media Index
+# > Media Index
 DOMAIN-SUFFIX,pub2.term.wtf
 DOMAIN-SUFFIX,pub2.emby.wtf
 DOMAIN-SUFFIX,pub1.emby.wtf
