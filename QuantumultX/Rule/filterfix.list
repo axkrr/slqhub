@@ -1,7 +1,7 @@
 #-----------------------------------------
 # name: filterfix
 # desc: 分流修正
-# author: axkrr
+# author: axkrr,奶思
 #-----------------------------------------
 
 host, ad.12306.cn, direct
