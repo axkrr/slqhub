@@ -1,32 +1,32 @@
-# shortcut
+# > shortcut
 DOMAIN-SUFFIX,routinehub.co
-# testflight app
+# > testflight app
 DOMAIN-SUFFIX,departures.to
-# book
+# > book
 DOMAIN-SUFFIX,z-library.sk
-# universal
+# > universal
 DOMAIN-SUFFIX,vercel.app
-# other app and web
+# > other app and web
 DOMAIN,i.lxlad.com
 DOMAIN-KEYWORD,minepi
-# API Interface
+# > API Interface
 DOMAIN-SUFFIX,rsshub.app
 DOMAIN,api.palera.in
 DOMAIN,agent.curtin.top
 DOMAIN-SUFFIX,api.120399.xyz
 DOMAIN-SUFFIX,pyrsshub.vercel.app
 DOMAIN-SUFFIX,api.binance.com
-# emby
+# > emby
 DOMAIN-SUFFIX,pub1.term.wtf
 DOMAIN-SUFFIX,pub1.emby.wtf
 DOMAIN-SUFFIX,pub2.term.wtf
 DOMAIN-SUFFIX,pub2.emby.wtf
 DOMAIN-SUFFIX,playz.mjji.de
-# Porn
+# > Porn
 DOMAIN-KEYWORD,pornhub
 DOMAIN-KEYWORD,phncdn
 DOMAIN-SUFFIX,heiliao.com
-# Node
+# > Node
 DOMAIN-SUFFIX,script.hub
 DOMAIN-SUFFIX,sub.store
 DOMAIN-SUFFIX,luolicon.ru
