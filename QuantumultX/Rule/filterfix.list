@@ -1,3 +1,9 @@
+#-----------------------------------------
+# name: filterfix
+# desc: 分流修正
+# author: axkrr
+#-----------------------------------------
+
 host, ad.12306.cn, direct
 # > anti-ad
 host-keyword, anti-ad.net, direct
