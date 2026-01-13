@@ -1,6 +1,7 @@
 #!name=senplayervideosniff
 #!desc=获取网页视频流跳转SenPlayer播放
 #!category=工具模块
+#!author=axkrr
 
 [Script]
 senplayer-video-sniff = type=http-response,pattern=\.(m3u8|mp4),requires-body=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/JS/videosniff.js
