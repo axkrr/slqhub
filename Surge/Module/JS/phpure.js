@@ -1,7 +1,8 @@
 /**
  * @name phpure
  * @desc PornHub广告净化
- */
+ * @author axkrr
+*/
 
 // 存在响应体时才处理
 if (typeof $response !== "undefined" && $response.body) {
