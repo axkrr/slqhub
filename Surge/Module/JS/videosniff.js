@@ -1,7 +1,8 @@
 /**
  * @name senplayervideosniff
  * @desc 获取网页视频流跳转SenPlayer播放
- */
+ * @author axkrr
+*/
 
 const url = $request.url;
 const headers = $request.headers;
