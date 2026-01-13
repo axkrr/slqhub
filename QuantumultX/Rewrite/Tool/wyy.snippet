@@ -1,6 +1,17 @@
-#!name=网易云音乐SVIP (暗夜)
-#!desc=移植自Surge模块：去广告、精简首页、本地解锁SVIP标识。
-#!author=暗夜
+#-----------------------------------------
+# name: wyy
+# desc: 网易云音乐SVIP
+# author: axkrr,暗夜
+#-----------------------------------------
+
+[filter]
+# > 广告域名拦截
+host, iadmat.nosdn.127.net, reject
+host, iadmatapk.nosdn.127.net, reject
+host, iadmusicmat.music.126.net, reject
+host, iadmusicmatvideo.music.126.net, reject
+host, ipv4.music.163.com, reject
+host, ipv6.music.163.com, reject
 
 [rewrite]
 # > 广告请求拦截
@@ -45,15 +56,6 @@
 
 # 音质
 ^https?:\/\/interface\d?\.music\.163\.com\/eapi\/vipauth\/app\/auth\/(soundquality\/)?query url script-request-header https://he2o.vercel.app/Resource/-Rewrite/anyehttp/wyy-s.js
-
-[filter]
-# > 广告域名拦截
-host, iadmat.nosdn.127.net, reject
-host, iadmatapk.nosdn.127.net, reject
-host, iadmusicmat.music.126.net, reject
-host, iadmusicmatvideo.music.126.net, reject
-host, ipv4.music.163.com, reject
-host, ipv6.music.163.com, reject
 
 [mitm]
 hostname = %APPEND% interface*.music.163.com, music.163.com
