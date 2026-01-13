@@ -3,8 +3,8 @@
  * @desc 获取网页视频流跳转SenPlayer播放
  * @author axkrr,御清弦
 [rewrite]
-^https?:\/\/.*\.m3u8(\?.*)?$ url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/videosniff.js
-^https?:\/\/.*\.mp4(\?.*)?$  url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/videosniff.js
+^https?:\/\/.*\.m3u8(\?.*)?$ url script-response-body https://raw.githubusercontent.com/axkrr/slqhub/main/QuantumultX/Rewrite/JS/videosniff.js
+^https?:\/\/.*\.mp4(\?.*)?$  url script-response-body https://raw.githubusercontent.com/axkrr/slqhub/main/QuantumultX/Rewrite/JS/videosniff.js
 
 [mitm]
 hostname = %APPEND% *.phncdn.com, *.cloudfront.net, www.pornhub.com, cn.pornhub.com, txh066.com, txh067.com, p3.unpljks.top, long.ctttfk.cn
