@@ -1,0 +1,11 @@
+#-----------------------------------------
+# name: 应用安装
+# desc: AppStore低版本应用,下架应用安装
+#-----------------------------------------
+
+[rewrite]
+# 匹配AppleStoreAPI接口
+^https:\/\/apple-api\.com url script-request-body https://raw.githubusercontent.com/githubdulong/Script/master/AppleStoreAPI.js
+
+[mitm]
+hostname = %APPEND% apple-api.com
