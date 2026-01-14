@@ -30,6 +30,7 @@ HOST-KEYWORD,rust
 HOST-SUFFIX,ghcr.io
 # > Pi
 HOST-KEYWORD,minepi
+HOST-SUFFIX,pinet.com
 # > Web Utils
 HOST,i.lxlad.com
 HOST-SUFFIX,greasyfork.org
