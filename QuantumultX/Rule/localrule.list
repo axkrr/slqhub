@@ -50,6 +50,7 @@ HOST-SUFFIX,ip-api.com
 HOST-SUFFIX, vercel.app
 # > Local Tools
 HOST-SUFFIX,dompling.github.io
+HOST-SUFFIX,rsshub.app
 HOST-SUFFIX, script.hub
 HOST-SUFFIX, sub.store
 HOST-SUFFIX, boxjs.com
