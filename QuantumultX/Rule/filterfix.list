@@ -4,6 +4,10 @@
 # author: axkrr,奶思
 #-----------------------------------------
 
+# > api接口
+host, api.xsj.wasu.tv, direct
+host, api.wsgw-rewrite.com, direct
+# > 12306
 host, ad.12306.cn, direct
 # > anti-ad
 host-keyword, anti-ad.net, direct
