@@ -26,6 +26,8 @@ HOST,huggingface.co
 HOST-KEYWORD,brew
 HOST-KEYWORD,rust
 HOST-SUFFIX,ghcr.io
+HOST,api.qiuchenly.us.kg
+HOST,api.macosicons.com
 # > Pi
 HOST-KEYWORD,minepi
 HOST-SUFFIX,pinet.com
