@@ -5,15 +5,14 @@
 #-----------------------------------------
 
 [rewrite]
-# 拦截初始化和弹窗接口
-^https?:\/\/www\.daxuesoutijiang\.com\/init\/config\/(init|popupconfig) url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/dxstjpure.js
+# 初始化配置、弹窗、新版广告配置、新版广告请求
+^https?:\/\/(www\.daxuesoutijiang\.com\/init\/config\/(init|popupconfig)|adx\.zuoyebang\.com\/adxserver\/ad\/(getconfig|adreq)) url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/dxstjpure.js
 
-# 屏蔽广告统计与日志域名
-^https?:\/\/stats\.cdnjtzy\.com\/stats\/PKD-DXST url reject-200
-^https?:\/\/nlog\.daxuesoutijiang\.com\/log\/ url reject
+# 统计上报、日志收集
+^https?:\/\/(stats\.cdnjtzy\.com|nlog\.daxuesoutijiang\.com)\/.* url reject-200
 
-# 屏蔽广告图片和WebP静态资源
+# 广告静态图片资源
 ^https?:\/\/zyb-(vip|stats)\.cdnjtzy\.com\/.*\.webp url reject-img
 
 [mitm]
-hostname = %APPEND% www.daxuesoutijiang.com, stats.cdnjtzy.com, nlog.daxuesoutijiang.com, zyb-vip.cdnjtzy.com
+hostname = %APPEND% www.daxuesoutijiang.com, adx.zuoyebang.com, stats.cdnjtzy.com, nlog.daxuesoutijiang.com, zyb-vip.cdnjtzy.com
