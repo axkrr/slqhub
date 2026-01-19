@@ -5,11 +5,11 @@
 #-----------------------------------------
 
 [rewrite]
-# 拦截并净化广告映射配置接口
-^https?:\/\/api\.shanghailingye\.cn\/(app|ad)\/map url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/qdpure.js
+# 1. 拦截广告配置接口
+^https?:\/\/api\.shanghailingye\.cn\/(ad|app)\/map url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/qdpure.js
 
-# 拦截广告图片资源
-^https?:\/\/qudaapi\.8quan\.com\/index\/source\/show\?filepath=.*(advertisement|banner|adv) url reject-200
+# 2. 拦截广告图片资源
+^https?:\/\/qudaapi\.8quan\.com\/index\/source\/show\?filepath=.*(advertisement|banner) url reject-img
 
 [mitm]
 hostname = %APPEND% api.shanghailingye.cn, qudaapi.8quan.com
