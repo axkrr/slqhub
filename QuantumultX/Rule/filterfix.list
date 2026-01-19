@@ -5,10 +5,10 @@
 #-----------------------------------------
 
 # > 去哒
-host, cuiniu.8quan.com, reject
+host,cuiniu.8quan.com, reject
 # > api接口
-host, api.xsj.wasu.tv, direct
-host, api.wsgw-rewrite.com, direct
+host,api.xsj.wasu.tv, direct
+host,api.wsgw-rewrite.com, direct
 # > 12306
 host,ad.12306.cn, direct
 # > anti-ad
