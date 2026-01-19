@@ -3,7 +3,8 @@
 # desc: 分流修正
 # author: axkrr,奶思
 #-----------------------------------------
-
+# > 去哒
+host,cuiniu.8quan.com, reject
 # > api接口
 host, api.xsj.wasu.tv, direct
 host, api.wsgw-rewrite.com, direct
