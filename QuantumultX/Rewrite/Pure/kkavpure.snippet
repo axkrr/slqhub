@@ -1,0 +1,11 @@
+# [name] 6633rr广告净化
+# [desc] 自动屏蔽站点的弹窗与轮播广告
+# [author] Gemini
+# [update] 2026-01-20
+
+[rewrite]
+# 拦截获取广告接口
+^https:\/\/www\.6633rr\.com\/api\/abd\/getabds url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/kkavpure.js
+
+[mitm]
+hostname = %APPEND% www.6633rr.com
