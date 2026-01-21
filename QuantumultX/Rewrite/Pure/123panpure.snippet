@@ -1,0 +1,31 @@
+# > 综合去广告重写 - 针对 TopOn, 穿山甲, 腾讯, 倍孜, 领野
+# 修改日期: 2026-01-21
+
+[rewrite]
+# 核心策略重写
+^https?:\/\/api\.anythinktech\.com\/v\d\/open\/placement url script-response-body https://raw.githubusercontent.com/YourRepo/main/anythink_ad.js
+^https?:\/\/adx-(bj|sz|sh|tx)\.anythinktech\.com\/bid url script-response-body https://raw.githubusercontent.com/YourRepo/main/anythink_ad.js
+^https?:\/\/api\.shanghailingye\.cn\/ad\/map url script-response-body https://raw.githubusercontent.com/YourRepo/main/anythink_ad.js
+# 腾讯Launch请求
+^https?:\/\/sdkquic\.e\.qq\.com\/launch url reject-200
+
+[filter]
+# 聚合平台与统计上报(TopOn)
+host-suffix, anythinktech.com, reject
+host-suffix, tk.anythinktech.com, reject
+# 腾讯广告(GDT/优量汇)
+host-suffix, e.qq.com, reject
+host-suffix, gdt.qq.com, reject
+host-keyword, sdkquic, reject
+# 穿山甲(Pangle/字节)
+host-suffix, pangolin-sdk-toutiao-b.com, reject
+host-keyword, pangolin-sdk, reject
+host-keyword, pangle, reject
+# 倍孜(Beizi)
+host-suffix, beizi.biz, reject
+host-suffix, bzads.com, reject
+# 领野(Lingye)
+host-suffix, shanghailingye.cn, reject
+
+[mitm]
+hostname = %APPEND% api.anythinktech.com, adx-*.anythinktech.com, api.shanghailingye.cn, sdkquic.e.qq.com, log-api.pangolin-sdk-toutiao-b.com, sdk.beizi.biz
