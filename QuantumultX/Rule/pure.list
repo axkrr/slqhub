@@ -1,4 +1,4 @@
-# 123panpure
+# > 123panpure
 host-suffix,anythinktech.com,reject
 host-suffix,tk.anythinktech.com,reject
 host-suffix,e.qq.com,reject
@@ -8,3 +8,6 @@ host-suffix, beizi.biz,reject
 host-suffix, bzads.com,reject
 host-suffix, shanghailingye.cn,reject
 host-keyword, pangolin-sdk,reject
+# > pornpure
+host-suffix,mc.yandex.ru,reject
+host-suffix,static.cloudflareinsights.com,reject
