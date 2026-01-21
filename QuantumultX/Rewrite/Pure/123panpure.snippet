@@ -4,28 +4,13 @@
 # author: axkrr
 #-----------------------------------------
 
-[filter_local]
-# 广告源域名暴力拦截
-host-suffix, anythinktech.com, reject
-host-suffix, tk.anythinktech.com, reject
-host-suffix, e.qq.com, reject
-host-suffix, gdt.qq.com, reject
-host-suffix, pangolin-sdk-toutiao-b.com, reject
-host-suffix, beizi.biz, reject
-host-suffix, bzads.com, reject
-host-suffix, shanghailingye.cn, reject
-# 穿山甲备用上报
-host-keyword, pangolin-sdk, reject
-
 [rewrite]
-# 核心策略重写
 ^https?:\/\/api\.anythinktech\.com\/v\d\/open\/placement url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/123panpure.js
 
 ^https?:\/\/adx-.*\.anythinktech\.com\/(bid|request) url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/123panpure.js
 
 ^https?:\/\/api\.shanghailingye\.cn\/ad\/map url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/123panpure.js
 
-# 腾讯Launch请求
 ^https?:\/\/sdkquic\.e\.qq\.com\/launch url reject-200
 
 [mitm]
