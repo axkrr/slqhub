@@ -5,13 +5,10 @@
 #-----------------------------------------
 
 [rewrite]
-# 初始化配置、弹窗、新版广告配置、新版广告请求
 ^https?:\/\/(www\.daxuesoutijiang\.com\/init\/config\/(init|popupconfig)|adx\.zuoyebang\.com\/adxserver\/ad\/(getconfig|adreq)) url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/dxstjpure.js
 
-# 统计上报、日志收集
 ^https?:\/\/(stats\.cdnjtzy\.com|nlog\.daxuesoutijiang\.com)\/.* url reject-200
 
-# 广告静态图片资源
 ^https?:\/\/zyb-(vip|stats)\.cdnjtzy\.com\/.*\.webp url reject-img
 
 [mitm]
