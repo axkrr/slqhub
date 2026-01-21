@@ -5,12 +5,12 @@
 #-----------------------------------------
 
 [rewrite]
-^https?:\/\/mobilead\.kuwo\.cn\/EcomResourceServer\/(getIOSIsHideAd|getMotor)\.do url script-response-body data:application/json,{}
-^https?:\/\/rich\.kuwo\.cn\/(AdService|ecom)\/kaiping\/ad[iI]nfo url script-response-body data:application/json,{}
-^https?:\/\/wapi\.kuwo\.cn\/openapi\/v1\/user\/adVip\/info url script-response-body data:application/json,{}
-^https?:\/\/wapi\.kuwo\.cn\/openapi\/v1\/operate(\/(adVip|freeMode\/h5))?\/text url script-response-body data:application/json,{}
-^https?:\/\/ad\.tencentmusic\.com\/config\/uni url script-response-body data:application/json, 
-^https?:\/\/abt-kuwo\.tencentmusic\.com\/kuwo\/ui\/info url script-response-body data:application/json,{}
+^https?:\/\/mobilead\.kuwo\.cn\/EcomResourceServer\/(getIOSIsHideAd|getMotor)\.do url script-response-body - script="var body='{}';$done({body});"
+^https?:\/\/rich\.kuwo\.cn\/(AdService|ecom)\/kaiping\/ad[iI]nfo url script-response-body - script="var body='{}';$done({body});"
+^https?:\/\/wapi\.kuwo\.cn\/openapi\/v1\/user\/adVip\/info url script-response-body - script="var body='{}';$done({body});"
+^https?:\/\/wapi\.kuwo\.cn\/openapi\/v1\/operate(\/(adVip|freeMode\/h5))?\/text url script-response-body - script="var body='{}';$done({body});"
+^https?:\/\/ad\.tencentmusic\.com\/config\/uni url script-response-body - script="var body=' ';$done({body});"
+^https?:\/\/abt-kuwo\.tencentmusic\.com\/kuwo\/ui\/info url script-response-body - script="var body='{}';$done({body});"
 
 ^https?:\/\/vip1\.kuwo\.cn\/vip\/enc\/user\/vip url script-response-body https://raw.githubusercontent.com/Yuheng0101/X/main/Scripts/kuwo.js
 ^https?:\/\/music(pay)?\.kuwo\.cn\/music\.pay\?newver=3 url script-request-body https://raw.githubusercontent.com/Yuheng0101/X/main/Scripts/kuwo.js
