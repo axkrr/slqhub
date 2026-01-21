@@ -4,14 +4,6 @@
 # author: axkrr
 #-----------------------------------------
 
-[rewrite]
-# 核心策略重写
-^https?:\/\/api\.anythinktech\.com\/v\d\/open\/placement url script-response-body https://raw.githubusercontent.com/YourRepo/main/anythink_ad.js
-^https?:\/\/adx-(bj|sz|sh|tx)\.anythinktech\.com\/bid url script-response-body https://raw.githubusercontent.com/YourRepo/main/anythink_ad.js
-^https?:\/\/api\.shanghailingye\.cn\/ad\/map url script-response-body https://raw.githubusercontent.com/YourRepo/main/anythink_ad.js
-# 腾讯Launch请求
-^https?:\/\/sdkquic\.e\.qq\.com\/launch url reject-200
-
 [filter]
 # 聚合平台与统计上报(TopOn)
 host-suffix, anythinktech.com, reject
@@ -29,6 +21,14 @@ host-suffix, beizi.biz, reject
 host-suffix, bzads.com, reject
 # 领野(Lingye)
 host-suffix, shanghailingye.cn, reject
+
+[rewrite]
+# 核心策略重写
+^https?:\/\/api\.anythinktech\.com\/v\d\/open\/placement url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/123panpure.js
+^https?:\/\/adx-(bj|sz|sh|tx)\.anythinktech\.com\/bid url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/123panpure.js
+^https?:\/\/api\.shanghailingye\.cn\/ad\/map url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/123panpure.js
+# 腾讯Launch请求
+^https?:\/\/sdkquic\.e\.qq\.com\/launch url reject-200
 
 [mitm]
 hostname = %APPEND% api.anythinktech.com, adx-*.anythinktech.com, api.shanghailingye.cn, sdkquic.e.qq.com, log-api.pangolin-sdk-toutiao-b.com, sdk.beizi.biz
