@@ -5,28 +5,26 @@
 #-----------------------------------------
 
 [filter]
-# 聚合平台与统计上报(TopOn)
+# 广告源域名暴力拦截
 host-suffix, anythinktech.com, reject
 host-suffix, tk.anythinktech.com, reject
-# 腾讯广告(GDT/优量汇)
 host-suffix, e.qq.com, reject
 host-suffix, gdt.qq.com, reject
-host-keyword, sdkquic, reject
-# 穿山甲(Pangle/字节)
 host-suffix, pangolin-sdk-toutiao-b.com, reject
-host-keyword, pangolin-sdk, reject
-host-keyword, pangle, reject
-# 倍孜(Beizi)
 host-suffix, beizi.biz, reject
 host-suffix, bzads.com, reject
-# 领野(Lingye)
 host-suffix, shanghailingye.cn, reject
+# 穿山甲备用上报
+host-keyword, pangolin-sdk, reject
 
 [rewrite]
 # 核心策略重写
 ^https?:\/\/api\.anythinktech\.com\/v\d\/open\/placement url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/123panpure.js
-^https?:\/\/adx-(bj|sz|sh|tx)\.anythinktech\.com\/bid url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/123panpure.js
+
+^https?:\/\/adx-.*\.anythinktech\.com\/(bid|request) url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/123panpure.js
+
 ^https?:\/\/api\.shanghailingye\.cn\/ad\/map url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/123panpure.js
+
 # 腾讯Launch请求
 ^https?:\/\/sdkquic\.e\.qq\.com\/launch url reject-200
 
