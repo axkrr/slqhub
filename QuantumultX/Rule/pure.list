@@ -18,3 +18,5 @@ host,iadmusicmat.music.126.net,reject
 host,iadmusicmatvideo.music.126.net,reject
 host,ipv4.music.163.com,reject
 host,ipv6.music.163.com,reject
+# > quda
+host,cuiniu.8quan.com,reject
