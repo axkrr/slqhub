@@ -5,10 +5,8 @@
 #-----------------------------------------
 
 [rewrite]
-# 改写广告配置JSON
 ^https?:\/\/.*\.umetrip\.com\/gateway\/api\/umetrip\/advert url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/hlzhpure.js
 
-# 拦截包含/fs/advert/路径的图片
 ^https?:\/\/(oss|static)\.umetrip\.com\/fs\/advert\/ url reject-200
 
 [mitm]
