@@ -21,12 +21,11 @@ host,905.jsy902.xyz
 host-suffix,luolicon.ru
 # > kelee
 host-suffix,kelee.one
-# > local_macos
+# > macos_local
 host,huggingface.co
 host-keyword,brew
 host-keyword,rust
 host-suffix,ghcr.io
-host-suffix,qiuchenly.us
 host-suffix,macosicons.com
 # > pi
 host-keyword,minepi
