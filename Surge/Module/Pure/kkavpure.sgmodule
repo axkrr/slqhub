@@ -7,7 +7,7 @@
 
 [URL Rewrite]
 ^https?://.*{{{DOMAIN}}}\.com\/js\/aaCoverAd\.js url reject
-^https?://.*{{{DOMAIN}}}\.com\/js\/t\.js url reject
+^https?://.*{{{DOMAIN}}}\.com\/js\/aaFloat\.js url reject
 
 [MITM]
 hostname = %APPEND% {{{DOMAIN}}}.com,*.{{{DOMAIN}}}.com
