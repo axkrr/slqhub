@@ -6,24 +6,7 @@
 #!arguments-desc=[参数设置]\nDOMAIN: 填入网站域名.com前面的部分
 
 [Script]
-kkavpure=type=http-response,pattern=^https?://.*{{{DOMAIN}}}\.com/.*,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub-entry/main/kkavpure.js
-
-#!name=44eett彻底杀广告位脚本
-#!desc=移除所有内部广告JS+div
-
-[Script]
-44eett Ad Killer = type=http-response, pattern=^https?://(www\.)?44eett\.com, script-path=kill-ad.js, requires-body=true, timeout=10, max-size=5242880
-
-[Script Path]
-kill-ad.js = 
-let body = $response.body;
-body = body.replace(/<script src="\/js\/aaCoverAd\.js"[^>]*><\/script>/gi, '');
-body = body.replace(/<script src="\/js\/aaFloat\.js"[^>]*><\/script>/gi, '');
-body = body.replace(/<script>var _czc = _czc \|\| \[\];[\s\S]*?s9\.cnzz\.com\/z\.js[\s\S]*?<\/script>/gi, '');
-body = body.replace(/<div class=footer-advertising>[\s\S]*?<\/div>/gi, '');
-body = body.replace(/<div class="footer-advertising">[\s\S]*?<\/div>/gi, '');
-body += '<style>.footer-advertising,.advertising,iframe[src*="ad"],.ad{display:none!important}</style>';
-$done({body});
+kkavpure=type=http-response,pattern=^https?://.*{{{DOMAIN}}}\.com/.*,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub-entry/main/kkavpure2.js
 
 [MITM]
 hostname = %APPEND% {{{DOMAIN}}}.com,*.{{{DOMAIN}}}.com
