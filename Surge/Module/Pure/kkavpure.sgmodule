@@ -5,6 +5,20 @@
 #!arguments=DOMAIN:kkavpure
 #!arguments-desc=[参数设置]\nDOMAIN: 填入网站域名.com前面的部分
 
+#!name=屏蔽44eett广告GIF
+#!desc=基于全部抓包数据
+[Rule]
+DOMAIN,ky1.zjqjs.com,REJECT
+DOMAIN,oline182.top,REJECT
+DOMAIN,jklhgfg.htst273h.com,REJECT
+DOMAIN,ccc333swrt.com,REJECT
+DOMAIN,img.cosman107.top,REJECT
+DOMAIN,txdy.hznunxc.com,REJECT
+DOMAIN,img707.qxwoiv.com,REJECT
+DOMAIN,fff222abdd.com,REJECT
+DOMAIN,img1.ah7907.com,REJECT
+URL-REGEX,^https?://img\.alicdn\.com/imgextra/i2/2217565595682/O1CN01a7G0no1rqPYOMa2C6_!!2217565595682\.gif,REJECT
+
 [Script]
 kkavpure=type=http-response,pattern=^https?://.*{{{DOMAIN}}}\.com/.*,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub-entry/main/kkavpure.js
 
