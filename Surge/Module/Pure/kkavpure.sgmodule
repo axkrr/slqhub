@@ -1,9 +1,9 @@
 #!name=kkavpure
-#!desc=kkavpure广告净化
+#!desc=kkav净化
 #!category=广告拦截
 #!author=axkrr
 #!arguments=DOMAIN:kkavpure
-#!arguments-desc=[参数设置]\nDOMAIN: 填入网站域名.com前面的部分
+#!arguments-desc=[参数设置]\nDOMAIN: 填入网站域名.com前面部分
 
 [URL Rewrite]
 ^https?://.*{{{DOMAIN}}}\.com\/js\/aaCoverAd\.js url reject
