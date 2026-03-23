@@ -7,4 +7,4 @@
 senplayer-video-sniff = type=http-response,pattern=\.(m3u8|mp4),requires-body=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub-entry/main/videosniff.js
 
 [MITM]
-hostname = %APPEND% *.phncdn.com, *.cloudfront.net, www.pornhub.com, cn.pornhub.com, txh066.com, txh067.com, p3.unpljks.top, long.gfuhubh.cn
+hostname = %APPEND% *.phncdn.com, *.cloudfront.net, *.txh*.com, long.*.cn, surrit.com, *.aisheji8.com
