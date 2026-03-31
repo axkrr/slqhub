@@ -1,19 +1,11 @@
-# > chatgpt
-IP-CIDR,104.18.39.85/32,no-resolve
-IP-CIDR,69.171.234.48/32,no-resolve
+# > dump
+DOMAIN-SUFFIX,decrypt.day
 # > scripting
-DOMAIN-SUFFIX,javbus.com
-DOMAIN-SUFFIX,missav.ai
 DOMAIN-SUFFIX,workers.dev
-# > 小米刷步
-#DOMAIN,api-user.huami.com
-#DOMAIN,account.huami.com
 # > zlibrary
 DOMAIN-SUFFIX,z-library.sk
 # > shortcut
 DOMAIN,routinehub.co
-# > jisuyun
-DOMAIN,905.jsy902.xyz
 # > kelee
 DOMAIN-SUFFIX,kelee.one
 # > Local_macOS
@@ -23,7 +15,6 @@ DOMAIN-SUFFIX,ghcr.io
 # > Pi
 DOMAIN-KEYWORD,minepi
 # > Web Utils
-DOMAIN-SUFFIX,luolicon.ru
 DOMAIN,i.lxlad.com
 DOMAIN-SUFFIX,greasyfork.org
 DOMAIN-SUFFIX,sleazyfork.org
@@ -37,14 +28,6 @@ DOMAIN-SUFFIX,script.hub
 DOMAIN-SUFFIX,sub.store
 DOMAIN-SUFFIX,jsdelivr.net
 # > Media Index
-DOMAIN-SUFFIX,pub2.term.wtf
-DOMAIN-SUFFIX,pub2.emby.wtf
-DOMAIN-SUFFIX,pub1.emby.wtf
-DOMAIN-SUFFIX,pub1.term.wtf
-DOMAIN-SUFFIX,playz.mjji.de
-DOMAIN-SUFFIX,heiliao.com
 DOMAIN-KEYWORD,phncdn
 DOMAIN-KEYWORD,pornhub
-DOMAIN-SUFFIX,txh067.com
-DOMAIN-SUFFIX,txh066.com
-DOMAIN-SUFFIX,kkav.com
+DOMAIN-SUFFIX,missav.ai
