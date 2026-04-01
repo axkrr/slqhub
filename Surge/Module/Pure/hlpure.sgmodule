@@ -9,6 +9,7 @@ URL-REGEX,^https?:\/\/heiliao\.com\/.*placeholder.*\.png,REJECT
 URL-REGEX,^https?:\/\/(pic\.kriipk\.cn|pic\.vugogg\.cn)\/hc237\/uploads\/default\/other\/(2026-03-21\/(83ff448cadef8de212adc6e8c324e9c8|c4d08f34557f6b7d575e095cf22be354)|2026-04-01\/(f40154ab0144580fa0a3bd62890a0836|395a46b40e56555c39c4042d754338a4))\.jpg$,REJECT
 URL-REGEX,^https?:\/\/pic\.kriipk\.cn\/hc237\/uploads\/default\/other\/2026-01-19\/(974f98be1eb3f1826a1dd5633af6a89b|38e8c9cb12efc360e48c824fefadb79d|429bbb4346bae16f6964199abef29060|d8bd4423648d740a8ed622f2c2181e41|165b4f6a7819cbc3802660bea2294cb0|0b11cf4c99b14f6f9e2e1ac5300c75f6|f8c240a80e22bc01a279d77bfef10313|878b33342523f6bede3ff31e995e7c28|fabf23019e87a19768a607df66b68101)\.(png|jpg)$,REJECT
 URL-REGEX,^https?:\/\/heiliao\.com\/static\/pc\/img\/popup_header\.png$,REJECT
+URL-REGEX,^https?:\/\/pic\.kriipk\.cn\/upload_01\/upload\/20260401\/2026040118271285724\.png$,REJECT
 
 [MITM]
 hostname = %APPEND% pic.vugogg.cn, pic.kriipk.cn, heiliao.com
