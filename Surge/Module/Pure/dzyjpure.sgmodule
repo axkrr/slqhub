@@ -1,0 +1,10 @@
+#!name=dzyjpure
+#!desc=地震预警净化
+#!category=广告拦截
+#!author=axkrr
+
+[Script]
+dzyjpure = type=http-response,pattern=^https?:\/\/(sdk\.e\.qq\.com\/ola\/v2|open\.e\.kuaishou\.cn\/rest\/e\/v3\/open\/config|sofire\.baidu\.com\/ios\/6\/m|.*\.ugen\.json),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub-entry/main/dzyjpure.js
+
+[MITM]
+hostname = %APPEND% sdk.e.qq.com, open.e.kuaishou.cn, sofire.baidu.com, *.bytescm.com
