@@ -1,11 +1,26 @@
-#!name=dzyjpure
-#!desc=地震预警净化 (防卡顿版)
+#!name=earthwkpure
+#!desc=地震预警去广告（开屏+多SDK净化）
 #!category=广告拦截
 #!author=axkrr
 
 [Script]
-# 地震预警广告净化
-dzyjpure = type=http-response,pattern=^https?:\/\/(sdk\.e\.qq\.com\/ola\/v2|open\.e\.kuaishou\.cn\/rest\/e\/v3\/open\/config|sofire\.baidu\.com\/ios\/6\/m|.*\.ugen\.json),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub-entry/main/dzyjpure.js
+// 核心广告（快手SDK）
+earthwkpure_univ = type=http-response,pattern=^https?:\/\/open\.e\.kuaishou\.cn\/rest\/e\/v3\/open\/univ(\?.*)?$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub-entry/main/dzyjpure.js
+
+// 配置接口兜底（防二次拉广告）
+earthwkpure_config = type=http-response,pattern=^https?:\/\/open\.e\.kuaishou\.cn\/rest\/e\/v3\/open\/config(\?.*)?$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub-entry/main/dzyjpure.js
+
+// Sigmob广告
+earthwkpure_sigmob = type=http-response,pattern=^https?:\/\/c\.etoolads\.cn\/s\/config(\?.*)?$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub-entry/main/dzyjpure.js
+
+// 腾讯广点通
+earthwkpure_gdt = type=http-response,pattern=^https?:\/\/sdk\.e\.qq\.com\/ola\/v2(\?.*)?$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub-entry/main/dzyjpure.js
+
+
+[URL Rewrite]
+// 广告素材直接拦（不会卡启动）
+^https?:\/\/p\d+-lm\.adukwai\.com\/bs2\/adUnionVideo\/.*\.(jpg|mp4) reject
+^https?:\/\/lf-cdn-tos\.bytescm\.com\/obj\/static\/ad\/.* reject
 
 [MITM]
-hostname = %APPEND%sdk.e.qq.com,open.e.kuaishou.cn,sofire.baidu.com,*.bytescm.com,*.e.qq.com
+hostname = %APPEND% open.e.kuaishou.cn,c.etoolads.cn,sdk.e.qq.com,p\d+-lm.adukwai.com,lf-cdn-tos.bytescm.com
