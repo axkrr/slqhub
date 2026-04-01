@@ -38,7 +38,7 @@ URL-REGEX,^https?:\/\/{{{DOMAIN}}}\.com\/images\/placeholder2\.png,REJECT
 [Script]
 kkavpure = type=http-response,pattern=aaCoverAd\.js,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub-entry/main/kkavpure.js
 
-kkavcss = type=http-response,pattern=^https?:\/\/{{{DOMAIN}}}\.com,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub-entry/main/kkavpure.js
+kkavcss = type=http-response,pattern=^https?:\/\/{{{DOMAIN}}}\.com,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub-entry/main/kkavcss.js
 
 [MITM]
 hostname = %APPEND% {{{DOMAIN}}}.com,*.{{{DOMAIN}}}.com
