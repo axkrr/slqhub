@@ -1,1 +1,7 @@
-g
+#!name=hlpure
+#!desc=heiliao净化
+#!category=mine
+#!author=axkrr
+
+[Rule]
+DOMAIN-SUFFIX,pic.vugogg.cn,REJECT
