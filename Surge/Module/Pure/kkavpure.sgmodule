@@ -6,6 +6,7 @@
 #!arguments-desc=[参数设置]\nDOMAIN: 填入网站域名.com前面部分
 
 [Rule]
+DOMAIN-SUFFIX,beyond4099.top,REJECT
 DOMAIN-SUFFIX,tjwqzz.com,REJECT
 DOMAIN-SUFFIX,xyzinf113.top,REJECT
 DOMAIN-SUFFIX,oline182.top,REJECT
