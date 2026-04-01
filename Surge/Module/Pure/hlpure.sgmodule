@@ -7,6 +7,7 @@
 URL-REGEX,^https?:\/\/(pic\.vugogg\.cn|pic\.kriipk\.cn)\/.*\.gif$,REJECT
 URL-REGEX,^https?:\/\/heiliao\.com\/.*placeholder.*\.png,REJECT
 URL-REGEX,^https?:\/\/(pic\.kriipk\.cn|pic\.vugogg\.cn)\/hc237\/uploads\/default\/other\/(2026-03-21\/(83ff448cadef8de212adc6e8c324e9c8|c4d08f34557f6b7d575e095cf22be354)|2026-04-01\/(f40154ab0144580fa0a3bd62890a0836|395a46b40e56555c39c4042d754338a4))\.jpg$,REJECT
+URL-REGEX,^https?:\/\/heiliao\.com\/static\/pc\/img\/popup_header\.png$,REJECT
 
 [MITM]
 hostname = %APPEND% pic.vugogg.cn, pic.kriipk.cn, heiliao.com
