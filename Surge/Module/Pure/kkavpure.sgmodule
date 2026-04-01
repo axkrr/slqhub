@@ -31,9 +31,8 @@ DOMAIN,d3ccefxs96519j.cloudfront.net,REJECT
 URL-REGEX,^https?:\/\/img\.alicdn\.com\/imgextra\/.*!!(2216598935604|2217565595682|2207246784654),REJECT
 # 美团CDN
 URL-REGEX,^https?:\/\/img\.meituan\.net\/content\/05d180f88068789c43d6ebd62be843a4181000\.gif,REJECT
-
-[Map Local]
-^https?:\/\/{{{DOMAIN}}}\.com\/images\/placeholder2\.png(\?.*)? data="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" status-code=200
+# 屏蔽广告占位图
+URL-REGEX,^https?:\/\/{{{DOMAIN}}}\.com\/images\/placeholder2\.png,REJECT
 
 [Script]
 kkavpure = type=http-response,pattern=aa(Float|Cover)Ad\.js,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub-entry/main/kkavpure.js
