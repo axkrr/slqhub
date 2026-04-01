@@ -3,5 +3,4 @@
 #!category=mine
 #!author=axkrr
 
-[Rule]
-DOMAIN-SUFFIX,pic.vugogg.cn,REJECT
+^https?:\/\/pic\.vugogg\.cn\/.*\.gif$ url reject
