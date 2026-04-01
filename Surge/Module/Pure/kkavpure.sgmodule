@@ -2,8 +2,6 @@
 #!desc=kkav净化
 #!category=广告拦截
 #!author=axkrr
-#!arguments=DOMAIN:kkavpure
-#!arguments-desc=[参数设置]\nDOMAIN: 填入网站域名.com前面部分
 
 [Rule]
 DOMAIN-SUFFIX,akoot92.onting550.top,REJECT
@@ -32,8 +30,3 @@ DOMAIN,d3ccefxs96519j.cloudfront.net,REJECT
 URL-REGEX,^https?:\/\/img\.alicdn\.com\/imgextra\/.*!!(2216598935604|2217565595682|2207246784654),REJECT
 # 美团CDN
 URL-REGEX,^https?:\/\/img\.meituan\.net\/content\/05d180f88068789c43d6ebd62be843a4181000\.gif,REJECT
-# 屏蔽广告占位图
-URL-REGEX,^https?:\/\/{{{DOMAIN}}}\.com\/images\/placeholder2\.png,REJECT
-
-[MITM]
-hostname = %APPEND% {{{DOMAIN}}}.com,*.{{{DOMAIN}}}.com
