@@ -4,7 +4,7 @@
 #!author=axkrr
 
 [Rule]
-URL-REGEX,^https?:\/\/pic\.vugogg\.cn\/.*\.gif$,REJECT
+URL-REGEX,^https?:\/\/(pic\.vugogg\.cn|pic\.kriipk\.cn)\/.*\.gif$,REJECT
 
 [MITM]
-hostname = %APPEND% pic.vugogg.cn
+hostname = %APPEND% pic.vugogg.cn, pic.kriipk.cn
