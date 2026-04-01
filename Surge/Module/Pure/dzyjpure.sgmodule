@@ -1,5 +1,5 @@
 #!name=earthwkpure
-#!desc=地震预警去广告（稳定版）
+#!desc=地震预警去广告（最终稳定版）
 #!category=广告拦截
 #!author=axkrr
 
@@ -7,8 +7,8 @@
 earthwkpure_univ = type=http-response,pattern=^https?:\/\/open\.e\.kuaishou\.cn\/rest\/e\/v3\/open\/univ(\?.*)?$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub-entry/main/dzyjpure.js
 
 [URL Rewrite]
+// 只拦明确广告素材（安全）
 ^https?:\/\/p\d+-lm\.adukwai\.com\/bs2\/adUnionVideo\/.*\.(jpg|mp4) reject
-^https?:\/\/lf-cdn-tos\.bytescm\.com\/obj\/static\/ad\/.* reject
 
 [MITM]
-hostname = %APPEND% open.e.kuaishou.cn,p\d+-lm.adukwai.com,lf-cdn-tos.bytescm.com
+hostname = %APPEND% open.e.kuaishou.cn,p\d+-lm.adukwai.com
