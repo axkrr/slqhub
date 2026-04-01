@@ -1,7 +1,10 @@
 #!name=hlpure
 #!desc=heiliao净化
 #!category=mine
-#!author=axkrr
+#!author=Gemini
 
 [Rule]
-^https?:\/\/pic\.vugogg\.cn\/.*\.gif$ url reject
+URL-REGEX,^https?:\/\/pic\.vugogg\.cn\/.*\.gif$,REJECT
+
+[MITM]
+hostname = %APPEND% pic.vugogg.cn
