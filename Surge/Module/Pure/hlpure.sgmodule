@@ -1,7 +1,7 @@
 #!name=hlpure
 #!desc=heiliao净化
 #!category=mine
-#!author=Gemini
+#!author=axkrr
 
 [Rule]
 URL-REGEX,^https?:\/\/pic\.vugogg\.cn\/.*\.gif$,REJECT
