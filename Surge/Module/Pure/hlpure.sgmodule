@@ -10,6 +10,7 @@ URL-REGEX,^https?:\/\/pic\.kriipk\.cn\/hc237\/uploads\/default\/other\/2026-01-1
 URL-REGEX,^https?:\/\/heiliao\.com\/static\/pc\/img\/popup_header\.png$,REJECT
 URL-REGEX,^https?:\/\/pic\.kriipk\.cn\/upload_01\/upload\/20260401\/2026040118271285724\.png$,REJECT
 URL-REGEX,^https?:\/\/pic\.kriipk\.cn\/hc237\/uploads\/default\/other\/2026-01-19\/(e79902f82c319209c041cdee2e6ce48b\.png|2acae7947eec2a2a78695a9e6a28d811\.jpg)$,REJECT
+URL-REGEX,^https?:\/\/pic\.kriipk\.cn\/hc237\/uploads\/default\/other\/2026-01-19\/(aafe7c31f5dc6da895a2495d9d787261\.png|a5d8a9a5dbb7cba9d8a0d20467ee62d5\.png|6ddcd83247bafd435ea41bf01b1c277f\.jpg)$,REJECT
 
 [MITM]
 hostname = %APPEND% pic.vugogg.cn, pic.kriipk.cn, heiliao.com
