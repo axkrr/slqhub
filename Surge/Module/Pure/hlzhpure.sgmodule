@@ -1,6 +1,6 @@
 #!name=hlzhpure
 #!desc=航旅纵横净化
-#!category=广告拦截
+#!category=axkrr
 #!author=axkrr
 
 [Rule]
@@ -13,7 +13,6 @@ DOMAIN-SUFFIX, ad.umetrip.com, REJECT
 #
 URL-REGEX, ^https?:\/\/oss\.umetrip\.com\/fs\/advert\/, REJECT
 URL-REGEX, ^https?:\/\/static\.umetrip\.com\/fs\/advert\/, REJECT
-#
 URL-REGEX, ^https?:\/\/.*\.umetrip\.com\/gateway\/api\/umetrip\/advert, REJECT
 
 [MITM]
