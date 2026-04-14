@@ -4,9 +4,9 @@
 # author: axkrr
 #-----------------------------------------
 # > apkpure
-DOMAIN-SUFFIX,apkpure.com
+host-suffix,apkpure.com
 # > dump
-DOMAIN-SUFFIX,decrypt.day
+host-suffix,decrypt.day
 # > scripting
 host,image.tmdb.org
 host,api.themoviedb.org
