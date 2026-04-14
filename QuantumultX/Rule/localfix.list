@@ -35,19 +35,9 @@ host,i.lxlad.com
 host-suffix,greasyfork.org
 host-suffix,sleazyfork.org
 # > media
-host-suffix,pub2.term.wtf
-host-suffix,pub2.emby.wtf
-host-suffix,pub1.emby.wtf
-host-suffix,pub1.term.wtf
-host-suffix,playz.mjji.de
 host-suffix,heiliao.com
 host-keyword,phncdn
 host-keyword,pornhub
-host-suffix,txh067.com
-host-suffix,javbus.com
-host-suffix,javdb.com
-host-suffix,missav.ai
-host-suffix,surrit.com
 # > api
 host-suffix,ip-api.com
 # > local tool
