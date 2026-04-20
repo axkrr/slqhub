@@ -29,7 +29,6 @@ host-suffix,ghcr.io
 host-suffix,macosicons.com
 # > pi
 host-keyword,minepi
-host-suffix,pinet.com
 # > web
 host,i.lxlad.com
 host-suffix,greasyfork.org
@@ -38,6 +37,7 @@ host-suffix,sleazyfork.org
 host-suffix,heiliao.com
 host-keyword,phncdn
 host-keyword,pornhub
+host,xueshan.liminalnet.com
 # > api
 host-suffix,ip-api.com
 # > local tool
