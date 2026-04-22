@@ -5,13 +5,14 @@
 #-----------------------------------------
 
 [rewrite_local]
-# > 屏蔽开屏及配置广告
-^https?:\/\/yike\.baidu\.com\/api\/(operation\/splash|config|ad\/get) url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/ykxcpure.js
-# > 百度系广告SDK
-^https?:\/\/mobads\.baidu\.com url reject-200
-^https?:\/\/mobads-logs\.baidu\.com url reject-200
+# > 脚本处理业务接口+权限接口
+^https?:\/\/yike\.baidu\.com\/api\/(operation\/splash|config) url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/ykxcpure.js
+^https?:\/\/pan\.baidu\.com\/api\/user\/privilege url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/ykxcpure.js
+# > 百度联盟SDK强制拦截并返回200
+^https?:\/\/mobads\.baidu\.com\/cpro\/ui\/mads\.php url reject-200
 ^https?:\/\/wn\.pos\.baidu\.com url reject-200
 ^https?:\/\/duclick\.baidu\.com url reject-200
 
 [mitm]
-hostname = %APPEND% yike.baidu.com, mobads.baidu.com, mobads-logs.baidu.com, wn.pos.baidu.com
+hostname = %APPEND% yike.baidu.com, pan.baidu.com, mobads.baidu.com, wn.pos.baidu.com
+
