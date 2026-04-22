@@ -6,12 +6,17 @@
 
 [rewrite_local]
 # > 开屏广告
-^https?:\/\/cgate\.zhaopin\.com\/operation\/ad\/bidMainPage url reject-dict
+^https?:\/\/cgate\.zhaopin\.com\/operation\/ad\/bidMainPage url response-body "url"\s*:\s*"https?:\/\/[^"]+" response-body "url":""
+^https?:\/\/cgate\.zhaopin\.com\/operation\/ad\/bidMainPage url response-body "url2"\s*:\s*"https?:\/\/[^"]+" response-body "url2":""
+
 # > 首页及其他弹窗广告
-^https?:\/\/cgate\.zhaopin\.com\/bdp\/operation\/getPopupInfo url reject-dict
-# > 屏蔽穿山甲第三方广告SDK请求
-^https?:\/\/.*\.pangolin-sdk-toutiao\d*\.com url reject
-^https?:\/\/.*\.pglstatp-toutiao\.com url reject
+^https?:\/\/cgate\.zhaopin\.com\/bdp\/operation\/getPopupInfo url response-body "items"\s*:\s*\[.*?\] response-body "items":[]
+
+# > 穿山甲第三方广告SDK
+^https?:\/\/.*\.pangolin-sdk-toutiao\d*\.com url reject-dict
+^https?:\/\/.*\.pglstatp-toutiao\.com url reject-dict
+^https?:\/\/gromore\.pangolin-sdk-toutiao\.com url reject-dict
+
 
 [mitm]
 hostname = %APPEND% cgate.zhaopin.com, *.pangolin-sdk-toutiao*.com, *.pglstatp-toutiao.com
