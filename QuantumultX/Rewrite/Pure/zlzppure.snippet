@@ -6,7 +6,7 @@
 
 [rewrite_local]
 # > 开屏、推荐广告及弹窗
-^https?:\/\/cgate\.zhaopin\.com\/(operation\/ad\/(bidMainPage|getAdRecommend)|bdp\/operation\/getPopupInfo) url script-response-body https://raw.githubusercontent.com/YourGitHub/rules/main/zhilian_pure.js
+^https?:\/\/cgate\.zhaopin\.com\/(operation\/ad\/(bidMainPage|getAdRecommend)|bdp\/operation\/getPopupInfo) url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/zlzppure.js
 
 # > 解决SDK无限重试
 ^https?:\/\/.*\.pangolin-sdk-toutiao\d*\.com url reject-200
