@@ -1,0 +1,13 @@
+[rewrite_local]
+# > 开屏广告
+^https?:\/\/cgate\.zhaopin\.com\/operation\/ad\/bidMainPage url reject-dict
+
+# > 首页及其他弹窗广告
+^https?:\/\/cgate\.zhaopin\.com\/bdp\/operation\/getPopupInfo url reject-dict
+
+# > 屏蔽穿山甲第三方广告SDK请求
+^https?:\/\/.*\.pangolin-sdk-toutiao\d*\.com url reject
+^https?:\/\/.*\.pglstatp-toutiao\.com url reject
+
+[mitm]
+hostname = %APPEND% cgate.zhaopin.com, *.pangolin-sdk-toutiao*.com, *.pglstatp-toutiao.com
