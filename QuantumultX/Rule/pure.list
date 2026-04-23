@@ -1,3 +1,5 @@
+# > ykxc
+host, pop.pcsnetwork.netdisk.baidu.com, reject
 # > 123panpure
 host-suffix,anythinktech.com,reject
 host-suffix,tk.anythinktech.com,reject
