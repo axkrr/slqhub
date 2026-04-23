@@ -6,6 +6,9 @@
 
 [rewrite]
 ^https?:\/\/pan\.baidu\.com\/rest\/2\.0\/pcs\/(adv|ad).* url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/ykxcpure.js
+^https?:\/\/pan\.baidu\.com\/rest\/2\.0\/xpan\/(nas|feed).* url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/ykxcpure.js
+^https?:\/\/pan\.baidu\.com\/(act\/v2\/|rest\/2\.0\/pcs\/banner).* url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/ykxcpure.js
+
 ^https?:\/\/(mobads|als|sofire|afd|afdconf)\.baidu\.com\/.* url reject-200
 ^https?:\/\/api-access\.pangolin-sdk-toutiao\d*\.com\/.* url reject-200
 ^https?:\/\/sf\d+-fe-tos\.pglstatp-toutiao\.com\/.* url reject-200
@@ -13,8 +16,10 @@
 ^https?:\/\/(sdk|api-htp)\.beizi\.biz\/.* url reject-200
 ^https?:\/\/sdk(-cfg)?\.adx\.adwangmai\.com\/.* url reject-200
 ^https?:\/\/sdk(log)?\.zhangyuyidong\.cn\/.* url reject-200
+
 ^https?:\/\/toblog\.ctobsnssdk\.com\/.* url reject
-^https?:\/\/.*\/(ad\/log|advert\/report|log\/ad|track\/ad).* url reject
+^https?:\/\/.*\/(ad\/log|advert\/report|track\/ad).* url reject
+
 
 [mitm]
 hostname = %APPEND% pan.baidu.com, mobads.baidu.com, als.baidu.com, sofire.baidu.com, afd.baidu.com, afdconf.baidu.com, api-access.pangolin-sdk-toutiao.com, api-access.pangolin-sdk-toutiao1.com, sf3-fe-tos.pglstatp-toutiao.com, sf6-fe-tos.pglstatp-toutiao.com, v2mi.gdt.qq.com, sdk.beizi.biz, api-htp.beizi.biz, sdk.adx.adwangmai.com, sdk-cfg.adx.adwangmai.com, sdk.zhangyuyidong.cn, sdklog.zhangyuyidong.cn, toblog.ctobsnssdk.com
