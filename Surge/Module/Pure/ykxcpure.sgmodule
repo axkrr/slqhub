@@ -1,0 +1,23 @@
+#!name=ykxcpure
+#!desc=一刻相册净化
+#!author=axkrr
+
+[Script]
+ykxcpure = type=http-response,pattern=^https?:\/\/pan\.baidu\.com\/rest\/2\.0\/pcs\/(adv|ad).*,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub-entry/main/ykxcpure.js
+ykxcpure = type=http-response,pattern=^https?:\/\/pan\.baidu\.com\/rest\/2\.0\/xpan\/(nas|feed).*,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub-entry/main/ykxcpure.js
+ykxcpure = type=http-response,pattern=^https?:\/\/pan\.baidu\.com\/(act\/v2\/|rest\/2\.0\/pcs\/banner).*,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub-entry/main/ykxcpure.js
+
+[URL Rewrite]
+^https?:\/\/(mobads|als|sofire|afd|afdconf)\.baidu\.com\/.* - reject
+^https?:\/\/api-access\.pangolin-sdk-toutiao\d*\.com\/.* - reject
+^https?:\/\/sf\d+-fe-tos\.pglstatp-toutiao\.com\/.* - reject
+^https?:\/\/v2mi\.gdt\.qq\.com\/.* - reject
+^https?:\/\/(sdk|api-htp)\.beizi\.biz\/.* - reject
+^https?:\/\/sdk(-cfg)?\.adx\.adwangmai\.com\/.* - reject
+^https?:\/\/sdk(log)?\.zhangyuyidong\.cn\/.* - reject
+^https?:\/\/toblog\.ctobsnssdk\.com\/.* - reject
+^https?:\/\/.*\/(ad\/log|advert\/report|track\/ad).* - reject
+
+
+[MITM]
+hostname = %APPEND% pan.baidu.com, mobads.baidu.com, als.baidu.com, sofire.baidu.com, afd.baidu.com, afdconf.baidu.com, api-access.pangolin-sdk-toutiao.com, api-access.pangolin-sdk-toutiao1.com, sf3-fe-tos.pglstatp-toutiao.com, sf6-fe-tos.pglstatp-toutiao.com, v2mi.gdt.qq.com, sdk.beizi.biz, api-htp.beizi.biz, sdk.adx.adwangmai.com, sdk-cfg.adx.adwangmai.com, sdk.zhangyuyidong.cn, sdklog.zhangyuyidong.cn, toblog.ctobsnssdk.com
