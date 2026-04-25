@@ -1,6 +1,6 @@
 #-----------------------------------------
 # name: yike_ads_clean
-# desc: 一刻相册全广告净化（最终完整版）
+# desc: 一刻相册广告净化（稳定最终版）
 # author: axkrr
 #-----------------------------------------
 
@@ -8,10 +8,10 @@
 
 ^https?:\/\/pan\.baidu\.com\/rest\/2\.0\/pcs\/(adv|ad).* url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/ykxcpure.js
 
-^https?:\/\/pan\.baidu\.com\/rest\/2\.0\/xpan\/(guide|personalized|home|albumtab|nas|feed).* url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/ykxcpure.js
+^https?:\/\/pan\.baidu\.com\/rest\/2\.0\/xpan\/(home|albumtab|nas|feed|guide|personalized).* url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/ykxcpure.js
 
 
-; SDK兜底
+; ===== SDK兜底（防止残留广告）=====
 ^https?:\/\/(mobads|als|sofire|afd|afdconf)\.baidu\.com\/.* url reject-200
 ^https?:\/\/api-access\.pangolin-sdk-toutiao\d*\.com\/.* url reject-200
 ^https?:\/\/sf\d+-fe-tos\.pglstatp-toutiao\.com\/.* url reject-200
@@ -20,7 +20,7 @@
 ^https?:\/\/sdk(-cfg)?\.adx\.adwangmai\.com\/.* url reject-200
 ^https?:\/\/sdk(log)?\.zhangyuyidong\.cn\/.* url reject-200
 
-; 上报
+; ===== 上报（可选）=====
 ^https?:\/\/toblog\.ctobsnssdk\.com\/.* url reject
 ^https?:\/\/.*\/(ad\/log|advert\/report|track\/ad).* url reject
 
