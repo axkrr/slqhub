@@ -1,6 +1,6 @@
 #-----------------------------------------
 # name: yike_ads_clean
-# desc: 一刻相册全广告净化（开屏加速+信息流+无占位）
+# desc: 一刻相册全广告净化（最终完整版）
 # author: axkrr
 #-----------------------------------------
 
@@ -8,12 +8,10 @@
 
 ^https?:\/\/pan\.baidu\.com\/rest\/2\.0\/pcs\/(adv|ad).* url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/ykxcpure.js
 
-^https?:\/\/pan\.baidu\.com\/rest\/2\.0\/xpan\/(nas|feed|smartprogram|activityentry).* url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/ykxcpure.js
-
-^https?:\/\/pan\.baidu\.com\/(act\/v2\/homepage|act\/v2\/album|act\/v2\/|rest\/2\.0\/pcs\/banner).* url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/ykxcpure.js
+^https?:\/\/pan\.baidu\.com\/rest\/2\.0\/xpan\/(guide|personalized|home|albumtab|nas|feed).* url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/ykxcpure.js
 
 
-; SDK兜底（防漏）
+; SDK兜底
 ^https?:\/\/(mobads|als|sofire|afd|afdconf)\.baidu\.com\/.* url reject-200
 ^https?:\/\/api-access\.pangolin-sdk-toutiao\d*\.com\/.* url reject-200
 ^https?:\/\/sf\d+-fe-tos\.pglstatp-toutiao\.com\/.* url reject-200
