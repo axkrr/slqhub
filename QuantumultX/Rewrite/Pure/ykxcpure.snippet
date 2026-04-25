@@ -3,26 +3,14 @@
 # desc: 一刻相册广告净化（稳定最终版）
 # author: axkrr
 #-----------------------------------------
+# > 业务接口脚本处理 (开屏+横幅+配置)
+^https?:\/\/yike\.baidu\.com\/api\/(operation\/(splash|banner)|config) url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/ykxcpure.js
+^https?:\/\/pan\.baidu\.com\/api\/user\/privilege url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/ykxcpure.js
 
-[rewrite]
-
-^https?:\/\/pan\.baidu\.com\/rest\/2\.0\/pcs\/(adv|ad).* url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/ykxcpure.js
-
-^https?:\/\/pan\.baidu\.com\/rest\/2\.0\/xpan\/(home|albumtab|nas|feed|guide|personalized).* url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/ykxcpure.js
-
-; ===== SDK兜底（防止残留广告）=====
-^https?:\/\/(mobads|als|sofire|afd|afdconf)\.baidu\.com\/.* url reject-200
-^https?:\/\/api-access\.pangolin-sdk-toutiao\d*\.com\/.* url reject-200
-^https?:\/\/sf\d+-fe-tos\.pglstatp-toutiao\.com\/.* url reject-200
-^https?:\/\/v2mi\.gdt\.qq\.com\/.* url reject-200
-^https?:\/\/(sdk|api-htp)\.beizi\.biz\/.* url reject-200
-^https?:\/\/sdk(-cfg)?\.adx\.adwangmai\.com\/.* url reject-200
-^https?:\/\/sdk(log)?\.zhangyuyidong\.cn\/.* url reject-200
-
-; ===== 上报（可选）=====
-^https?:\/\/toblog\.ctobsnssdk\.com\/.* url reject
-^https?:\/\/.*\/(ad\/log|advert\/report|track\/ad).* url reject
-
+# > 广告 SDK 阻断 (防止无限重试引起的卡顿)
+^https?:\/\/mobads\.baidu\.com\/cpro\/ui\/mads\.php url reject-200
+^https?:\/\/wn\.pos\.baidu\.com url reject-200
+^https?:\/\/duclick\.baidu\.com url reject-200
 
 [mitm]
-hostname = %APPEND% pan.baidu.com, mobads.baidu.com, als.baidu.com, sofire.baidu.com, afd.baidu.com, afdconf.baidu.com, api-access.pangolin-sdk-toutiao.com, api-access.pangolin-sdk-toutiao1.com, sf3-fe-tos.pglstatp-toutiao.com, sf6-fe-tos.pglstatp-toutiao.com, v2mi.gdt.qq.com, sdk.beizi.biz, api-htp.beizi.biz, sdk.adx.adwangmai.com, sdk-cfg.adx.adwangmai.com, sdk.zhangyuyidong.cn, sdklog.zhangyuyidong.cn, toblog.ctobsnssdk.com
+hostname = %APPEND% yike.baidu.com, pan.baidu.com, mobads.baidu.com, wn.pos.baidu.com
