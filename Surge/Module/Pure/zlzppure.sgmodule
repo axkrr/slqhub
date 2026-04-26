@@ -1,6 +1,7 @@
-#!name = zlzppure
-#!desc = 智联招聘净化
-#!update: 2026-04-24
+#!name=zlzppure
+#!desc=智联招聘净化
+#!category=axkrr
+#!update:2026-04-24
 
 [Script]
 # > 业务接口处理
