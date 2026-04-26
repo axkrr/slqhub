@@ -4,7 +4,7 @@
 
 [Script]
 # > 业务接口处理
-zlzppure = type=http-response,pattern=^https?:\/\/cgate\.zhaopin\.com\/(operation\/ad\/(bidMainPage|getAdRecommend)|bdp\/operation\/getPopupInfo),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/open_config/main/zlzppure.js
+zlzppure = type=http-response,pattern=^https?:\/\/cgate\.zhaopin\.com\/(operation\/ad\/(bidMainPage|getAdRecommend)|bdp\/operation\/getPopupInfo),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub-entry/main/zlzppure.js
 # > SDK拦截
 ^https?:\/\/.*\.pangolin-sdk-toutiao\d*\.com - reject-dict
 ^https?:\/\/.*\.pglstatp-toutiao\.com - reject-dict
