@@ -1,0 +1,14 @@
+#!name=京东历史比价
+#!desc=首次使用请打开【慢慢买】APP，点击【我的】，提示【获取ck成功🎉】即可正常比价
+#!category=enhance
+#!author=wf021325
+
+[Script]
+jd_price_res = type=http-response, pattern=^https?:\/\/in\.m\.jd\.com\/product\/graphext\/\d+\.html, requires-body=1, max-size=0, script-path=https://raw.githubusercontent.com/wf021325/qx/master/js/jd_price.js
+jd_price_req = type=http-request, pattern=^https?:\/\/apapia-sqk-weblogic\.manmanbuy\.com\/baoliao\/center\/menu$, requires-body=1, max-size=0, script-path=https://raw.githubusercontent.com/wf021325/qx/master/js/jd_price.js
+
+# jd_price_res_local = type=http-response, pattern=^https?:\/\/in\.m\.jd\.com\/product\/graphext\/\d+\.html, requires-body=1, max-size=0, script-path=http://192.168.2.170:8080/jd_price.js
+# jd_price_req_local = type=http-request, pattern=^https?:\/\/apapia-sqk-weblogic\.manmanbuy\.com\/baoliao\/center\/menu$, requires-body=1, max-size=0, script-path=http://192.168.2.170:8080/jd_price.js
+
+[MITM]
+hostname = %APPEND% in.m.jd.com, apapia-sqk-weblogic.manmanbuy.com
