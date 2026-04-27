@@ -1,7 +1,7 @@
 #!name=ProKnockOut
 #!desc=crack
-#!category=axkrr
-#!author=彭于晏💞,axkrr
+#!category=crack
+#!author=彭于晏💞
 
 [Script]
 Proknockout = type=http-response, pattern=^https:\/\/buy\.itunes\.apple\.com\/verifyReceipt, script-path=https://raw.githubusercontent.com/89996462/Quantumult-X/main/ycdz/Proknockout.js, requires-body=true, max-size=-1, timeout=60
