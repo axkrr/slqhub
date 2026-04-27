@@ -1,10 +1,7 @@
 #!name=Google
-#!desc=某些APP要清除缓存或者重新安装拦截广告才会生效！
+#!desc=谷歌系广告净化
+#!category=iNaiSi
 #!author=奶思
-#!category=奶思的模块
-#!homepage=https://github.com/fmz200/wool_scripts
-#!raw-url=https://github.com/fmz200/wool_scripts/raw/main/Surge/module/split/partG/Google.sgmodule
-#!tg-channel=https://t.me/inaisi
 
 [Rule]
 DOMAIN-SUFFIX,google-analytics.com,REJECT
