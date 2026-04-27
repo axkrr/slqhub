@@ -1,6 +1,6 @@
-#!name=PingMeck
-#!desc=PingMe获取cookie
-#!category=axkrr
+#!name=PingMe
+#!desc=获取cookie
+#!category=cookie
 #!author=@ZenMoFiShi,fmz200
 
 [Script]
