@@ -1,0 +1,23 @@
+# > ChatGPT
+DOMAIN-SUFFIX,chatgpt.com
+DOMAIN-SUFFIX,oaistatic.com
+DOMAIN-SUFFIX,oaiusercontent.com
+DOMAIN-SUFFIX,openai.com
+DOMAIN,api.statsig.com
+DOMAIN,api-iam.intercom.io
+DOMAIN,chatgpt.livekit.cloud
+DOMAIN,o33249.ingest.sentry.io
+DOMAIN,openaiapi-site.azureedge.net
+DOMAIN,sfo3.turn.livekit.cloud
+DOMAIN-KEYWORD,openaicom
+# > Claude
+DOMAIN-SUFFIX,claude.ai
+DOMAIN-SUFFIX,anthropic.com
+# > Gemini
+DOMAIN,ai.google.dev
+DOMAIN,bard.google.com
+DOMAIN,gemini.google.com
+DOMAIN,generativelanguage.googleapis.com
+DOMAIN,proactivebackend-pa.googleapis.com
+# > Copilot
+DOMAIN-SUFFIX,githubcopilot.com
