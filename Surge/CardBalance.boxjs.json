@@ -1,0 +1,61 @@
+{
+  "id": "CQU.CardBalance",
+  "name": "重庆大学饭卡",
+  "author": "@Hermes",
+  "description": "重庆大学一卡通饭卡余额数据采集",
+  "icon": "https://img.icons8.com/color/144/credit-card--v1.png",
+  "repo": "",
+  "apps": [
+    {
+      "id": "CQU.CardBalance",
+      "name": "饭卡余额",
+      "descs_html": [
+        "用于保存重庆大学一卡通系统抓取到的 <code>Cookie</code> 和余额数据，供 Scripting 小组件使用。",
+        "<b>获取方式：</b><br/>1）启用本模块并开启 MITM：<code>card.cqu.edu.cn</code>；<br/>2）在浏览器中打开余额查询页面 <code>http://card.cqu.edu.cn/PPage/ComePage?flowID=14</code>；<br/>3）确保已登录，页面加载完成后脚本自动写入 Cookie 和余额数据。",
+        "<b>说明：</b><br/>• Cookie 和余额数据会自动抓取并写入，无需手动填写；<br/>• 余额数据包含：余额金额、账户列表、更新时间等。"
+      ],
+      "icons": [
+        "https://img.icons8.com/color/144/credit-card--v1.png",
+        "https://img.icons8.com/color/144/credit-card--v1.png"
+      ],
+      "keys": [
+        "@CQU.CardBalance.Settings"
+      ],
+      "settings": [
+        {
+          "id": "@CQU.CardBalance.Settings.Cookie",
+          "name": "饭卡 Cookie（完整字符串）",
+          "type": "text",
+          "val": "",
+          "placeholder": "脚本自动抓取，无需手动填写",
+          "desc": "脚本会自动写入完整 Cookie 字符串。如需重置，可先清空此字段，再重新打开余额页面触发抓取。"
+        },
+        {
+          "id": "@CQU.CardBalance.Settings.Balance",
+          "name": "当前余额（元）",
+          "type": "text",
+          "val": "",
+          "placeholder": "脚本自动更新",
+          "desc": "最近一次抓取到的饭卡余额，单位：元。"
+        },
+        {
+          "id": "@CQU.CardBalance.Settings.BalanceRaw",
+          "name": "余额原始数据",
+          "type": "textarea",
+          "rows": 4,
+          "val": "",
+          "placeholder": "脚本自动更新",
+          "desc": "包含所有账户信息的完整 JSON 数据。"
+        },
+        {
+          "id": "@CQU.CardBalance.Settings.UpdatedAt",
+          "name": "最后更新时间",
+          "type": "text",
+          "val": "",
+          "placeholder": "脚本自动更新",
+          "desc": "最近一次成功抓取余额的时间。"
+        }
+      ]
+    }
+  ]
+}
