@@ -4,7 +4,7 @@
 #!author=Hermes
  
 [Script]
-饭卡Cookie = type=http-request, pattern=http:\/\/card\.cqu\.edu\.cn\/NcAccType\/GetCurrentAccountList, script-path=https://raw.githubusercontent.com/你的用户名/你的仓库/main/CardBalance.js, requires-body=1, max-size=0, script-update-interval=0
+饭卡Cookie = type=http-request, pattern=http:\/\/card\.cqu\.edu\.cn\/NcAccType\/GetCurrentAccountList, script-path=https://raw.githubusercontent.com/axkrr/slqhub-entry/main/cardbalance.js, requires-body=1, max-size=0, script-update-interval=0
  
 [MITM]
 hostname = %APPEND% card.cqu.edu.cn
