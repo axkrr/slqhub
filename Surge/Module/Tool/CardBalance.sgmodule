@@ -1,10 +1,10 @@
-#!name=重庆大学饭卡余额
-#!desc=获取重庆大学一卡通饭卡 Cookie
-#!category=组件服务
-#!author=Hermes
+#!name=一卡通余额
+#!desc=获取一卡通ck
+#!category=cookie
+#!author=axkrr
  
 [Script]
-饭卡Cookie = type=http-request, pattern=http:\/\/card\.cqu\.edu\.cn\/NcAccType\/GetCurrentAccountList, script-path=https://raw.githubusercontent.com/axkrr/slqhub-entry/main/cardbalance.js, requires-body=1, max-size=0, script-update-interval=0
+一卡通ck = type=http-request, pattern=http:\/\/card\.cqu\.edu\.cn\/NcAccType\/GetCurrentAccountList, script-path=https://raw.githubusercontent.com/axkrr/slqhub-entry/main/cardbalance.js, requires-body=1, max-size=0, script-update-interval=0
  
 [MITM]
 hostname = %APPEND% card.cqu.edu.cn
