@@ -1,8 +1,8 @@
 {
   "id": "CQU",
   "name": "一卡通余额",
-  "author": "axkrr",
-  "repo": "https://github.com/axkrr/slqhub",
+  "author": "@axkrr",
+  "repo": "https://github.com/axkrr",
   "apps": [
     {
       "id": "CQU.CardBalance",
