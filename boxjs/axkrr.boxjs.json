@@ -1,34 +1,26 @@
 {
-  "id": "CQU.CardBalance",
-  "name": "重庆大学饭卡",
-  "author": "@Hermes",
-  "description": "重庆大学一卡通饭卡余额数据采集",
-  "icon": "https://img.icons8.com/color/144/credit-card--v1.png",
-  "repo": "",
+  "id": "CQU",
+  "name": "一卡通余额",
+  "author": "@axkrr",
+  "repo": "https://github.com/axkrr/slqhub",
   "apps": [
     {
       "id": "CQU.CardBalance",
-      "name": "饭卡余额",
-      "descs_html": [
-        "用于保存重庆大学一卡通系统抓取到的 <code>Cookie</code>，供 Scripting 小组件使用。",
-        "<b>获取方式：</b><br/>1）启用本模块并开启 MITM：<code>card.cqu.edu.cn</code>；<br/>2）在浏览器中打开余额查询页面 <code>http://card.cqu.edu.cn/PPage/ComePage?flowID=14</code>；<br/>3）页面加载时自动触发 <code>NcAccType/GetCurrentAccountList</code> 接口，脚本自动写入 Cookie。",
-        "<b>说明：</b><br/>• 脚本会自动抓取 Cookie 并写入 <code>CQU.CardBalance.Settings.Cookie</code>；<br/>• 无需手动填写，如需重置可清空后重新触发。"
-      ],
+      "name": "一卡通余额",
       "icons": [
-        "https://img.icons8.com/color/144/credit-card--v1.png",
-        "https://img.icons8.com/color/144/credit-card--v1.png"
+        "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/card2.png"
       ],
       "keys": [
-        "@CQU.CardBalance.Settings"
+        "@CQU.CardBalance.Settings.Cookie"
       ],
       "settings": [
         {
           "id": "@CQU.CardBalance.Settings.Cookie",
-          "name": "饭卡 Cookie（完整字符串）",
+          "name": "一卡通Cookie",
           "type": "text",
           "val": "",
-          "placeholder": "脚本自动抓取，无需手动填写",
-          "desc": "脚本会自动写入完整 Cookie 字符串。如需重置，可先清空此字段，再重新打开余额页面触发抓取。"
+          "desc": "脚本自动抓取，无需手动填写",
+          "placeholder": "打开校园卡页面自动获取"
         }
       ]
     }
