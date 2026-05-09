@@ -6,9 +6,13 @@
 
 [rewrite]
 ^https?://interface.*\.music\.163\.com/eapi/ad/get url reject
+
 ^https?://interface.*\.music\.163\.com/eapi/ad/config/get url reject
+
 ^https?://interface.*\.music\.163\.com/eapi/ad/iyunIds url reject
+
 ^https?://interface.*\.music\.163\.com/eapi/ad/prefetch/select url reject
+
 ^https?://interface.*\.music\.163\.com/eapi/ad/loading/current url reject
 
 ^https?:\/\/interface\d?\.music\.163\.com\/eapi\/(?:delivery\/(batch-)?deliver|moment\/tab\/info\/|side-bar\/mini-program\/music-service\/account|yunbei\/account\/entrance\/) url reject-dict
