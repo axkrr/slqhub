@@ -1,29 +1,29 @@
 # > unknown
-domain,sdl.dtzsghnr.cn
-domain-suffix,sentry.io
+DOMAIN,sdl.dtzsghnr.cn
+DOMAIN-SUFFIX,sentry.io
 # > umeng
-domain-suffix,unity3d.com
+DOMAIN-SUFFIX,unity3d.com
 # > 一刻相册
-domain,pop.pcsnetwork.netdisk.baidu.com
+DOMAIN,pop.pcsnetwork.netdisk.baidu.com
 # > 123云盘
-domain-suffix,anythinktech.com
-domain-suffix,tk.anythinktech.com
-domain-suffix,e.qq.com
-domain-suffix,gdt.qq.com
-domain-suffix,pangolin-sdk-toutiao-b.com
-domain-suffix, beizi.biz
-domain-suffix, bzads.com
-domain-suffix, shanghailingye.cn
-domain-keyword, pangolin-sdk
+DOMAIN-SUFFIX,anythinktech.com
+DOMAIN-SUFFIX,tk.anythinktech.com
+DOMAIN-SUFFIX,e.qq.com
+DOMAIN-SUFFIX,gdt.qq.com
+DOMAIN-SUFFIX,pangolin-sdk-toutiao-b.com
+DOMAIN-SUFFIX, beizi.biz
+DOMAIN-SUFFIX, bzads.com
+DOMAIN-SUFFIX, shanghailingye.cn
+DOMAIN-KEYWORD, pangolin-sdk
 # > porn
-domain-suffix,mc.yandex.ru
-domain-suffix,static.cloudflareinsights.com
+DOMAIN-SUFFIX,mc.yandex.ru
+DOMAIN-SUFFIX,static.cloudflareinsights.com
 # > 网易云音乐
-domain,iadmat.nosdn.127.net
-domain,iadmatapk.nosdn.127.net
-domain,iadmusicmat.music.126.net
-domain,iadmusicmatvideo.music.126.net
-domain,ipv4.music.163.com
-domain,ipv6.music.163.com
+DOMAIN,iadmat.nosdn.127.net
+DOMAIN,iadmatapk.nosdn.127.net
+DOMAIN,iadmusicmat.music.126.net
+DOMAIN,iadmusicmatvideo.music.126.net
+DOMAIN,ipv4.music.163.com
+DOMAIN,ipv6.music.163.com
 # > 去上网
-domain,cuiniu.8quan.com
+DOMAIN,cuiniu.8quan.com
