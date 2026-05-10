@@ -1,4 +1,29 @@
-DOMAIN,sdl.dtzsghnr.cn
-DOMAIN,cuiniu.8quan.com
-DOMAIN-SUFFIX,unity3d.com
-DOMAIN-SUFFIX,sentry.io
+# > unknown
+domain,sdl.dtzsghnr.cn
+domain-suffix,sentry.io
+# > umeng
+domain-suffix,unity3d.com
+# > 一刻相册
+domain, pop.pcsnetwork.netdisk.baidu.com, reject
+# > 123云盘
+domain-suffix,anythinktech.com,reject
+domain-suffix,tk.anythinktech.com,reject
+domain-suffix,e.qq.com,reject
+domain-suffix,gdt.qq.com,reject
+domain-suffix,pangolin-sdk-toutiao-b.com,reject
+domain-suffix, beizi.biz,reject
+domain-suffix, bzads.com,reject
+domain-suffix, shanghailingye.cn,reject
+domain-keyword, pangolin-sdk,reject
+# > porn
+domain-suffix,mc.yandex.ru,reject
+domain-suffix,static.cloudflareinsights.com,reject
+# > 网易云音乐
+domain,iadmat.nosdn.127.net,reject
+domain,iadmatapk.nosdn.127.net,reject
+domain,iadmusicmat.music.126.net,reject
+domain,iadmusicmatvideo.music.126.net,reject
+domain,ipv4.music.163.com,reject
+domain,ipv6.music.163.com,reject
+# > 去上网
+domain,cuiniu.8quan.com,reject
