@@ -1,48 +1,48 @@
 # > yfamily
-domain-suffix,yfamilys.com
+DOMAIN-SUFFIX,yfamilys.com
 # > apkpure
-domain-suffix,apkpure.com
+DOMAIN-SUFFIX,apkpure.com
 # > crypto
-domain-suffix,api.binance.com
+DOMAIN-SUFFIX,api.binance.com
 # > xueshan
-domain-suffix,xueshan.shop
+DOMAIN-SUFFIX,xueshan.shop
 # > jisuyun
-domain-suffix,905.jsy902.xyz
+DOMAIN-SUFFIX,905.jsy902.xyz
 # > iios
-domain-suffix,dpdns.org
+DOMAIN-SUFFIX,dpdns.org
 # > dump
-domain-suffix,decrypt.day
+DOMAIN-SUFFIX,decrypt.day
 # > scripting
-domain-suffix,workers.dev
-domain-suffix,pages.dev
+DOMAIN-SUFFIX,workers.dev
+DOMAIN-SUFFIX,pages.dev
 # > zlibrary
-domain-suffix,z-library.sk
+DOMAIN-SUFFIX,z-library.sk
 # > shortcut
-domain,routinehub.co
+DOMAIN,routinehub.co
 # > kelee
-domain-suffix,kelee.one
+DOMAIN-SUFFIX,kelee.one
 # > Local_macOS
-domain-keyword,brew
-domain-keyword,rust
-domain-suffix,ghcr.io
+DOMAIN-KEYWORD,brew
+DOMAIN-KEYWORD,rust
+DOMAIN-SUFFIX,ghcr.io
 # > Pi
-domain-keyword,minepi
+DOMAIN-KEYWORD,minepi
 # > Web Utils
-domain,i.lxlad.com
-domain-suffix,greasyfork.org
-domain-suffix,sleazyfork.org
+DOMAIN,i.lxlad.com
+DOMAIN-SUFFIX,greasyfork.org
+DOMAIN-SUFFIX,sleazyfork.org
 # > API Interface
-domain-suffix,dompling.github.io
-domain,agent.curtin.top
-domain-suffix,vercel.app
-domain-suffix,ip-api.com
-domain-suffix,boxjs.com
-domain-suffix,script.hub
-domain-suffix,sub.store
-domain-suffix,jsdelivr.net
+DOMAIN-SUFFIX,dompling.github.io
+DOMAIN,agent.curtin.top
+DOMAIN-SUFFIX,vercel.app
+DOMAIN-SUFFIX,ip-api.com
+DOMAIN-SUFFIX,boxjs.com
+DOMAIN-SUFFIX,script.hub
+DOMAIN-SUFFIX,sub.store
+DOMAIN-SUFFIX,jsdelivr.net
 # > Media Index
-domain-keyword,phncdn
-domain-keyword,pornhub
-domain-suffix,missav.ai
-domain-suffix,heiliao.com
-domain-suffix,liminalnet.com
+DOMAIN-KEYWORD,phncdn
+DOMAIN-KEYWORD,pornhub
+DOMAIN-SUFFIX,missav.ai
+DOMAIN-SUFFIX,heiliao.com
+DOMAIN-SUFFIX,liminalnet.com
