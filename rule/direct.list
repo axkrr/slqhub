@@ -1,88 +1,88 @@
 # > feather
 domain-suffix,backloop.dev
 # > api
-domain,api.xsj.wasu.tv,direct
+domain,api.xsj.wasu.tv
 # > 12306
-domain,ad.12306.cn,direct
+domain,ad.12306.cn
 # > anti-ad
-domain-keyword,anti-ad.net,direct
+domain-keyword,anti-ad.net
 # > alibaba
-domain,log.mmstat.com,direct
-domain,sycm.mmstat.com,direct
+domain,log.mmstat.com
+domain,sycm.mmstat.com
 # > 爱影视
-domain,static.jssp.tv,direct
-domain,lain.bgm.tv,direct
-domain,tiao.cjkypo.com,direct
-domain,ok.zuidapic.com,direct
-domain,ts.thefiledomaining.com,direct
-domain,deo.shopeemobile.com,direct
-domain,m3u8.255tv.tk,direct
-domain,m3u8.mstopq.com,direct
-domain,ain.bgm.tv,direct
-domain-keyword,vip.lz-cdn,direct
-domain-keyword,ax1x.com,direct
-domain-keyword,o.lencr.org,direct
-domain-keyword,ttcdn-tos.kkimg.cc,direct
+domain,static.jssp.tv
+domain,lain.bgm.tv
+domain,tiao.cjkypo.com
+domain,ok.zuidapic.com
+domain,ts.thefiledomaining.com
+domain,deo.shopeemobile.com
+domain,m3u8.255tv.tk
+domain,m3u8.mstopq.com
+domain,ain.bgm.tv
+domain-keyword,vip.lz-cdn
+domain-keyword,ax1x.com
+domain-keyword,o.lencr.org
+domain-keyword,ttcdn-tos.kkimg.cc
 # > 大师兄影视
-domain,sdk.alibaba.com.ailbaba.me,direct
-domain,img.ffzypic.com,direct
-domain,img.liangzipic.com,direct
-domain,img.bfzypic.com,direct
-domain,img.kuaikanzy.net,direct
-domain,vip.imgffzy.com,direct
-domain,vip.ffzyread.com,direct
-domain,image.maimn.com,direct
-domain-keyword,bfzycdn.com,direct
-domain-keyword,vip.kuaikan-cdn,direct
-domain-keyword,vip.ffzy-play,direct
-domain-keyword,vip.ffzy-online,direct
+domain,sdk.alibaba.com.ailbaba.me
+domain,img.ffzypic.com
+domain,img.liangzipic.com
+domain,img.bfzypic.com
+domain,img.kuaikanzy.net
+domain,vip.imgffzy.com
+domain,vip.ffzyread.com
+domain,image.maimn.com
+domain-keyword,bfzycdn.com
+domain-keyword,vip.kuaikan-cdn
+domain-keyword,vip.ffzy-play
+domain-keyword,vip.ffzy-online
 # > 苹果推送服务
-domain-keyword,push.apple.com,direct
+domain-keyword,push.apple.com
 # > 苹果时间同步
-domain, time.apple.com,direct
+domain, time.apple.com
 # > 苹果天气服务
-domain-keyword,weather-edge.apple.com,direct
-domain-keyword,weather-adge.apple.com,direct
-domain-suffix,weather-data.apple.com,direct
-domain-suffix,weather-map.apple.com,direct
-domain-suffix,weather-analytics-events.apple.com,direct
+domain-keyword,weather-edge.apple.com
+domain-keyword,weather-adge.apple.com
+domain-suffix,weather-data.apple.com
+domain-suffix,weather-map.apple.com
+domain-suffix,weather-analytics-events.apple.com
 # > 苹果内购服务
-domain-keyword,buy.itunes.apple.com,direct
+domain-keyword,buy.itunes.apple.com
 # > 苹果icloud
-domain-keyword,icloud.com,direct
+domain-keyword,icloud.com
 # > 苹果输入法相关服务
-domain-keyword,api.smoot.apple.com,direct
-domain-keyword,api.smoot.apple.cn,direct
+domain-keyword,api.smoot.apple.com
+domain-keyword,api.smoot.apple.cn
 # > 苹果iMessage服务
-domain,init.ess.apple.com,direct
+domain,init.ess.apple.com
 # > 苹果其他服务
-domain,smp-device-content.apple.com,direct
-domain-keyword,ssl.apple.com,direct
-domain-keyword,humb.apple.com,direct
-domain-keyword,api-adservices.apple.com,direct
-domain-keyword,ls.apple.com,direct
-domain-keyword,gsa.apple.com,direct
-domain-keyword,ess.apple.com,direct
+domain,smp-device-content.apple.com
+domain-keyword,ssl.apple.com
+domain-keyword,humb.apple.com
+domain-keyword,api-adservices.apple.com
+domain-keyword,ls.apple.com
+domain-keyword,gsa.apple.com
+domain-keyword,ess.apple.com
 # > 苹果app store
-domain,itunes.apple.com,direct
+domain,itunes.apple.com
 # > 苹果播客
-domain-keyword,amp-api.podcasts.apple.com,proxy
+domain-keyword,amp-api.podcasts.apple.com
 # > QQ空间
-domain-keyword,ctc.qzs.qzone.qq.com,direct
+domain-keyword,ctc.qzs.qzone.qq.com
 # > strava
-domain,analytics.strava.com,direct
+domain,analytics.strava.com
 # > tencent
-domain,fairplay.l.qq.com,direct
-domain,livew.l.qq.com,direct
-domain,vd.l.qq.com,direct
-domain,vi.l.qq.com,direct
+domain,fairplay.l.qq.com
+domain,livew.l.qq.com
+domain,vd.l.qq.com
+domain,vi.l.qq.com
 # > umeng
-domain,msg.umeng.com,direct
-domain,msg.umengcloud.com,direct
+domain,msg.umeng.com
+domain,msg.umengcloud.com
 # > 携程
-domain-keyword,aw-s.tripcdn.com,direct
-domain-keyword,trip.com,direct
+domain-keyword,aw-s.tripcdn.com
+domain-keyword,trip.com
 # > 路由器后台
-ip-cidr,192.168.0.1/24,direct
+ip-cidr,192.168.0.1/24
 # > 天翼网关
-ip-cidr,192.168.1.1/24,direct
+ip-cidr,192.168.1.1/24
