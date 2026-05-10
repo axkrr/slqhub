@@ -83,6 +83,6 @@ DOMAIN,msg.umengcloud.com
 DOMAIN-KEYWORD,aw-s.tripcdn.com
 DOMAIN-KEYWORD,trip.com
 # > 路由器后台
-ip-cidr,192.168.0.1/24
+IP-CIDR,192.168.0.1/24
 # > 天翼网关
-ip-cidr,192.168.1.1/24
+IP-CIDR,192.168.1.1/24
