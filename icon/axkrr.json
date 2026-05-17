@@ -1,6 +1,6 @@
 {
   "name": "axkrr图标库",
-  "description": "收集常用的图标，分辨率为144＊144，搜索方式为app名称拼音缩写，更新日期：2026-05-18",
+  "description": "收集常用的图标，分辨率为144＊144，搜索方式为app名称拼音缩写，英文名app可直接搜索，更新日期：2026-05-18",
   "icons": [
     {
       "name": "avatar",
@@ -65,6 +65,10 @@
     {
       "name": "mmm",
       "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/mmm.png"
+    },
+    {
+      "name": "intolive",
+      "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/intolive.png"
     }
   ]
 }
