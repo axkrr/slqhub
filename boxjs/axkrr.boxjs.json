@@ -1,15 +1,16 @@
 {
   "id": "CQU",
-  "name": "一卡通余额",
+  "name": "axkrr的BoxJS订阅",
   "author": "@axkrr",
-  "repo": "https://github.com/axkrr",
+  "icon": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/card.png",
+  "repo": "https://github.com/axkrr/slqhub",
+  "desc": "重庆大学一卡通余额查询相关配置，Cookie由脚本自动获取，无需手动填写。",
+  "raw": "https://raw.githubusercontent.com/axkrr/slqhub/main/boxjs/CQU.boxjs.json",
+  "date": "更新日期：2026-05-17 00:00:00",
   "apps": [
     {
       "id": "CQU.CardBalance",
       "name": "一卡通余额",
-      "icons": [
-        "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/card.png"
-      ],
       "keys": [
         "@CQU.CardBalance.Settings.Cookie"
       ],
@@ -22,7 +23,12 @@
           "desc": "脚本自动抓取，无需手动填写",
           "placeholder": "打开校园卡页面自动获取"
         }
-      ]
+      ],
+      "icons": [
+        "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/card.png"
+      ],
+      "author": "@axkrr",
+      "repo": "https://github.com/axkrr/slqhub"
     }
   ]
 }
