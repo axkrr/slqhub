@@ -1,6 +1,6 @@
 {
   "name": "axkrr图标库",
-  "description": "收集一些自己常用的图标，更新日期：2026-05-17",
+  "description": "收集常用的图标，分辨率为144＊144，更新日期：2026-05-17",
   "icons": [
     {
       "name": "card",
@@ -13,6 +13,10 @@
     {
       "name": "jy",
       "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/jy.png"
+    },
+    {
+      "name": "ks",
+      "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/ks.png"
     }
   ]
 }
