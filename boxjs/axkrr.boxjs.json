@@ -8,7 +8,7 @@
       "id": "CQU.CardBalance",
       "name": "一卡通余额",
       "icons": [
-        "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/card2.png"
+        "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/card.png"
       ],
       "keys": [
         "@CQU.CardBalance.Settings.Cookie"
