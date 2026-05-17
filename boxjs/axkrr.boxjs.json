@@ -2,7 +2,7 @@
   "id": "CQU",
   "name": "axkrr的订阅",
   "author": "@axkrr",
-  "icon": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/card.png",
+  "icon": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/avatar.png",
   "repo": "https://github.com/axkrr/slqhub",
   "desc": "重庆大学一卡通余额查询相关配置，cookie由脚本自动获取，无需手动填写。",
   "raw": "https://raw.githubusercontent.com/axkrr/slqhub/main/boxjs/axkrr.boxjs.json",
