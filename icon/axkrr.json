@@ -1,1 +1,18 @@
-
+{
+  "name": "axkrr图标库",
+  "description": "收集一些自己常用的图标，更新日期：2026-05-17",
+  "icons": [
+    {
+      "name": "card",
+      "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/card.png"
+    },
+    {
+      "name": "dzyj",
+      "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/dzyj.png"
+    },
+    {
+      "name": "jy",
+      "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/jy.png"
+    }
+  ]
+}
