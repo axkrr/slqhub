@@ -3,6 +3,10 @@
   "description": "收集常用的图标，分辨率为144＊144，更新日期：2026-05-17",
   "icons": [
     {
+      "name": "avatar",
+      "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/avatar.png"
+    },
+    {
       "name": "card",
       "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/card.png"
     },
