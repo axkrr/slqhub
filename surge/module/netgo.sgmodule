@@ -2,9 +2,10 @@
 #!desc=应用净化
 #!category=axkrr
 #!author=axkrr
+#!update=2026-05-18
 
 [Script]
-qdpure = type=http-response,pattern=^https?:\/\/api\.shanghailingye\.cn\/ad\/map,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub-entry/main/qdpure.js
+qdpure = type=http-response,pattern=^https?:\/\/api\.shanghailingye\.cn\/ad\/map,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/qsw.js
 
 [MITM]
 hostname = %APPEND% api.shanghailingye.cn
