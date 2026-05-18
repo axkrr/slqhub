@@ -2,9 +2,10 @@
 #!desc=获取网页视频流
 #!category=tool
 #!author=axkrr
+#!update=2026-05-18
 
 [Script]
-senplayer-video-sniff = type=http-response,pattern=\.(m3u8|mp4),requires-body=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub-entry/main/videosniff.js
+senplayer-video-sniff = type=http-response,pattern=\.(m3u8|mp4),requires-body=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/videosniff.js
 
 [MITM]
 hostname = %APPEND% *.phncdn.com, *.cloudfront.net, *.txh*.com, long.*.cn, surrit.com, *.aisheji8.com
