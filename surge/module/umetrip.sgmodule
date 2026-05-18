@@ -2,6 +2,7 @@
 #!desc=应用净化
 #!category=axkrr
 #!author=axkrr
+#!update=2026-05-18
 
 [Rule]
 DOMAIN,analytics.umetrip.com,REJECT
