@@ -2,6 +2,7 @@
  * @name balance
  * @desc 获取一卡通cookie，请记得添加boxjs订阅。请在浏览器中打开并登录余额查询页面触发脚本，登录链接：http://card.cqu.edu.cn/PPage/ComePage?flowID=14；boxjs订阅：https://raw.githubusercontent.com/axkrr/slqhub-entry/refs/heads/main/axkrr.json
  * @author axkrr
+ * @update 2026-05-18
 */
 
 const APIKey = 'CQU'
