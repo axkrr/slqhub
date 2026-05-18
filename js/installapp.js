@@ -1,7 +1,7 @@
 /**
  * @name installapp
  * @desc IPATool辅助安装IPA工具
- * @author githubdulong,axkrr
+ * @author githubdulong
 */
 
 // 获取参数
