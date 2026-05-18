@@ -1,7 +1,8 @@
 #!name=抖音
 #!desc=客户端净化
 #!category=axkrr
-#!author=奶思,axkrr
+#!author=奶思
+#!update=2026-05-18
 
 [Body Rewrite]
 http-response-jq ^https:\/\/www\.douyin\.com\/aweme\/v1\/web\/tab\/feed\/\? 'if .aweme_list then .aweme_list |= map(select(.is_ads != true)) else . end'
