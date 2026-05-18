@@ -2,6 +2,7 @@
 #!desc=网页净化
 #!category=axkrr
 #!author=ddgksf2013
+#!update=2026-05-18
 
 [Map Local]
 ^https?:\/\/(cn|www)\.pornhub\.com\/_xa\/ads data-type=text data="{}" status-code=200 header="Content-Type:application/json"
