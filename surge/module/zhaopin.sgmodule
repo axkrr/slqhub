@@ -1,12 +1,10 @@
 #!name=智联招聘
 #!desc=应用净化
 #!category=axkrr
-#!update:2026-04-24
+#!update=2026-04-24
 
 [Script]
-# > 业务接口处理
-zlzppure = type=http-response,pattern=^https?:\/\/cgate\.zhaopin\.com\/(operation\/ad\/(bidMainPage|getAdRecommend)|bdp\/operation\/getPopupInfo),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub-entry/main/zlzppure.js
-# > SDK拦截
+zlzppure = type=http-response,pattern=^https?:\/\/cgate\.zhaopin\.com\/(operation\/ad\/(bidMainPage|getAdRecommend)|bdp\/operation\/getPopupInfo),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/zlzp.js
 ^https?:\/\/.*\.pangolin-sdk-toutiao\d*\.com - reject-dict
 ^https?:\/\/.*\.pglstatp-toutiao\.com - reject-dict
 ^https?:\/\/gromore\.pangolin-sdk-toutiao\.com - reject-dict
