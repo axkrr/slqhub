@@ -1,6 +1,7 @@
 /**
  * @name ykxc
  * @desc 一刻相册净化
+ * @author axkrr
  * @update 2026-05-18
  */ 
 
