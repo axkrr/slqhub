@@ -1,176 +1,175 @@
 /**
  * @name SenPlayerHijack
- * @desc 自动劫持网页视频并跳转 SenPlayer
+ * @desc 网页视频自动劫持跳转 SenPlayer（稳定完整版）
  * @author axkrr
  * @update 2026-05-18
- */
+*/
 
 let body = $response.body || "";
 
 console.log("════════════════════════════");
 console.log("🎬 SenPlayer Hijack 启动");
 
+// 防重复注入
 const inject = `
 <script>
 (function () {
 
-    if (window.__senplayer_hijack__) return;
-    window.__senplayer_hijack__ = true;
+    if (window.__senplayer__) return;
+    window.__senplayer__ = true;
 
-    console.log("🎬 SenPlayer 劫持已启动");
+    console.log("🎬 SenPlayer 已注入");
 
-    // 已跳转锁
     let jumped = false;
 
-    // 视频匹配
-    const videoRegex = /\\\\.(m3u8|mp4|mov|m4v|webm)(\\\\?|$)/i;
+    function log(msg) {
+        console.log("🎬 " + msg);
+    }
 
-    // 跳转
-    function jump(url) {
+    function isVideo(url) {
+        return typeof url === "string" &&
+            (url.includes("m3u8") ||
+             url.includes(".mp4") ||
+             url.includes(".mov") ||
+             url.includes(".m4v") ||
+             url.includes(".flv") ||
+             url.includes(".webm"));
+    }
 
-        if (!url) return;
+    // ⭐ 强制唤起 SenPlayer（关键修复）
+    function openSenPlayer(url) {
 
-        if (jumped) {
-            console.log("⚠️ 已跳转过");
-            return;
-        }
+        if (!url || jumped) return;
 
-        // blob 跳过
         if (url.startsWith("blob:")) {
-            console.log("⚠️ blob 地址跳过");
+            log("blob 跳过");
             return;
         }
 
-        // 非视频跳过
-        if (!videoRegex.test(url) && !url.includes("m3u8")) {
-            console.log("⚠️ 非视频链接:", url);
+        if (!isVideo(url)) {
+            log("非视频链接跳过: " + url);
             return;
         }
 
         jumped = true;
-
-        console.log("🚀 捕获视频:");
-        console.log(url);
 
         const senUrl =
             "senplayer://x-callback-url/play?url=" +
             encodeURIComponent(url) +
             "&force=true";
 
-        console.log("🚀 跳转 SenPlayer:");
-        console.log(senUrl);
+        log("🚀 捕获视频: " + url);
+        log("🚀 SenPlayer URL: " + senUrl);
 
-        location.href = senUrl;
+        // ===== 多重唤起方案（核心）=====
+
+        // 1 iframe
+        try {
+            const iframe = document.createElement("iframe");
+            iframe.style.display = "none";
+            iframe.src = senUrl;
+            document.documentElement.appendChild(iframe);
+            setTimeout(() => iframe.remove(), 3000);
+            log("iframe ok");
+        } catch (e) {
+            log("iframe fail");
+        }
+
+        // 2 a click（最重要）
+        try {
+            const a = document.createElement("a");
+            a.href = senUrl;
+            a.style.display = "none";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            log("a click ok");
+        } catch (e) {
+            log("a click fail");
+        }
+
+        // 3 window.open
+        try {
+            window.open(senUrl);
+            log("window.open ok");
+        } catch (e) {
+            log("window.open fail");
+        }
+
+        // 4 location fallback
+        try {
+            window.location.href = senUrl;
+            log("location ok");
+        } catch (e) {
+            log("location fail");
+        }
     }
 
-    // 劫持 fetch
+    // ===== fetch 劫持 =====
     const rawFetch = window.fetch;
+    window.fetch = function (...args) {
 
-    window.fetch = async function (...args) {
+        let url = args[0]?.url || args[0];
 
-        const url = args[0]?.url || args[0];
+        log("fetch: " + url);
 
-        console.log("🌐 fetch:", url);
-
-        if (typeof url === "string") {
-            jump(url);
-        }
+        if (isVideo(url)) openSenPlayer(url);
 
         return rawFetch.apply(this, args);
     };
 
-    // 劫持 XHR
+    // ===== xhr 劫持 =====
     const rawOpen = XMLHttpRequest.prototype.open;
-
     XMLHttpRequest.prototype.open = function (method, url) {
 
-        console.log("🌐 xhr:", url);
+        log("xhr: " + url);
 
-        jump(url);
+        if (isVideo(url)) openSenPlayer(url);
 
         return rawOpen.apply(this, arguments);
     };
 
-    // 劫持 hls.js
-    setInterval(() => {
+    // ===== video 监听 =====
+    function hookVideo(v) {
 
-        if (window.Hls && !window.__senplayer_hls__) {
+        if (!v || v.__hooked__) return;
+        v.__hooked__ = true;
 
-            window.__senplayer_hls__ = true;
+        log("hook video");
 
-            console.log("🎬 检测到 Hls.js");
+        v.addEventListener("play", function () {
 
-            const rawLoadSource = window.Hls.prototype.loadSource;
+            const url =
+                v.currentSrc ||
+                v.src ||
+                (v.querySelector("source")?.src || "");
 
-            window.Hls.prototype.loadSource = function (url) {
+            openSenPlayer(url);
 
-                console.log("🎬 Hls.loadSource:", url);
+        }, true);
 
-                jump(url);
+        v.addEventListener("click", function () {
 
-                return rawLoadSource.apply(this, arguments);
-            };
-        }
+            setTimeout(() => {
+                const url = v.currentSrc || v.src;
+                openSenPlayer(url);
+            }, 150);
 
-    }, 1000);
+        }, true);
+    }
 
-    // 劫持 video.js
-    setInterval(() => {
+    // ===== 扫描 =====
+    function scan() {
+        document.querySelectorAll("video").forEach(hookVideo);
+    }
 
-        if (window.videojs && !window.__senplayer_videojs__) {
+    scan();
 
-            window.__senplayer_videojs__ = true;
-
-            console.log("🎬 检测到 videojs");
-
-            const rawSrc = window.videojs.Player.prototype.src;
-
-            window.videojs.Player.prototype.src = function (source) {
-
-                console.log("🎬 videojs src:", source);
-
-                if (typeof source === "string") {
-                    jump(source);
-                }
-
-                if (source && source.src) {
-                    jump(source.src);
-                }
-
-                return rawSrc.apply(this, arguments);
-            };
-        }
-
-    }, 1000);
-
-    // 劫持原生 video
-    setInterval(() => {
-
-        const videos = document.querySelectorAll("video");
-
-        videos.forEach(video => {
-
-            if (video.__senplayer_hooked__) return;
-
-            video.__senplayer_hooked__ = true;
-
-            console.log("🎬 劫持原生 video");
-
-            video.addEventListener("play", () => {
-
-                console.log("▶️ play");
-
-                const url =
-                    video.currentSrc ||
-                    video.src;
-
-                jump(url);
-
-            }, true);
-
-        });
-
-    }, 1000);
+    const obs = new MutationObserver(scan);
+    obs.observe(document.documentElement, {
+        childList: true,
+        subtree: true
+    });
 
 })();
 </script>
@@ -185,6 +184,4 @@ if (body.includes("</body>")) {
 console.log("✅ 注入完成");
 console.log("════════════════════════════");
 
-$done({
-    body
-});
+$done({ body });
