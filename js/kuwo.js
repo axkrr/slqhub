@@ -1,12 +1,13 @@
 /**
  * @name kuwo
- * @desc kuwo maplocal固定返回
+ * @desc 酷我maplocal固定返回
  * @author 𝐎𝐍𝐙𝟑𝐕
+ * @update 2026-05-18
 */
 
 const url = $request.url;
 
-// 酷我maplocal固定返回
+// maplocal固定返回
 if (/mobilead\.kuwo\.cn\/EcomResourceServer\/(getIOSIsHideAd|getMotor)/.test(url)) {
     $done({body: '{}'});
 } else if (/rich\.kuwo\.cn\/(AdService|ecom)\/kaiping\/ad[iI]nfo/.test(url)) {
