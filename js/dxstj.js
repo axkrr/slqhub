@@ -2,6 +2,7 @@
  * @name dxstj
  * @desc 大学搜题酱净化
  * @author axkrr
+ * @update 2026-05-18
 */
 
 let body = $response.body;
@@ -9,7 +10,7 @@ if (body) {
     let obj = JSON.parse(body);
     let url = $request.url;
 
-    // 依然保留以防App部分功能仍依赖旧接口
+    // 保留依赖旧接口
     if (url.indexOf("init/config/init") !== -1) {
         if (obj.data) {
             if (obj.data.screen_ad) delete obj.data.screen_ad;
