@@ -2,7 +2,7 @@
 #!desc=拦截常见的HTTPDNS服务
 #!category=iKeLee
 #!author=可莉🅥
-#!date=2026-03-01 23:16:49
+#!update=2026-03-01
 
 [Rule]
 DOMAIN-KEYWORD,httpdns,REJECT,extended-matching,pre-matching
