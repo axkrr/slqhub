@@ -1,6 +1,7 @@
 /**
  * @name zlzp
  * @desc 智联招聘净化
+ * @author @axkrr
  * @update 2026-05-18
  */
 
