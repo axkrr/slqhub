@@ -2,7 +2,7 @@
 #!desc=广告净化基础，只针对广告平台
 #!category=iKeLee
 #!author=可莉🅥
-#!date=2026-03-03 10:07:10
+#!update=2026-03-03
 
 [Rule]
 DOMAIN-KEYWORD,adstrategy,REJECT,extended-matching,pre-matching
