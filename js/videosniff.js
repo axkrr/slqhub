@@ -1,35 +1,72 @@
 /**
  * @name videosniff_direct
- * @desc 网页端点击视频直接跳转 SenPlayer 播放，无需通知
+ * @desc 点击网页视频直接跳转 SenPlayer 播放
  * @author axkrr
  * @update 2026-05-18
- */
+*/
 
 const url = $request.url || "";
+const method = $request.method || "GET";
 const headers = $request.headers || {};
 
-const videoRegex = /\.(m3u8|mp4|mov|avi|flv)(\?.*)?$|playlist\.m3u8/i;
 const isQuanX = typeof $task !== "undefined";
 
-// UA 检查
+// 视频匹配
+const videoRegex = /\.(m3u8|mp4|mov|m4v|avi|flv|webm)(\?.*)?$|playlist\.m3u8/i;
+
+// UA
 const ua = (headers["User-Agent"] || headers["user-agent"] || "").toLowerCase();
-if (!["safari", "applewebkit"].some(key => ua.includes(key))) {
-    console.log("🚫 非浏览器请求，跳过");
-    $done({});
+const referer = headers["Referer"] || headers["referer"] || "";
+
+// 日志
+console.log("════════════════════════════");
+console.log("🎬 videosniff_direct 启动");
+console.log(`🔹 Method: ${method}`);
+console.log(`🔹 URL: ${url}`);
+console.log(`🔹 UA: ${ua}`);
+console.log(`🔹 Referer: ${referer}`);
+
+// 防止 SenPlayer 自己再次触发
+if (ua.includes("senplayer")) {
+  console.log("🚫 SenPlayer 内部请求，跳过");
+  console.log("════════════════════════════");
+  $done({});
 }
 
-// 如果是视频链接，则直接跳转 SenPlayer
-if (videoRegex.test(url)) {
-    const referer = encodeURIComponent(headers["Referer"] || headers["referer"] || "");
-    const userAgent = encodeURIComponent(headers["User-Agent"] || headers["user-agent"] || "");
-    const senUrl = `senplayer://x-callback-url/play?url=${encodeURIComponent(url)}&force=true&referer=${referer}&ua=${userAgent}`;
-    console.log("🔹 视频点击直接跳转 SenPlayer:", senUrl);
-    
-    // 对网页直接跳转
-    $done({
-        status: 302,
-        headers: { "Location": senUrl },
-    });
-} else {
-    $done({});
+// 仅处理浏览器请求
+if (!["safari", "applewebkit"].some(k => ua.includes(k))) {
+  console.log("🚫 非浏览器请求");
+  console.log("════════════════════════════");
+  $done({});
 }
+
+// 匹配视频
+if (!videoRegex.test(url)) {
+  console.log("🚫 非视频资源");
+  console.log("════════════════════════════");
+  $done({});
+}
+
+console.log("✅ 命中视频资源");
+
+// 构建 SenPlayer URL
+const senUrl =
+  "senplayer://x-callback-url/play?" +
+  "url=" + encodeURIComponent(url) +
+  "&referer=" + encodeURIComponent(referer) +
+  "&ua=" + encodeURIComponent(headers["User-Agent"] || headers["user-agent"] || "") +
+  "&force=true";
+
+console.log("🔹 SenPlayer URL:");
+console.log(senUrl);
+
+// 302 跳转
+console.log("✅ 执行跳转");
+console.log("════════════════════════════");
+
+$done({
+  status: "HTTP/1.1 302 Found",
+  headers: {
+    Location: senUrl
+  }
+});
