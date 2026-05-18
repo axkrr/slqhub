@@ -5,7 +5,7 @@
 #!update=2026-05-18
 
 [Script]
-dxstjpure = type=http-response,pattern=^https?:\/\/adx\.zuoyebang\.com\/adxserver\/ad\/adreq,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/dxstj.js
+dxstj = type=http-response,pattern=^https?:\/\/adx\.zuoyebang\.com\/adxserver\/ad\/adreq,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/dxstj.js
 
 [MITM]
 hostname = %APPEND% adx.zuoyebang.com
