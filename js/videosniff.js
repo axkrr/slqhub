@@ -1,6 +1,6 @@
 /**
- * @name SenPlayerInject
- * @desc 网页视频直接调用 SenPlayer
+ * @name SenPlayerHijack
+ * @desc 自动劫持网页视频并跳转 SenPlayer
  * @author axkrr
  * @update 2026-05-18
  */
@@ -8,63 +8,49 @@
 let body = $response.body || "";
 
 console.log("════════════════════════════");
-console.log("🎬 SenPlayer Inject 启动");
+console.log("🎬 SenPlayer Hijack 启动");
 
 const inject = `
 <script>
 (function () {
 
-    console.log("🎬 SenPlayer 注入成功");
+    if (window.__senplayer_hijack__) return;
+    window.__senplayer_hijack__ = true;
 
-    // 防重复
-    if (window.__senplayer_injected__) return;
-    window.__senplayer_injected__ = true;
+    console.log("🎬 SenPlayer 劫持已启动");
 
-    // 获取真实视频地址
-    function getVideoUrl(video) {
+    // 已跳转锁
+    let jumped = false;
 
-        if (!video) return "";
+    // 视频匹配
+    const videoRegex = /\\\\.(m3u8|mp4|mov|m4v|webm)(\\\\?|$)/i;
 
-        let src = "";
+    // 跳转
+    function jump(url) {
 
-        // video.src
-        if (video.src) {
-            src = video.src;
-        }
+        if (!url) return;
 
-        // source 标签
-        if (!src) {
-            const source = video.querySelector("source");
-            if (source && source.src) {
-                src = source.src;
-            }
-        }
-
-        // currentSrc
-        if (!src && video.currentSrc) {
-            src = video.currentSrc;
-        }
-
-        console.log("🎬 检测视频地址:", src);
-
-        return src;
-    }
-
-    // 跳转播放器
-    function openSenPlayer(video) {
-
-        const url = getVideoUrl(video);
-
-        if (!url) {
-            console.log("❌ 未获取到视频地址");
+        if (jumped) {
+            console.log("⚠️ 已跳转过");
             return;
         }
 
         // blob 跳过
         if (url.startsWith("blob:")) {
-            console.log("⚠️ blob 视频，暂不处理");
+            console.log("⚠️ blob 地址跳过");
             return;
         }
+
+        // 非视频跳过
+        if (!videoRegex.test(url) && !url.includes("m3u8")) {
+            console.log("⚠️ 非视频链接:", url);
+            return;
+        }
+
+        jumped = true;
+
+        console.log("🚀 捕获视频:");
+        console.log(url);
 
         const senUrl =
             "senplayer://x-callback-url/play?url=" +
@@ -74,69 +60,117 @@ const inject = `
         console.log("🚀 跳转 SenPlayer:");
         console.log(senUrl);
 
-        // 阻止网页播放
-        video.pause();
-
-        // 跳转
         location.href = senUrl;
     }
 
-    // 劫持 video
-    function hookVideo(video) {
+    // 劫持 fetch
+    const rawFetch = window.fetch;
 
-        if (!video || video.__senplayer_hooked__) return;
+    window.fetch = async function (...args) {
 
-        video.__senplayer_hooked__ = true;
+        const url = args[0]?.url || args[0];
 
-        console.log("🎬 劫持 video:", video);
+        console.log("🌐 fetch:", url);
 
-        // 点击播放
-        video.addEventListener("play", function () {
+        if (typeof url === "string") {
+            jump(url);
+        }
 
-            console.log("▶️ 用户播放视频");
+        return rawFetch.apply(this, args);
+    };
 
-            openSenPlayer(video);
+    // 劫持 XHR
+    const rawOpen = XMLHttpRequest.prototype.open;
 
-        }, true);
+    XMLHttpRequest.prototype.open = function (method, url) {
 
-        // 点击
-        video.addEventListener("click", function () {
+        console.log("🌐 xhr:", url);
 
-            console.log("🖱️ 点击视频");
+        jump(url);
 
-            setTimeout(() => {
-                openSenPlayer(video);
-            }, 200);
+        return rawOpen.apply(this, arguments);
+    };
 
-        }, true);
+    // 劫持 hls.js
+    setInterval(() => {
 
-    }
+        if (window.Hls && !window.__senplayer_hls__) {
 
-    // 扫描页面
-    function scanVideos() {
+            window.__senplayer_hls__ = true;
+
+            console.log("🎬 检测到 Hls.js");
+
+            const rawLoadSource = window.Hls.prototype.loadSource;
+
+            window.Hls.prototype.loadSource = function (url) {
+
+                console.log("🎬 Hls.loadSource:", url);
+
+                jump(url);
+
+                return rawLoadSource.apply(this, arguments);
+            };
+        }
+
+    }, 1000);
+
+    // 劫持 video.js
+    setInterval(() => {
+
+        if (window.videojs && !window.__senplayer_videojs__) {
+
+            window.__senplayer_videojs__ = true;
+
+            console.log("🎬 检测到 videojs");
+
+            const rawSrc = window.videojs.Player.prototype.src;
+
+            window.videojs.Player.prototype.src = function (source) {
+
+                console.log("🎬 videojs src:", source);
+
+                if (typeof source === "string") {
+                    jump(source);
+                }
+
+                if (source && source.src) {
+                    jump(source.src);
+                }
+
+                return rawSrc.apply(this, arguments);
+            };
+        }
+
+    }, 1000);
+
+    // 劫持原生 video
+    setInterval(() => {
 
         const videos = document.querySelectorAll("video");
 
-        console.log("🎬 当前 video 数量:", videos.length);
+        videos.forEach(video => {
 
-        videos.forEach(v => {
-            hookVideo(v);
+            if (video.__senplayer_hooked__) return;
+
+            video.__senplayer_hooked__ = true;
+
+            console.log("🎬 劫持原生 video");
+
+            video.addEventListener("play", () => {
+
+                console.log("▶️ play");
+
+                const url =
+                    video.currentSrc ||
+                    video.src;
+
+                jump(url);
+
+            }, true);
+
         });
 
-    }
-
-    // 初始扫描
-    scanVideos();
-
-    // 动态监听
-    const observer = new MutationObserver(() => {
-        scanVideos();
-    });
-
-    observer.observe(document.documentElement, {
-        childList: true,
-        subtree: true
-    });
+    }, 1000);
 
 })();
 </script>
