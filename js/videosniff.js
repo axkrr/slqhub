@@ -1,72 +1,156 @@
 /**
- * @name videosniff_direct
- * @desc 点击网页视频直接跳转 SenPlayer 播放
+ * @name SenPlayerInject
+ * @desc 网页视频直接调用 SenPlayer
  * @author axkrr
  * @update 2026-05-18
-*/
+ */
 
-const url = $request.url || "";
-const method = $request.method || "GET";
-const headers = $request.headers || {};
+let body = $response.body || "";
 
-const isQuanX = typeof $task !== "undefined";
-
-// 视频匹配
-const videoRegex = /\.(m3u8|mp4|mov|m4v|avi|flv|webm)(\?.*)?$|playlist\.m3u8/i;
-
-// UA
-const ua = (headers["User-Agent"] || headers["user-agent"] || "").toLowerCase();
-const referer = headers["Referer"] || headers["referer"] || "";
-
-// 日志
 console.log("════════════════════════════");
-console.log("🎬 videosniff_direct 启动");
-console.log(`🔹 Method: ${method}`);
-console.log(`🔹 URL: ${url}`);
-console.log(`🔹 UA: ${ua}`);
-console.log(`🔹 Referer: ${referer}`);
+console.log("🎬 SenPlayer Inject 启动");
 
-// 防止 SenPlayer 自己再次触发
-if (ua.includes("senplayer")) {
-  console.log("🚫 SenPlayer 内部请求，跳过");
-  console.log("════════════════════════════");
-  $done({});
+const inject = `
+<script>
+(function () {
+
+    console.log("🎬 SenPlayer 注入成功");
+
+    // 防重复
+    if (window.__senplayer_injected__) return;
+    window.__senplayer_injected__ = true;
+
+    // 获取真实视频地址
+    function getVideoUrl(video) {
+
+        if (!video) return "";
+
+        let src = "";
+
+        // video.src
+        if (video.src) {
+            src = video.src;
+        }
+
+        // source 标签
+        if (!src) {
+            const source = video.querySelector("source");
+            if (source && source.src) {
+                src = source.src;
+            }
+        }
+
+        // currentSrc
+        if (!src && video.currentSrc) {
+            src = video.currentSrc;
+        }
+
+        console.log("🎬 检测视频地址:", src);
+
+        return src;
+    }
+
+    // 跳转播放器
+    function openSenPlayer(video) {
+
+        const url = getVideoUrl(video);
+
+        if (!url) {
+            console.log("❌ 未获取到视频地址");
+            return;
+        }
+
+        // blob 跳过
+        if (url.startsWith("blob:")) {
+            console.log("⚠️ blob 视频，暂不处理");
+            return;
+        }
+
+        const senUrl =
+            "senplayer://x-callback-url/play?url=" +
+            encodeURIComponent(url) +
+            "&force=true";
+
+        console.log("🚀 跳转 SenPlayer:");
+        console.log(senUrl);
+
+        // 阻止网页播放
+        video.pause();
+
+        // 跳转
+        location.href = senUrl;
+    }
+
+    // 劫持 video
+    function hookVideo(video) {
+
+        if (!video || video.__senplayer_hooked__) return;
+
+        video.__senplayer_hooked__ = true;
+
+        console.log("🎬 劫持 video:", video);
+
+        // 点击播放
+        video.addEventListener("play", function () {
+
+            console.log("▶️ 用户播放视频");
+
+            openSenPlayer(video);
+
+        }, true);
+
+        // 点击
+        video.addEventListener("click", function () {
+
+            console.log("🖱️ 点击视频");
+
+            setTimeout(() => {
+                openSenPlayer(video);
+            }, 200);
+
+        }, true);
+
+    }
+
+    // 扫描页面
+    function scanVideos() {
+
+        const videos = document.querySelectorAll("video");
+
+        console.log("🎬 当前 video 数量:", videos.length);
+
+        videos.forEach(v => {
+            hookVideo(v);
+        });
+
+    }
+
+    // 初始扫描
+    scanVideos();
+
+    // 动态监听
+    const observer = new MutationObserver(() => {
+        scanVideos();
+    });
+
+    observer.observe(document.documentElement, {
+        childList: true,
+        subtree: true
+    });
+
+})();
+</script>
+`;
+
+if (body.includes("</body>")) {
+    body = body.replace("</body>", inject + "</body>");
+} else {
+    body += inject;
 }
 
-// 仅处理浏览器请求
-if (!["safari", "applewebkit"].some(k => ua.includes(k))) {
-  console.log("🚫 非浏览器请求");
-  console.log("════════════════════════════");
-  $done({});
-}
-
-// 匹配视频
-if (!videoRegex.test(url)) {
-  console.log("🚫 非视频资源");
-  console.log("════════════════════════════");
-  $done({});
-}
-
-console.log("✅ 命中视频资源");
-
-// 构建 SenPlayer URL
-const senUrl =
-  "senplayer://x-callback-url/play?" +
-  "url=" + encodeURIComponent(url) +
-  "&referer=" + encodeURIComponent(referer) +
-  "&ua=" + encodeURIComponent(headers["User-Agent"] || headers["user-agent"] || "") +
-  "&force=true";
-
-console.log("🔹 SenPlayer URL:");
-console.log(senUrl);
-
-// 302 跳转
-console.log("✅ 执行跳转");
+console.log("✅ 注入完成");
 console.log("════════════════════════════");
 
 $done({
-  status: "HTTP/1.1 302 Found",
-  headers: {
-    Location: senUrl
-  }
+    body
 });
