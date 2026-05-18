@@ -2,6 +2,7 @@
  * @name installapp
  * @desc IPATool辅助安装IPA工具
  * @author githubdulong
+ * @update 2026-05-18
 */
 
 // 获取参数
