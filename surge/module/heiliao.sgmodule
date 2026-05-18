@@ -4,7 +4,7 @@
 #!author=@ZenMoFiShi
 
 [Script]
-hlwxx_remove_ads = type=http-response, pattern=^https?:\/\/(?:www\.)?(?:heiliao|hlwxx|hlcx\d*)\.com\/(?!static\/|favicon|api\/|index\/statistics|uploads\/), requires-body=1, max-size=0, script-path=https://raw.githubusercontent.com/ZenmoFeiShi/Qx/refs/heads/main/hlwxx_remove_ads.js
+hlw = type=http-response, pattern=^https?:\/\/(?:www\.)?(?:heiliao|hlwxx|hlcx\d*)\.com\/(?!static\/|favicon|api\/|index\/statistics|uploads\/), requires-body=1, max-size=0, script-path=https://raw.githubusercontent.com/ZenmoFeiShi/Qx/refs/heads/main/hlwxx_remove_ads.js
 
 [URL Rewrite]
 ^https?:\/\/stats\.kwvprfcr\.xyz - reject
