@@ -129,6 +129,10 @@
     {
       "name": "adblocker",
       "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/adblocker.png"
+    },
+    {
+      "name": "google",
+      "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/google.png"
     }
   ]
 }
