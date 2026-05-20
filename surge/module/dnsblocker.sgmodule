@@ -2,6 +2,7 @@
 #!desc=拦截常见的HTTPDNS服务
 #!category=iKeLee
 #!author=可莉🅥
+#!icon=https://raw.githubusercontent.com/axkrr/slqhub/main/icon/httpdns.png
 #!update=2026-03-01
 
 [Rule]
