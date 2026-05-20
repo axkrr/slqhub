@@ -93,6 +93,10 @@
     {
       "name": "dy",
       "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/dy.png"
+    },
+    {
+      "name": "tx",
+      "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/tx.png"
     }
   ]
 }
