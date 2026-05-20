@@ -2,6 +2,7 @@
 #!desc=广告净化基础，只针对广告平台
 #!category=iKeLee
 #!author=可莉🅥
+#!icon=https://raw.githubusercontent.com/axkrr/slqhub/main/icon/adblocker.png
 #!update=2026-03-03
 
 [Rule]
