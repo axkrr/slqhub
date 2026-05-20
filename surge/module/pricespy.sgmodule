@@ -2,6 +2,8 @@
 #!desc=首次使用请打开【慢慢买】APP，点击【我的】，提示【获取ck成功🎉】即可正常比价
 #!category=enhance
 #!author=wf021325
+#!icon=https://raw.githubusercontent.com/axkrr/slqhub/main/icon/jd.png
+#!update=2026-05-20
 
 [Script]
 jd_price_res = type=http-response, pattern=^https?:\/\/in\.m\.jd\.com\/product\/graphext\/\d+\.html, requires-body=1, max-size=0, script-path=https://raw.githubusercontent.com/wf021325/qx/master/js/jd_price.js
