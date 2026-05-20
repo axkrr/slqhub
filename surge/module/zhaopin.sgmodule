@@ -1,6 +1,7 @@
 #!name=智联招聘
 #!desc=应用净化
 #!category=axkrr
+#!icon=https://raw.githubusercontent.com/axkrr/slqhub/main/icon/zlzp.png
 #!update=2026-04-24
 
 [Script]
