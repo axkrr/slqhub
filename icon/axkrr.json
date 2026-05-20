@@ -77,6 +77,10 @@
     {
       "name": "pi",
       "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/pi.png"
+    },
+    {
+      "name": "jd",
+      "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/jd.png"
     }
   ]
 }
