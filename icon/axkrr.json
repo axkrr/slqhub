@@ -125,6 +125,10 @@
     {
       "name": "httpdns",
       "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/httpdns.png"
+    },
+    {
+      "name": "adblocker",
+      "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/adblocker.png"
     }
   ]
 }
