@@ -1,41 +1,31 @@
 #!name=番茄小说
 #!desc=应用净化
-#!author=可莉🅥
-#!icon=https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/DragonRead.png
-#!update=2026-05-22
+#!category=axkrr
+#!icon=
+#!update=2026-05-23
 
 [Rule]
-DOMAIN,zlink.ugsdk.cn,REJECT-DROP
-DOMAIN,mon.toutiaocloud.net,REJECT-DROP
-DOMAIN,lf-normal-gr-sourcecdn.bytegecko.com,REJECT-DROP
-DOMAIN,lf-webcast-gr-sourcecdn.bytegecko.com,REJECT-DROP
-DOMAIN,p3-developer.bytemaimg.com,REJECT-DROP
-DOMAIN,webcast-open.douyin.com,REJECT-DROP
-DOMAIN,p11-webcast-sign.douyinpic.com,REJECT-DROP
-DOMAIN,p3-webcast-sign.douyinpic.com,REJECT-DROP
-DOMAIN,log3-applog.fqnovel.com,REJECT-DROP
-DOMAIN,log5-applog.fqnovel.com,REJECT-DROP
-DOMAIN,mon11-misc-lq.fqnovel.com,REJECT-DROP
-DOMAIN,mon11-misc.fqnovel.com,REJECT-DROP
-DOMAIN,mon3-misc.fqnovel.com,REJECT-DROP
-DOMAIN,rtlog3-applog.fqnovel.com,REJECT-DROP
-DOMAIN,rtlog5-applog.fqnovel.com,REJECT-DROP
-DOMAIN,effect.snssdk.com,REJECT-DROP
-DOMAIN,i.snssdk.com,REJECT-DROP
-DOMAIN,is-lq.snssdk.com,REJECT-DROP
-DOMAIN,is.snssdk.com,REJECT-DROP
-DOMAIN,security.snssdk.com,REJECT-DROP
-DOMAIN,vas.snssdk.com,REJECT-DROP
-DOMAIN,mon.toutiaocloud.com,REJECT-DROP
-DOMAIN,abtest3-misc.zijieapi.com,REJECT-DROP
-DOMAIN,ads3-normal.zijieapi.com,REJECT-DROP
-DOMAIN,ads5-normal.zijieapi.com,REJECT-DROP
-DOMAIN,feedback-c.zijieapi.com,REJECT-DROP
-DOMAIN,gecko3.zijieapi.com,REJECT-DROP
-DOMAIN,gecko5.zijieapi.com,REJECT-DROP
-DOMAIN,ma.zijieapi.com,REJECT-DROP
-DOMAIN,minigame3-normal.zijieapi.com,REJECT-DROP
-DOMAIN,minigame5-normal.zijieapi.com,REJECT-DROP
-DOMAIN,mssdk.zijieapi.com,REJECT-DROP
-DOMAIN,timon.zijieapi.com,REJECT-DROP
-DOMAIN,vcs.zijieapi.com,REJECT-DROP
+DOMAIN,i.snssdk.com,REJECT-DROP-DROP
+DOMAIN,i-lq.snssdk.com,REJECT-DROP
+DOMAIN,dig.bdurl.net,REJECT-DROP
+
+[URL Rewrite]
+^https?://.+\.pangolin-sdk-toutiao\.com/api/ad/union/sdk/(get_ads|stats|settings)/ - reject-drop
+^https?://.+\.pglstatp-toutiao\.com/.+/toutiao\.mp4 - reject-drop
+^https?://.+\.(pglstatp-toutiao|pstatp)\.com/(obj|img)/(ad-app-package|ad)/.+ - reject-drop
+^https?://.+\.(pglstatp-toutiao|pstatp)\.com/(obj|img)/web\.business\.image/.+ - reject-drop
+^https?://.+\.(pglstatp-toutiao|pstatp)\.com/obj/ad-pattern/renderer - reject-drop
+^https?://gurd\.snssdk\.com/src/server/v3/package - reject-drop
+^https?://.+\.byteimg\.com/tos-cn-i-1yzifmftcy/(.+)-jpeg\.jpeg - reject-drop
+^https?://.+\.pstatp\.com/obj/mosaic-legacy/.+\?from=ad - reject-drop
+^https?://.+\.pstatp\.com/bytecom/resource/track_log/src/.+ - reject-drop
+^https?://.+\.snssdk\.com/video/play/1/toutiao/.+/mp4 - reject-drop
+^https?://.+\.snssdk\.com/api/ad/.+ - reject-drop
+^http://.+.byteimg.com/ad-app-package - reject-drop
+^http://.+.byteimg.com/web.business.image - reject-drop
+^https?://.+\.(pglstatp-toutiao|pstatp)\.com/(ad-app-package|ad)/.+ - reject-drop
+^https?://adim\.pinduoduo\.com/.+/toutiao\?.+ - reject-drop
+^https?://.+novelapp\.fqnovelvod\.com/.+/video/.+ - reject-drop
+
+[MITM]
+hostname = %APPEND% *.pangolin-sdk-toutiao, *.pangolin-sdk-toutiao.*, *.pstatp.com, *.pstatp.com.*, *.pglstatp-toutiao.com.*, *.pglstatp-toutiao.com, gurd.snssdk.com, gurd.snssdk.com.*, *default.ixigua.com, adim.pinduoduo.com, v6-novelapp.fqnovelvod.com
