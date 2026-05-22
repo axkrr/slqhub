@@ -5,27 +5,26 @@
 #!update=2026-05-23
 
 [Rule]
-DOMAIN,i.snssdk.com,REJECT-DROP-DROP
+DOMAIN,i.snssdk.com,REJECT-DROP
 DOMAIN,i-lq.snssdk.com,REJECT-DROP
 DOMAIN,dig.bdurl.net,REJECT-DROP
 
-[URL Rewrite]
-^https?://.+\.pangolin-sdk-toutiao\.com/api/ad/union/sdk/(get_ads|stats|settings)/ - reject-drop
-^https?://.+\.pglstatp-toutiao\.com/.+/toutiao\.mp4 - reject-drop
-^https?://.+\.(pglstatp-toutiao|pstatp)\.com/(obj|img)/(ad-app-package|ad)/.+ - reject-drop
-^https?://.+\.(pglstatp-toutiao|pstatp)\.com/(obj|img)/web\.business\.image/.+ - reject-drop
-^https?://.+\.(pglstatp-toutiao|pstatp)\.com/obj/ad-pattern/renderer - reject-drop
-^https?://gurd\.snssdk\.com/src/server/v3/package - reject-drop
-^https?://.+\.byteimg\.com/tos-cn-i-1yzifmftcy/(.+)-jpeg\.jpeg - reject-drop
-^https?://.+\.pstatp\.com/obj/mosaic-legacy/.+\?from=ad - reject-drop
-^https?://.+\.pstatp\.com/bytecom/resource/track_log/src/.+ - reject-drop
-^https?://.+\.snssdk\.com/video/play/1/toutiao/.+/mp4 - reject-drop
-^https?://.+\.snssdk\.com/api/ad/.+ - reject-drop
-^http://.+.byteimg.com/ad-app-package - reject-drop
-^http://.+.byteimg.com/web.business.image - reject-drop
-^https?://.+\.(pglstatp-toutiao|pstatp)\.com/(ad-app-package|ad)/.+ - reject-drop
-^https?://adim\.pinduoduo\.com/.+/toutiao\?.+ - reject-drop
-^https?://.+novelapp\.fqnovelvod\.com/.+/video/.+ - reject-drop
+URL-REGEX,"^https?://.+\.pangolin-sdk-toutiao\.com/api/ad/union/sdk/(get_ads|stats|settings)/",REJECT-DROP
+URL-REGEX,"^https?://.+\.pglstatp-toutiao\.com/.+/toutiao\.mp4",REJECT-DROP
+URL-REGEX,"^https?://.+\.(pglstatp-toutiao|pstatp)\.com/(obj|img)/(ad-app-package|ad)/.+",REJECT-DROP
+URL-REGEX,"^https?://.+\.(pglstatp-toutiao|pstatp)\.com/(obj|img)/web\.business\.image/.+",REJECT-DROP
+URL-REGEX,"^https?://.+\.(pglstatp-toutiao|pstatp)\.com/obj/ad-pattern/renderer",REJECT-DROP
+URL-REGEX,"^https?://gurd\.snssdk\.com/src/server/v3/package",REJECT-DROP
+URL-REGEX,"^https?://.+\.byteimg\.com/tos-cn-i-1yzifmftcy/(.+)-jpeg\.jpeg",REJECT-DROP
+URL-REGEX,"^https?://.+\.pstatp\.com/obj/mosaic-legacy/.+\?from=ad",REJECT-DROP
+URL-REGEX,"^https?://.+\.pstatp\.com/bytecom/resource/track_log/src/.+",REJECT-DROP
+URL-REGEX,"^https?://.+\.snssdk\.com/video/play/1/toutiao/.+/mp4",REJECT-DROP
+URL-REGEX,"^https?://.+\.snssdk\.com/api/ad/.+",REJECT-DROP
+URL-REGEX,"^http://.+.byteimg.com/ad-app-package",REJECT-DROP
+URL-REGEX,"^http://.+.byteimg.com/web.business.image",REJECT-DROP
+URL-REGEX,"^https?://.+\.(pglstatp-toutiao|pstatp)\.com/(ad-app-package|ad)/.+",REJECT-DROP
+URL-REGEX,"^https?://adim\.pinduoduo\.com/.+/toutiao\?.+",REJECT-DROP
+URL-REGEX,"^https?://.+novelapp\.fqnovelvod\.com/.+/video/.+",REJECT-DROP
 
 [MITM]
 hostname = %APPEND% *.pangolin-sdk-toutiao, *.pangolin-sdk-toutiao.*, *.pstatp.com, *.pstatp.com.*, *.pglstatp-toutiao.com.*, *.pglstatp-toutiao.com, gurd.snssdk.com, gurd.snssdk.com.*, *default.ixigua.com, adim.pinduoduo.com, v6-novelapp.fqnovelvod.com
