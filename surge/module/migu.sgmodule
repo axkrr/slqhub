@@ -1,0 +1,14 @@
+#!name=咪咕视频
+#!desc=crack
+#!caregory=crack
+#!author=怎么肥事
+#!icon=
+#!update=2026-05-14
+
+[Rewrite]
+^https?:\/\/(play|play-pre|v|v[0-9]?-sc|vmesh|app-sc|vms-sc|display(-sc)?|common-sc|program-sc|d[0-9]-sc|fs-sc|fsdv-sc|mp-user|recommend-dy|chat|chat-wx|public-deliver[0-9]?|public-operbiz[0-9]?|public-img)\.miguvideo\.com\/.+ url script-request-header https://raw.githubusercontent.com/ZenmoFeiShi/Qx/refs/heads/main/migu_vip.js
+
+^https?:\/\/(passport|uem|push|jadeite|jadeiteapp|hound|feedback|rcsdk)\.migu\.cn\/.+ url script-request-header https://raw.githubusercontent.com/ZenmoFeiShi/Qx/refs/heads/main/migu_vip.js
+
+[MITM]
+hostname = %APPEND% *.miguvideo.com, *.migu.cn
