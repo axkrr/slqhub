@@ -1,0 +1,12 @@
+#!name=芒果TV
+#!desc=crack
+#!category=crack
+#!author=怎么肥事
+#!icon=
+#!update=2026-05-14
+
+[Rewrite]
+^https?:\/\/mobile-stream\.api\.mgtv\.com\/v1\/video\/source url script-request-header https://raw.githubusercontent.com/ZenmoFeiShi/Qx/refs/heads/main/mgtv_vip.js
+
+[MITM]
+hostname = %APPEND% mobile-stream.api.mgtv.com
