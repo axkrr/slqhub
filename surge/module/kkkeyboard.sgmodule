@@ -5,8 +5,8 @@
 #!icon=https://raw.githubusercontent.com/axkrr/slqhub/main/icon/kkkeyboard.png
 #!update=2026-05-27
 
-[Body Rewrite]
-weshine_all = type=http-response,pattern=^https?:\/\/kk\.weshine\.im\/v1\.0\/text2voice\/(checkCount|consumeCount|createTtsAudio),requires-body=true,script-path=https://raw.githubusercontent.com/your/path/weshine_all.js
+[Script]
+kktype_vip = type=http-response,pattern=^https?:\/\/kk\.weshine\.im\/v1\.0\/text2voice\/(checkCount|consumeCount|createTtsAudio),requires-body=true,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/kktype.js
 
 [MITM]
 hostname = %APPEND% kk.weshine.im
