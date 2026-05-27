@@ -1,6 +1,6 @@
 {
   "name": "axkrr图标库",
-  "description": "收集常用的图标，分辨率为144＊144，搜索方式为app名称拼音缩写，英文名app可直接搜索，更新日期：2026-05-20",
+  "description": "收集常用的图标，分辨率为144＊144，搜索方式为app名称拼音缩写，英文名app可直接搜索，更新日期：2026-05-27",
   "icons": [
     {
       "name": "avatar",
@@ -147,8 +147,8 @@
       "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/wsgw.png"
     },
     {
-      "name": "kkkeyboard",
-      "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/kkkeyboard.png"
+      "name": "kkjp",
+      "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/kkjp.png"
     },
     {
       "name": "mgsp",
