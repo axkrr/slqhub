@@ -5,7 +5,7 @@
 #!icon=https://raw.githubusercontent.com/axkrr/slqhub/main/icon/mgtv.png
 #!update=2026-05-14
 
-[Rewrite]
+[Script]
 ^https?:\/\/mobile-stream\.api\.mgtv\.com\/v1\/video\/source url script-request-header https://raw.githubusercontent.com/ZenmoFeiShi/Qx/refs/heads/main/mgtv_vip.js
 
 [MITM]
