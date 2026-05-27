@@ -6,8 +6,7 @@
 #!update=2026-05-27
 
 [Body Rewrite]
-^https?:\/\/kk\.weshine\.im\/v1\.0\/text2voice\/(checkCount|consumeCount) url jsonjq-response-body .data.totalCount = 999 | .data.currCount = 999
-^https?:\/\/kk\.weshine\.im\/v1\.0\/text2voice\/createTtsAudio url jsonjq-response-body .data.freeCount = 999
+weshine_all = type=http-response,pattern=^https?:\/\/kk\.weshine\.im\/v1\.0\/text2voice\/(checkCount|consumeCount|createTtsAudio),requires-body=true,script-path=https://raw.githubusercontent.com/your/path/weshine_all.js
 
 [MITM]
 hostname = %APPEND% kk.weshine.im
