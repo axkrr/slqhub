@@ -5,7 +5,7 @@
 #!icon=https://raw.githubusercontent.com/axkrr/slqhub/main/icon/kkkeyboard.png
 #!update=2026-05-27
 
-[Script]
+[Body Rewrite]
 ^https?:\/\/kk\.weshine\.im\/v1\.0\/text2voice\/(checkCount|consumeCount) url jsonjq-response-body .data.totalCount = 999 | .data.currCount = 999
 ^https?:\/\/kk\.weshine\.im\/v1\.0\/text2voice\/createTtsAudio url jsonjq-response-body .data.freeCount = 999
 
