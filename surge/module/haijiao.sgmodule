@@ -3,11 +3,11 @@
 #!category=crack
 #!author=Yu9191
 #!icon=https://raw.githubusercontent.com/axkrr/slqhub/main/icon/hjsq.png
-#!homepage=https://p3.asbiypam.cc/index.html
+#!homepage=https://haijiao.com
 #!update=2026-03-16
 
 [Script]
-haijiao = type=http-response,pattern=^https:\/\/api2\.khnqucvm\.cc\/(?:api\.php\/api|api)\/(?:mv\/detail|users\/base_info|home\/getconfig|novel\/detail|novel\/recommend|novel\/chaptersList|novel\/chapterDetail|navigation\/index(?:_aw)?|tabnew\/list_construct|porngame\/nav)(?:\?.*)?$,requires-body=true,script-path=https://raw.githubusercontent.com/Yu9191/Rewrite/refs/heads/main/haijiaoshequ.js
+haijiao = type=http-response,pattern=^https?:\/\/(www\.)?haijiao\.com\/api\/(topic\/\d+|banner\/banner_list)$,requires-body=true,script-path=https://raw.githubusercontent.com/Yu9191/Rewrite/refs/heads/main/haijiao.js
 
 [MITM]
-hostname = %APPEND% *.khnqucvm.cc,api2.xivjndn.xyz
+hostname = %APPEND% haijiao.com,*.haijiao.com
