@@ -3,8 +3,8 @@
 #!category=crack
 #!author=Yu9191
 #!icon=https://raw.githubusercontent.com/axkrr/slqhub/main/icon/hjsq.png
-#!homepage=https://haijiao.com
-#!update=2026-03-16
+#!homepage=haijiao.com
+#!update=2025-04-04
 
 [Script]
 haijiao = type=http-response,pattern=^https?:\/\/(www\.)?haijiao\.com\/api\/(topic\/\d+|banner\/banner_list)$,requires-body=true,script-path=https://raw.githubusercontent.com/Yu9191/Rewrite/refs/heads/main/haijiao.js
