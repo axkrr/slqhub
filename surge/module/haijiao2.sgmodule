@@ -9,7 +9,7 @@
 [Script]
 hjsq_noad = type=http-response,pattern=^https?:\/\/api2\.[^\/]+\/api\/,requires-body=true,script-path=https://raw.githubusercontent.com/89996462/Quantumult-X/main/ghs/hjsq-noad.js
 
-hjsq = type=http-request,pattern=^https:\/\/[^\/]*\..*\.cn\/\w+\/[a-z0-9]{32}\/[a-z0-9]{32}\.m3u8(\?.*)?,script-path=https://raw.githubusercontent.com/89996462/Quantumult-X/main/ghs/hdsq.js
+hjsq = type=http-request,pattern=^https:\/\/[^\/]*\..*\.cn\/\w+\/[a-z0-9]{32}\/[a-z0-9]{32}\.m3u8(\?.*)?,requires-body=true,script-path=https://raw.githubusercontent.com/89996462/Quantumult-X/main/ghs/hdsq.js
 
 [MITM]
 hostname = %APPEND% p4.aozngkwm.com, *.aozngkwm.com, api2.anpbbxdyo.com, *.anpbbxdyo.com, new.iajckz.cn, *.iajckz.cn, *.aavhnube.cc
