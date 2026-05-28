@@ -1,19 +1,13 @@
 #!name=海角社区
-#!desc=解锁金币、VIP视频
+#!desc=解锁会员视频&付费视频
 #!category=crack
-#!author=@ioskcc
+#!author=
 #!icon=
-#!update=2026-05-26
-
-[Rule]
-DOMAIN,ap.dc-report.cc,REJECT
-DOMAIN,api-dc-prod-002.cyou,REJECT
-DOMAIN,api-dc2-prod-02.cyou,REJECT
+#!homepage=https://p3.asbiypam.cc/index.html
+#!update=2026-03-16
 
 [Script]
-hjsq_noad = type=http-response,pattern=^https?:\/\/api2\.[^\/]+\/api\/,requires-body=true,script-path=https://raw.githubusercontent.com/89996462/Quantumult-X/main/ghs/hjsq-noad.js
-
-hjsq = type=http-request,pattern=^https:\/\/[^\/]*\..*\.cn\/\w+\/[a-z0-9]{32}\/[a-z0-9]{32}\.m3u8(\?.*)?,script-path=https://raw.githubusercontent.com/89996462/Quantumult-X/main/ghs/hdsq.js
+haijiao = type=http-response,pattern=^https:\/\/api2\.khnqucvm\.cc\/(?:api\.php\/api|api)\/(?:mv\/detail|users\/base_info|home\/getconfig|novel\/detail|novel\/recommend|novel\/chaptersList|novel\/chapterDetail|navigation\/index(?:_aw)?|tabnew\/list_construct|porngame\/nav)(?:\?.*)?$,requires-body=true,script-path=https://raw.githubusercontent.com/Yu9191/Rewrite/refs/heads/main/haijiaoshequ.js
 
 [MITM]
-hostname = %APPEND% p4.aozngkwm.com,*.aozngkwm.com,api2.anpbbxdyo.com,*.anpbbxdyo.com,new.iajckz.cn,*.iajckz.cn,*.aavhnube.cc
+hostname = %APPEND% *.khnqucvm.cc,api2.xivjndn.xyz
