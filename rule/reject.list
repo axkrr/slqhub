@@ -19,10 +19,10 @@ DOMAIN-SUFFIX,tk.anythinktech.com
 DOMAIN-SUFFIX,e.qq.com
 DOMAIN-SUFFIX,gdt.qq.com
 DOMAIN-SUFFIX,pangolin-sdk-toutiao-b.com
-DOMAIN-SUFFIX, beizi.biz
-DOMAIN-SUFFIX, bzads.com
-DOMAIN-SUFFIX, shanghailingye.cn
-DOMAIN-KEYWORD, pangolin-sdk
+DOMAIN-SUFFIX,beizi.biz
+DOMAIN-SUFFIX,bzads.com
+DOMAIN-SUFFIX,shanghailingye.cn
+DOMAIN-KEYWORD,pangolin-sdk
 # > porn
 DOMAIN-SUFFIX,mc.yandex.ru
 DOMAIN-SUFFIX,static.cloudflareinsights.com
