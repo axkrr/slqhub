@@ -8,10 +8,10 @@
 const url = $request.url;
 const headers = $request.headers;
 
-// 替换 host 防止部分限制
+// 替换host
 let videoUrl = url.replace(/\/\/(?!long)[^\.]+\./, 'y.js.cn.v7').replace(/\.m3u8/, '.m3u8');
 console.log('视频链接捕获成功:', videoUrl);
-// Surge 通知
+// surge通知
 if (typeof $notification !== 'undefined') {
     $notification.post(
         '彭于晏提示❗️视频链接捕获成功',
