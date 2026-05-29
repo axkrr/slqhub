@@ -4,6 +4,7 @@
 #!author=Yu9191
 #!icon=
 #!update=2025-11-15
+#!homeoage=
 
 [Rule]
 URL-REGEX,^https:\/\/x364nz6\.rygzq0s\.fit:34218\/(gm\/game\/(tabList|listByTab|nameList)|iqiyi\/media\/ad\/listByIdList)$,REJECT
