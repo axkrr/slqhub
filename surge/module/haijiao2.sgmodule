@@ -7,9 +7,9 @@
 #!homepage=https://p4.aozngkwm.com/
 
 [Rule]
-URL-REGEX,^https?:\/\/ap\.dc-report\.cc\/,REJECT-DROP
-URL-REGEX,^https?:\/\/api-dc-prod-002\.cyou\/,REJECT-DROP
-URL-REGEX,^https?:\/\/api-dc2-prod-02\.cyou\/,REJECT-DROP
+DOMAIN,ap.dc-report.cc,REJECT
+DOMAIN,api-dc-prod-002.cyou,REJECT
+DOMAIN,api-dc2-prod-02.cyou,REJECT
 
 [Script]
 hjsq_noad = type=http-response,pattern=^https?:\/\/api2\.[^\/]+\/api\/,requires-body=true,script-path=https://raw.githubusercontent.com/89996462/Quantumult-X/main/ghs/hjsq-noad.js
