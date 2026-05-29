@@ -14,7 +14,7 @@ URL-REGEX,^https?:\/\/api-dc2-prod-02\.cyou\/,REJECT-DROP
 [Script]
 hjsq_noad = type=http-response,pattern=^https?:\/\/api2\.[^\/]+\/api\/,requires-body=true,script-path=https://raw.githubusercontent.com/89996462/Quantumult-X/main/ghs/hjsq-noad.js
 
-hjsq = type=http-request,pattern=^https:\/\/[^\/]*\..*\.cn\/\w+\/[a-z0-9]{32}\/[a-z0-9]{32}\.m3u8(\?.*)?,requires-body=false,script-path=https://raw.githubusercontent.com/89996462/Quantumult-X/main/ghs/hdsq.js
+hjsq = type=http-request,pattern=^https:\/\/[^\/]*\..*\.cn\/\w+\/[a-z0-9]{32}\/[a-z0-9]{32}\.m3u8(\?.*)?,requires-body=false,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/haijiao.js
 
 [MITM]
 hostname = %APPEND% 120play.*.cn, tp5.iajckz.cn, h5play.*.com, long.*.cn, *.fipxor.cn, p4.aozngkwm.com, *.aozngkwm.com, api2.fnomellx.cc, *.fnomellx.cc, api2.anpbbxdyo.com, *.anpbbxdyo.com
