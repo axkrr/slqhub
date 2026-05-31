@@ -1,3 +1,10 @@
+/**
+ * @name 海角社区
+ * @desc 解锁—金币视频—VIP视频
+ * @author ioskcc
+ * @update 2026-05-26
+*/
+
 let { headers, url } = $request,
   isSurge = typeof $task !== "undefined",
   isQX = typeof $httpClient !== "undefined" && !isSurge,
