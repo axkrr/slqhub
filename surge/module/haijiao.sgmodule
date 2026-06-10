@@ -1,10 +1,10 @@
-h!name=海角社区
+!name=海角社区
 #!desc=解锁—金币视频—VIP视频
 #!category=crack
 #!author=ioskcc
 #!icon=https://raw.githubusercontent.com/axkrr/slqhub/main/icon/hjsq.png
 #!update=2026-05-26
-
+#!homepage=p4.aozngkwm.com
 [URL Rewrite]
 # 广告图 CDN
 ^https?:\/\/ap\.dc-report\.cc\/ - reject
