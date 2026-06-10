@@ -3,7 +3,7 @@
 #!author=Salem
 #!category=tools
 #!icon=https://cdn.jsdelivr.net/gh/salem-2007/apple-cert-block@main/icon.png
-#!update=2026-06-10
+#!update=2026-05-26
 
 [Rule]
 # Apple OCSP
