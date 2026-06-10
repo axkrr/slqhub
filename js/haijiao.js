@@ -5,17 +5,23 @@
  * @update 2026-05-26
 */
 
-let { headers, url } = $request,
-  isSurge = typeof $task !== "undefined",
-  isQX = typeof $httpClient !== "undefined" && !isSurge,
-  isLoon = typeof $loon !== "undefined",
-  newUrl = url.replace(/\/\/(?!long)[^\.]+\./, "//long.").replace(/\.m3u8/, ".mp4");
- 
-headers.hasOwnProperty("X-Playback-Session-Id") && (
-  console.log("通杀Crack~"),
-  isSurge && $notify("彭于晏提示❗️视频链接捕获成功", ">_ 点击此通知可跳转观看 🔞", "", { "open-url": newUrl }),
-  isQX && $notification.post("彭于晏提示❗️视频链接捕获成功", ">_ 点击此通知可跳转观看 🔞", "", { "url": newUrl }),
-  isLoon && $notification.post("彭于晏提示❗️视频链接捕获成功", ">_ 点击此通知可跳转观看 🔞", "", { "openUrl": newUrl })
-);
- 
-$done({ response: { headers } });
+let { headers: requestHeaders, url: requestUrl } = $request;
+
+let processedUrl = requestUrl
+    .replace(/\/\/(?!long)[^\.]+\./, "//long.")
+    .replace(/\.m3u8/, "");
+
+if (requestHeaders['X-Playback-Session-Id']) {
+    console.log("X-Playback-Session-Id intercepted");
+    
+    if (typeof $notify !== 'undefined') {
+        $notify('彭于晏提示❗️视频链接捕获成功', '点击跳转播放', '', { 'open-url': processedUrl });
+    } else if (typeof $notification !== 'undefined') {
+        $notification.post('彭于晏提示❗️视频链接捕获成功', '点击跳转播放', '', {
+            'url': processedUrl,
+            'openUrl': processedUrl
+        });
+    }
+}
+
+$done({ 'response': { 'headers': requestHeaders } });
