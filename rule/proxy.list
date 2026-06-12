@@ -10,6 +10,7 @@ DOMAIN-SUFFIX,apkpure.com
 DOMAIN-SUFFIX,api.binance.com
 # > xueshan
 DOMAIN-SUFFIX,xueshan.shop
+DOMAIN-SUFFIX,xueshanlink.com
 # > jisuyun
 DOMAIN-SUFFIX,905.jsy902.xyz
 # > iios
@@ -47,7 +48,6 @@ DOMAIN-SUFFIX,jsdelivr.net
 # > Media Index
 DOMAIN-KEYWORD,phncdn
 DOMAIN-KEYWORD,pornhub
-DOMAIN-SUFFIX,haijiao.com
 DOMAIN-SUFFIX,missav.ai
 DOMAIN-SUFFIX,heiliao.com
 DOMAIN-SUFFIX,liminalnet.com
