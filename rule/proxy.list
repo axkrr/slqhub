@@ -19,9 +19,6 @@ DOMAIN-SUFFIX,905.jsy902.xyz
 DOMAIN-SUFFIX,dpdns.org
 # > dump
 DOMAIN-SUFFIX,decrypt.day
-# > cloudflare
-DOMAIN-SUFFIX,workers.dev
-DOMAIN-SUFFIX,pages.dev
 # > zlibrary
 DOMAIN-SUFFIX,z-library.sk
 # > shortcut
