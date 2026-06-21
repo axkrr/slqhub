@@ -1,3 +1,6 @@
+# > cloudflare
+DOMAIN-SUFFIX,workers.dev
+DOMAIN-SUFFIX,pages.dev
 # > dns
 DOMAIN-SUFFIX,nextdns.io
 # > themebox
