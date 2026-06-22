@@ -1,14 +1,20 @@
 #!name=智联招聘
-#!desc=应用净化
+#!desc=广告净化
 #!category=axkrr
+#!author=axkrr
 #!icon=https://raw.githubusercontent.com/axkrr/slqhub/main/icon/zlzp.png
-#!update=2026-04-24
+#!update=2026-06-22
 
-[Script]
-zlzp = type=http-response,pattern=^https?:\/\/cgate\.zhaopin\.com\/(operation\/ad\/(bidMainPage|getAdRecommend)|bdp\/operation\/getPopupInfo),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/zlzp.js
+[Rule]
+^https?:\/\/cgate\.zhaopin\.com\/campusbusiness\/operation-ad-slot\/getAdvertisement - reject-dict
+^https?:\/\/cgate\.zhaopin\.com\/bdp\/global\/config - reject-dict
+^https?:\/\/fe-api\.zhaopin\.com\/experiment\/config\/c\/app - reject-dict
 ^https?:\/\/.*\.pangolin-sdk-toutiao\d*\.com - reject-dict
 ^https?:\/\/.*\.pglstatp-toutiao\.com - reject-dict
 ^https?:\/\/gromore\.pangolin-sdk-toutiao\.com - reject-dict
 
+[Script]
+zlzp = type=http-response,pattern=^https?:\/\/cgate\.zhaopin\.com\/(operation\/ad\/(bidMainPage|getAdRecommend)|bdp\/operation\/getPopupInfo|campusbusiness\/operation-ad-slot\/getAdvertisement),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/zlzp.js
+
 [MITM]
-hostname = %APPEND% cgate.zhaopin.com, *.pangolin-sdk-toutiao*.com, *.pglstatp-toutiao.com
+hostname = %APPEND% cgate.zhaopin.com, fe-api.zhaopin.com, *.pangolin-sdk-toutiao*.com, *.pglstatp-toutiao.com
