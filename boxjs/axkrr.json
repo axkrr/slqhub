@@ -4,20 +4,20 @@
   "author": "@axkrr",
   "icon": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/avatar.png",
   "repo": "https://github.com/axkrr/slqhub",
-  "desc": "重庆大学一卡通余额查询相关配置，cookie由脚本自动获取，无需手动填写。",
+  "desc": "重庆大学一卡通余额查询相关配置，Token由脚本自动获取，无需手动填写。",
   "raw": "https://raw.githubusercontent.com/axkrr/slqhub/main/boxjs/axkrr.json",
-  "date": "更新日期：2026-05-17",
+  "date": "更新日期：2026-06-24",
   "apps": [
     {
       "id": "CQU.CardBalance",
       "name": "一卡通余额",
       "keys": [
-        "@CQU.CardBalance.Settings.Cookie"
+        "@CQU.CardBalance.Settings.Token"
       ],
       "settings": [
         {
-          "id": "@CQU.CardBalance.Settings.Cookie",
-          "name": "一卡通Cookie",
+          "id": "@CQU.CardBalance.Settings.Token",
+          "name": "一卡通Token",
           "type": "text",
           "val": "",
           "desc": "脚本自动抓取，无需手动填写",
