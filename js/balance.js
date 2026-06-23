@@ -11,14 +11,14 @@ const ROOT_KEY = '#CQU'
 $ = new API(APIKey, true)
 
 if (typeof $request !== 'undefined') {
-  GetCookie()
+  GetToken()
 }
 
-function GetCookie() {
+function GetToken() {
   const headers = $request.headers || {}
-  const cookie = headers.Cookie || headers.cookie || ''
+  const token = headers['synjones-auth'] || ''
 
-  if (cookie) {
+  if (token) {
     let root = {}
     try {
       root = JSON.parse($persistentStore.read('CQU') || '{}')
@@ -27,19 +27,20 @@ function GetCookie() {
     }
     root.CardBalance = root.CardBalance || {}
     root.CardBalance.Settings = root.CardBalance.Settings || {}
-    root.CardBalance.Settings.Cookie = cookie
+    root.CardBalance.Settings.Cookie = token
+
     $.write(JSON.stringify(root), '#CQU')
 
     $.notify(
-      '重庆大学饭卡',
-      'Cookie 写入成功',
+      '重庆大学一卡通',
+      'Token 写入成功',
       'CQU → CardBalance → Settings → Cookie'
     )
   } else {
     $.notify(
-      '重庆大学饭卡',
-      '未检测到 Cookie',
-      '请确保已登录一卡通系统，并重新打开余额页面'
+      '重庆大学一卡通',
+      '未检测到 Token',
+      '请确保已打开校园卡余额页面'
     )
   }
 
