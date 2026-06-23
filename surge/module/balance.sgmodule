@@ -1,12 +1,12 @@
-#!name=一卡通余额
-#!desc=获取一卡通ck
+#!name=一卡通Token
+#!desc=获取一卡通Token
 #!category=cookie
 #!author=axkrr
 #!icon=https://raw.githubusercontent.com/axkrr/slqhub/main/icon/card.png
-#!updaet=2026-05-18
- 
+#!updaet=2026-06-24
+
 [Script]
-一卡通ck = type=http-request, pattern=http:\/\/payment\.cqu\.edu\.cn\/berserker-app\/ykt\/tsm\/queryCard, script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/balance.js, requires-body=1, max-size=0, script-update-interval=0
- 
+一卡通Token = type=http-request, pattern=http:\/\/payment\.cqu\.edu\.cn\/berserker-app\/ykt\/tsm\/queryCard, script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/balance.js, requires-body=1, max-size=0, script-update-interval=0
+
 [MITM]
 hostname = %APPEND% payment.cqu.edu.cn
