@@ -1,10 +1,10 @@
 {
-  "id": "CQU",
+  "id": "CQU"，
   "name": "axkrr的订阅",
   "author": "@axkrr",
   "icon": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/avatar.png",
   "repo": "https://github.com/axkrr/slqhub",
-  "desc": "重庆大学一卡通余额查询相关配置，Token由脚本自动获取，无需手动填写。",
+  "desc": "重庆大学一卡通余额查询。token由Surge脚本自动从oauth/token响应中抓取并存入BoxJS，无需手动填写。有效期约70天。",
   "raw": "https://raw.githubusercontent.com/axkrr/slqhub/main/boxjs/axkrr.json",
   "date": "更新日期：2026-06-24",
   "apps": [
@@ -12,16 +12,34 @@
       "id": "CQU.CardBalance",
       "name": "一卡通余额",
       "keys": [
-        "@CQU.CardBalance.Settings.Token"
+        "@CQU.CardBalance.Tokens.AccessToken",
+        "@CQU.CardBalance.Tokens.RefreshToken",
+        "@CQU.CardBalance.Tokens.UpdatedAt"
       ],
       "settings": [
         {
-          "id": "@CQU.CardBalance.Settings.Token",
-          "name": "一卡通Token",
+          "id": "@CQU.CardBalance.Tokens.AccessToken",
+          "name": "AccessToken (JWT)",
           "type": "text",
           "val": "",
-          "desc": "脚本自动抓取，无需手动填写",
-          "placeholder": "打开校园卡页面自动获取"
+          "desc": "脚本自动从oauth/token抓取，无需手动填写。有效期约70天。",
+          "placeholder": "在今日校园app中打开余额页面自动获取"
+        },
+        {
+          "id": "@CQU.CardBalance.Tokens.RefreshToken",
+          "name": "RefreshToken",
+          "type": "text",
+          "val": "",
+          "desc": "用于刷新AccessToken，同样自动获取",
+          "placeholder": "自动获取"
+        },
+        {
+          "id": "@CQU.CardBalance.Tokens.UpdatedAt",
+          "name": "最后更新时间",
+          "type": "text",
+          "val": "",
+          "desc": "令牌最后更新时间戳，自动记录",
+          "placeholder": "自动记录"
         }
       ],
       "icons": [
