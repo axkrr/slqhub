@@ -4,7 +4,7 @@
   "author": "@axkrr",
   "icon": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/avatar.png",
   "repo": "https://github.com/axkrr/slqhub",
-  "desc": "重庆大学一卡通余额查询。token由Surge脚本自动从oauth/token响应中抓取并存入BoxJS，无需手动填写。有效期约70天。",
+  "desc": "一卡通余额查询。token由模块自动抓取并存入BoxJS，无需手动填写。有效期约70天。",
   "raw": "https://raw.githubusercontent.com/axkrr/slqhub/main/boxjs/axkrr.json",
   "date": "更新日期：2026-06-24",
   "apps": [
