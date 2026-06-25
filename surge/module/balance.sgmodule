@@ -1,12 +1,12 @@
-#!name=重庆大学一卡通Token
-#!desc=自动捕获JWT令牌并存入BoxJS，token有效期约70天
+#!name=一卡通token
+#!desc=自动捕获JWT令牌并存入BoxJS.token有效期约70天;打开今日校园-服务-一卡通-余额
 #!category=cookie
 #!author=axkrr
 #!icon=https://raw.githubusercontent.com/axkrr/slqhub/main/icon/card.png
 #!update=2026-06-24
 
 [Script]
-一卡通Token捕获 = type=http-response, pattern=http:\/\/payment\.cqu\.edu\.cn\/berserker-auth\/oauth\/token, script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/balance.js, requires-body=1, max-size=8192, script-update-interval=0
+一卡通token = type=http-response, pattern=http:\/\/payment\.cqu\.edu\.cn\/berserker-auth\/oauth\/token, script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/balance.js, requires-body=1, max-size=8192, script-update-interval=0
 
 [MITM]
 hostname = %APPEND% payment.cqu.edu.cn
