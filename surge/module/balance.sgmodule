@@ -1,5 +1,5 @@
 #!name=一卡通token
-#!desc=自动捕获JWT令牌并存入boxjs.token有效期约70天;打开今日校园-服务-一卡通-余额;boxjs订阅链接：https://raw.githubusercontent.com/axkrr/slqhub/main/boxjs/axkrr.json
+#!desc=自动捕获JWT令牌并存入boxjs,token有效期约70天;触发条件:今日校园-服务-一卡通-余额;boxjs订阅链接:https://raw.githubusercontent.com/axkrr/slqhub-entry/main/axkrr.json
 #!category=cookie
 #!author=axkrr
 #!icon=https://raw.githubusercontent.com/axkrr/slqhub/main/icon/card.png
