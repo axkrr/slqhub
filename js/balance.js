@@ -1,6 +1,6 @@
 /**
  * @name balance
- * @desc 捕获一卡通JWT令牌(access_token + refresh_token)并存入BoxJS。请在今日校园app中打开余额查询页面触发。token有效期约70天，过期前会自动续期。
+ * @desc 捕获一卡通JWT令牌
  * @author axkrr
  * @update 2026-06-24
 */
