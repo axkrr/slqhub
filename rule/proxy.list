@@ -1,3 +1,5 @@
+# > wsgw
+DOMAIN-SUFFIX,api.wsgw-rewrite.com
 # > cloudflare
 DOMAIN-SUFFIX,cloudflare.com
 DOMAIN-SUFFIX,workers.dev
