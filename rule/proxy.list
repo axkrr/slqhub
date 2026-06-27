@@ -1,4 +1,5 @@
 # > cloudflare
+DOMAIN-SUFFIX,cloudflare.com
 DOMAIN-SUFFIX,workers.dev
 DOMAIN-SUFFIX,pages.dev
 # > dns
@@ -54,4 +55,5 @@ DOMAIN-KEYWORD,phncdn
 DOMAIN-KEYWORD,pornhub
 DOMAIN-SUFFIX,missav.ai
 DOMAIN-SUFFIX,heiliao.com
+DOMAIN-SUFFIX,haijiao.com
 DOMAIN-SUFFIX,liminalnet.com
