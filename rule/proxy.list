@@ -1,7 +1,5 @@
 # > mithka
 DOMAIN-SUFFIX,nekoko.it
-# > scripting
-DOMAIN-SUFFIX,us.kg
 # > wsgw
 DOMAIN-SUFFIX,api.wsgw-rewrite.com
 # > cloudflare
