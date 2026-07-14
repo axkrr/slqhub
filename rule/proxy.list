@@ -3,7 +3,6 @@ DOMAIN-SUFFIX,nekoko.it
 # > wsgw
 DOMAIN-SUFFIX,api.wsgw-rewrite.com
 # > cloudflare
-DOMAIN-SUFFIX,cloudflare.com
 DOMAIN-SUFFIX,workers.dev
 DOMAIN-SUFFIX,pages.dev
 # > dns
