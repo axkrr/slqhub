@@ -1,5 +1,5 @@
 # > adsafe
-DOMAIN,dt.adsafeprotected.com
+DOMAIN-SUFFIX,adsafeprotected.com
 # > qlam
 DOMAIN,img.qlam.cc
 # > abc
