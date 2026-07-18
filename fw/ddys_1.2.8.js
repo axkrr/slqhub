@@ -26,7 +26,7 @@ var WidgetMetadata = {
       title: "视觉 API Key（一次性）",
       type: "input",
       description: "OpenAI 兼容多模态 Key，只填一次。用于自动点选验证码续 Cookie，之后不用再抓 CK。",
-      value: ""
+      value: "burst_uid=e44fd7040a7e045e82bd48e8aa155e9b"
     },
     {
       name: "visionApiBase",
