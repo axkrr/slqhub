@@ -5,7 +5,7 @@
 #-----------------------------------------
 
 [rewrite]
-^https?:\/\/(www\.daxuesoutijiang\.com\/init\/config\/(init|popupconfig)|adx\.zuoyebang\.com\/adxserver\/ad\/(getconfig|adreq)) url script-response-body https://raw.githubusercontent.com/axkrr/slqhub-entry/main/dxstjpure.js
+^https?:\/\/(www\.daxuesoutijiang\.com\/init\/config\/(init|popupconfig)|adx\.zuoyebang\.com\/adxserver\/ad\/(getconfig|adreq)) url script-response-body https://raw.githubusercontent.com/axkrr/slqhub/main/js/dxstj.js
 
 ^https?:\/\/(stats\.cdnjtzy\.com|nlog\.daxuesoutijiang\.com)\/.* url reject-200
 
