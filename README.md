@@ -1,3 +1,4 @@
+# 自用，请勿传播
 # Surge
 ### config
 [Surge.conf](https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Config/Surge.conf)  
