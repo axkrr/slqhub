@@ -3,8 +3,7 @@ DOMAIN-SUFFIX,adsafeprotected.com
 # > qlam
 DOMAIN,img.qlam.cc
 # > abc
-DOMAIN,msmp.abchina.com.cn
-DOMAIN,mobilepaas.abchina.com.cn
+DOMAIN-SUFFIX,abchina.com.cn
 # > wechat
 DOMAIN,wclg.art
 # > xianyu
