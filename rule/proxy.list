@@ -64,3 +64,4 @@ DOMAIN-SUFFIX,missav.ai
 DOMAIN-SUFFIX,heiliao.com
 DOMAIN-SUFFIX,haijiao.com
 DOMAIN-SUFFIX,liminalnet.com
+IP-CIDR,216.144.234.247/32
