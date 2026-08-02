@@ -19,7 +19,7 @@ DOMAIN,support.lcsignx.com
 DOMAIN-SUFFIX,yfamilys.com
 # > apkpure
 DOMAIN-SUFFIX,apkpure.com
-# > crypto
+# > crypto widget
 DOMAIN-SUFFIX,api.binance.com
 # > kittysu
 DOMAIN-SUFFIX,luolicon.ru
@@ -38,22 +38,28 @@ DOMAIN-SUFFIX,z-library.sk
 DOMAIN,routinehub.co
 # > kelee
 DOMAIN-SUFFIX,kelee.one
-# > Local_macOS
+# > homebrew
 DOMAIN-KEYWORD,brew
+# > rust
 DOMAIN-KEYWORD,rust
+# > qiuchen store
 DOMAIN-SUFFIX,ghcr.io
+# > huggingface
 DOMAIN-SUFFIX,huggingface.co
 # > Pi
 DOMAIN-KEYWORD,minepi
-# > image host
+# > lxlad
 DOMAIN,i.lxlad.com
-# > js script
+# > user script
 DOMAIN-SUFFIX,greasyfork.org
 DOMAIN-SUFFIX,sleazyfork.org
-# > API Interface
+# > ip
 DOMAIN-SUFFIX,ip-api.com
+# > pkc
 DOMAIN,agent.curtin.top
+# > vercel
 DOMAIN-SUFFIX,vercel.app
+# > backend service
 DOMAIN-SUFFIX,sub.store
 DOMAIN-SUFFIX,script.hub
 DOMAIN-SUFFIX,boxjs.com
