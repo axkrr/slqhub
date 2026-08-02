@@ -2,8 +2,8 @@
 DOMAIN-SUFFIX,iturrit.com
 # > mithka
 DOMAIN-SUFFIX,nekoko.it
-# > wsgw
-DOMAIN-SUFFIX,api.wsgw-rewrite.com
+# > Pi
+DOMAIN-KEYWORD,minepi
 # > dns
 DOMAIN-SUFFIX,nextdns.io
 # > iios
@@ -16,6 +16,8 @@ DOMAIN-SUFFIX,decrypt.day
 DOMAIN-SUFFIX,z-library.sk
 # > shortcut
 DOMAIN,routinehub.co
+# > wsgw
+DOMAIN-SUFFIX,api.wsgw-rewrite.com
 # > crypto widget
 DOMAIN-SUFFIX,api.binance.com
 # > ip
@@ -31,8 +33,6 @@ DOMAIN-SUFFIX,905.jsy902.xyz
 DOMAIN-SUFFIX,kelee.one
 # > yfamily
 DOMAIN-SUFFIX,yfamilys.com
-# > Pi
-DOMAIN-KEYWORD,minepi
 # > lxlad
 DOMAIN,i.lxlad.com
 # > user script
