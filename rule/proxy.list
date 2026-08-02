@@ -1,28 +1,25 @@
-# > iwara
-DOMAIN-SUFFIX,iwara.tv
-# > decrypt
-DOMAIN,decrypt.34306.lol
 # > turrit
 DOMAIN-SUFFIX,iturrit.com
 # > mithka
 DOMAIN-SUFFIX,nekoko.it
 # > wsgw
 DOMAIN-SUFFIX,api.wsgw-rewrite.com
-# > cloudflare
-DOMAIN-SUFFIX,workers.dev
-DOMAIN-SUFFIX,pages.dev
 # > dns
 DOMAIN-SUFFIX,nextdns.io
-# > themebox
-DOMAIN,api-tool.imtheme.cn
-# > lcsign
-DOMAIN,support.lcsignx.com
-# > yfamily
-DOMAIN-SUFFIX,yfamilys.com
+# > iios
+DOMAIN-SUFFIX,dpdns.org
 # > apkpure
 DOMAIN-SUFFIX,apkpure.com
+# > dump
+DOMAIN-SUFFIX,decrypt.day
+# > zlibrary
+DOMAIN-SUFFIX,z-library.sk
+# > shortcut
+DOMAIN,routinehub.co
 # > crypto widget
 DOMAIN-SUFFIX,api.binance.com
+# > ip
+DOMAIN-SUFFIX,ip-api.com
 # > kittysu
 DOMAIN-SUFFIX,luolicon.ru
 # > xueshan
@@ -30,24 +27,10 @@ DOMAIN-SUFFIX,xueshan.shop
 DOMAIN-SUFFIX,xueshanlink.com
 # > jisuyun
 DOMAIN-SUFFIX,905.jsy902.xyz
-# > iios
-DOMAIN-SUFFIX,dpdns.org
-# > dump
-DOMAIN-SUFFIX,decrypt.day
-# > zlibrary
-DOMAIN-SUFFIX,z-library.sk
-# > shortcut
-DOMAIN,routinehub.co
 # > kelee
 DOMAIN-SUFFIX,kelee.one
-# > homebrew
-DOMAIN-KEYWORD,brew
-# > rust
-DOMAIN-KEYWORD,rust
-# > qiuchen store
-DOMAIN-SUFFIX,ghcr.io
-# > huggingface
-DOMAIN-SUFFIX,huggingface.co
+# > yfamily
+DOMAIN-SUFFIX,yfamilys.com
 # > Pi
 DOMAIN-KEYWORD,minepi
 # > lxlad
@@ -55,10 +38,23 @@ DOMAIN,i.lxlad.com
 # > user script
 DOMAIN-SUFFIX,greasyfork.org
 DOMAIN-SUFFIX,sleazyfork.org
-# > ip
-DOMAIN-SUFFIX,ip-api.com
 # > pkc
 DOMAIN,agent.curtin.top
+# > themebox
+DOMAIN,api-tool.imtheme.cn
+# > lcsign
+DOMAIN,support.lcsignx.com
+# > qiuchen store
+DOMAIN-SUFFIX,ghcr.io
+# > homebrew
+DOMAIN-KEYWORD,brew
+# > rust
+DOMAIN-KEYWORD,rust
+# > huggingface
+DOMAIN-SUFFIX,huggingface.co
+# > cloudflare
+DOMAIN-SUFFIX,workers.dev
+DOMAIN-SUFFIX,pages.dev
 # > vercel
 DOMAIN-SUFFIX,vercel.app
 # > backend service
@@ -66,8 +62,10 @@ DOMAIN-SUFFIX,sub.store
 DOMAIN-SUFFIX,script.hub
 DOMAIN-SUFFIX,boxjs.com
 DOMAIN-SUFFIX,dompling.github.io
-# > media
+# > emby
 DOMAIN-SUFFIX,liminalnet.com
+# > iwara
+DOMAIN-SUFFIX,iwara.tv
 # > porn
 DOMAIN-KEYWORD,phncdn
 DOMAIN-KEYWORD,pornhub
