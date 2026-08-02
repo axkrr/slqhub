@@ -181,6 +181,10 @@
     {
       "name": "locus",
       "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/locus.png"
+    },
+    {
+      "name": "zfb",
+      "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/zfb.png"
     }
   ]
 }
