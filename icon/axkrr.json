@@ -193,6 +193,10 @@
     {
       "name": "wb",
       "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/wb.png"
+    },
+    {
+      "name": "xhs",
+      "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/xhs.png"
     }
   ]
 }
