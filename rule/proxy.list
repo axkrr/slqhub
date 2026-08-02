@@ -17,9 +17,9 @@ DOMAIN-SUFFIX,z-library.sk
 # > shortcut
 DOMAIN,routinehub.co
 # > wsgw
-DOMAIN-SUFFIX,api.wsgw-rewrite.com
+DOMAIN,api.wsgw-rewrite.com
 # > crypto widget
-DOMAIN-SUFFIX,api.binance.com
+DOMAIN,api.binance.com
 # > ip
 DOMAIN-SUFFIX,ip-api.com
 # > kittysu
