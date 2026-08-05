@@ -86,8 +86,6 @@
 11、[酷狗音乐mac端脚本](https://raw.githubusercontent.com/chmg2025/script/refs/heads/main/kugouvip.js)  
 ### task收藏
 1、[task合集](https://raw.githubusercontent.com/fmz200/wool_scripts/refs/heads/main/QuantumultX/tasks/fmz200_tasks.json)  
-# icon
-[axkrr.json](https://raw.githubusercontent.com/axkrr/slqhub/main/icon/axkrr.json)  
 ## 
 ### icon收藏
 1、[Cute](https://raw.githubusercontent.com/tugepaopao/Image-Storage/master/other/Cute.json)  
