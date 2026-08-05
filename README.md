@@ -1,22 +1,5 @@
 # slqhub
 ## 自用备份，请勿传播
-# Surge
-### config
-[Surge.conf](https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Config/Surge.conf)  
-### rule
-1、[localrule.list](https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Rule/localrule.list)  
-### module
-1、[dypure.sgmodule](https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/Pure/dypure.sgmodule)  
-2、[qdpure.sgmodule](https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/Pure/qdpure.sgmodule)  
-3、[hlzhpure.sgmodule](https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/Pure/hlzhpure.sgmodule)  
-4、[dxstjpure.sgmodule](https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/Pure/dxstjpure.sgmodule)  
-5、[pkocrack.sgmodule](https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/Crack/pkocrack.sgmodule)  
-6、[videosniff.sgmodule](https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/Tool/videosniff.sgmodule)  
-#### js
-1、[qd.js](https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/JS/qd.js)  
-2、[dxstj.js](https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/JS/dxstj.js)  
-3、[videosniff.js](https://raw.githubusercontent.com/axkrr/slqhub/main/Surge/Module/JS/videosniff.js)  
-## 
 ### 模块收藏
 #### 工具模块
 1、[BoxJS](https://raw.githubusercontent.com/chavyleung/scripts/master/box/rewrite/boxjs.rewrite.surge.sgmodule)  
@@ -80,12 +63,6 @@
 1、[IP-Pure](https://raw.githubusercontent.com/BOBOLAOSHIV587/Rules/refs/heads/main/JS/IPPure/IPPure.sgmodule)  
 2、[Surge Pro](https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Surge-Pro/Moore/SurgePro.sgmodule)  
 3、[流媒体解锁检测](https://raw.githubusercontent.com/Rabbit-Spec/Surge/Master/Module/Panel/Stream-All/Moore/Stream-All.sgmodule)  
-# Loon
-### config
-[Loon.lcf](https://raw.githubusercontent.com/axkrr/slqhub/main/Loon/Config/Loon.lcf)  
-### rule
-1、[localpure.lsr](https://raw.githubusercontent.com/axkrr/slqhub/main/Loon/Rule/localpure.lsr)  
-2、[localrule.lsr](https://raw.githubusercontent.com/axkrr/slqhub/main/Loon/Rule/localrule.lsr)  
 ## 
 ### 插件收藏
 1、[剪映](https://github.com/Moli-X/Resources/raw/main/Loon/JianYing.plugin)  
@@ -94,18 +71,6 @@
 4、[微信小程序去广告](https://raw.githubusercontent.com/fmz200/wool_scripts/main/Loon/plugin/WeChatMiniAds.plugin)  
 ### script收藏
 1、[script合集](https://github.com/fmz200/wool_scripts/raw/main/Loon/script/tasks.scripts)  
-# Qx
-### config 
-[QX.conf](https://raw.githubusercontent.com/axkrr/slqhub/main/QuantumultX/Config/QX.conf)  
-### rule
-1、[localrule.list](https://raw.githubusercontent.com/axkrr/slqhub/main/QuantumultX/Rule/localrule.list)  
-2、[filterfix.list](https://raw.githubusercontent.com/axkrr/slqhub/main/QuantumultX/Rule/filterfix.list)  
-### rewrite
-1、[qdpure.snippet](https://raw.githubusercontent.com/axkrr/slqhub/main/QuantumultX/Rewrite/Pure/qdpure.snippet)  
-2、[dxstjpure.snippet](https://raw.githubusercontent.com/axkrr/slqhub/main/QuantumultX/Rewrite/Pure/dxstjpure.snippet)  
-#### js
-1、[qd.js](https://raw.githubusercontent.com/axkrr/slqhub/main/QuantumultX/Rewrite/JS/qd.js)  
-2、[dxstj.js](https://raw.githubusercontent.com/axkrr/slqhub/main/QuantumultX/Rewrite/JS/dxstj.js)  
 ## 
 ### 重写收藏
 1、[芒果TV](https://raw.githubusercontent.com/WeiGiegie/666/main/mgtv.js)  
