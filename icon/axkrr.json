@@ -209,6 +209,10 @@
     {
       "name": "mt",
       "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/mt.png"
+    },
+    {
+      "name": "pdd",
+      "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/pdd.png"
     }
   ]
 }
