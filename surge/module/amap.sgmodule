@@ -2,7 +2,7 @@
 #!desc=高德打车三端(地图APP/微信/支付宝小程序)抓取签到Cookie(sessionid/userId/adiu)的模块
 #!category=cookie
 #!author=wf021325
-#!icon=
+#!icon=https://raw.githubusercontent.com/axkrr/slqhub/main/icon/gddt.png
 #!update=2026-08-08
 
 [Script]
