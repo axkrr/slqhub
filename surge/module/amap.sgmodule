@@ -1,7 +1,9 @@
 #!name=高德打车ck
-#!desc=高德打车三端(地图APP/微信/支付宝小程序)抓取签到 Cookie(sessionid/userId/adiu)的模块
+#!desc=高德打车三端(地图APP/微信/支付宝小程序)抓取签到Cookie(sessionid/userId/adiu)的模块
 #!category=cookie
 #!author=wf021325
+#!icon=
+#!update=2026-08-08
 
 [Script]
 Dache_GetCookie = type=http-response,pattern=^https?:\/\/(m5(|-zb)|dache)\.amap\.com\/(ws\/yuece\/(act|openapi\/activity\/current)\/query|common\/(alipaymini|wxmini)\?_ENCRYPT=),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/wf021325/qx/master/task/ampDache.js
