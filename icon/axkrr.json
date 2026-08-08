@@ -233,6 +233,14 @@
     {
       "name": "qcwy",
       "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/qcwy.png"
+    },
+    {
+      "name": "lp",
+      "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/lp.png"
+    },
+    {
+      "name": "boss",
+      "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/boss.png"
     }
   ]
 }
