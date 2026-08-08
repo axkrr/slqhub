@@ -2,7 +2,7 @@
 #!desc=cookie获取
 #!author=MartinsKin
 #!category=cookie
-#!icon=https://raw.githubusercontent.com/ClydeTime/BiliBili/main/database/icon_Avatar.png
+#!icon=https://raw.githubusercontent.com/axkrr/slqhub/main/icon/blbl.png
 #!update=2025-05-15
 #!arguments=script_QrCode:B站Cookie(扫码),script_APP:B站Cookie(APP)
 # 使用APP获取cookie,保持B站Cookie(APP)开启,如检测到cookie变更会自动更新,解决cookie经常过期的问题
