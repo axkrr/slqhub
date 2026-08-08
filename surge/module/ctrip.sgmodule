@@ -3,6 +3,7 @@
 #!category=cookie
 #!author=NobyDa
 #!icon=
+#!update=2026-08-08
 #!arguments=禁用脚本:携程旅行[授权],禁用MITM:hostname
 #!arguments-desc=禁用脚本：禁用获取授权脚本，输入 # 表示禁用。\n\n禁用MITM：禁用MITM主机名，输入 # 表示禁用。
 
