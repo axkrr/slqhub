@@ -4,7 +4,7 @@
 #!author=axkrr
 #!icon=https://raw.githubusercontent.com/axkrr/slqhub/main/icon/card.png
 #!update=2026-06-24
-#boxjs订阅链接:https://raw.githubusercontent.com/axkrr/slqhub-entry/main/axkrr.json
+# boxjs订阅链接:https://raw.githubusercontent.com/axkrr/slqhub-entry/main/axkrr.json
 
 [Script]
 一卡通token = type=http-response, pattern=http:\/\/payment\.cqu\.edu\.cn\/berserker-auth\/oauth\/token, script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/balance.js, requires-body=1, max-size=8192, script-update-interval=0
