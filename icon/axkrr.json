@@ -241,6 +241,10 @@
     {
       "name": "boss",
       "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/boss.png"
+    },
+    {
+      "name": "cll",
+      "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/cll.png"
     }
   ]
 }
