@@ -56,7 +56,7 @@ DOMAIN-KEYWORD,rust
 DOMAIN-SUFFIX,huggingface.co
 # > cloudflare
 DOMAIN-SUFFIX,workers.dev
-DOMAIN-SUFFIX,pages.dev
+#DOMAIN-SUFFIX,pages.dev
 # > vercel
 DOMAIN-SUFFIX,vercel.app
 # > backend service
