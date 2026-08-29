@@ -2,15 +2,17 @@
 哔哩哔哩扫码登录 - QuanX 分段版 (2026-08-29)
 配套 ClydeTime/BiliBili 的 BiliBiliDailyBonus.js 使用(每日任务不受影响)
 
-段1: script-response-body 触发 → 生成二维码并推送(约1秒完成, 不触发QuanX重写10秒超时)
-段2: 定时任务(* * * * *) → 每5秒轮询扫码状态, 确认后写入 bilibili_daily_bonus(与每日任务共用存储)
+段1: script-response-body 触发 → 生成二维码并推送(约0.5秒完成, 不触发QuanX重写10秒超时)
+段2: script-request-header 匹配 app.bilibili.com 任意请求 → APP流量驱动轮询(秒级)
+段3: 定时任务(* * * * *) → 兜底轮询(每分钟, 每5秒一次×3)
 
 QuanX 配置:
 [rewrite_local]
-^https?:\/\/app\.bilibili\.com\/x\/resource\/fingerprint\? url script-response-body BiliBiliQrLogin.js
+^https?:\/\/app\.bilibili\.com\/x\/resource\/fingerprint\? url script-response-body https://raw.githubusercontent.com/axkrr/slqhub/main/js/bilibili.js
+^https?:\/\/app\.bilibili\.com\/ url script-request-header https://raw.githubusercontent.com/axkrr/slqhub/main/js/bilibili.js
 
 [task_local]
-* * * * * BiliBiliQrLogin.js, tag=B站扫码轮询, timeout=70, enabled=true
+* * * * * https://raw.githubusercontent.com/axkrr/slqhub/main/js/bilibili.js, tag=B站扫码轮询兜底, enabled=true
 30 7 * * * https://raw.githubusercontent.com/ClydeTime/BiliBili/main/js/BiliBiliDailyBonus.js, tag=B站每日等级任务, img-url=https://raw.githubusercontent.com/HuiDoY/Icon/main/mini/Color/bilibili.png, enabled=true
 
 [MITM]
@@ -38,9 +40,11 @@ const generateSign = body => md5(
 
 !(async () => {
     if ("object" === typeof $response) {
-        await genQr();
+        await genQr();          // 段1: 重写-响应 → 生成二维码并推送
+    } else if ("object" === typeof $request) {
+        await pollQrOnce();     // 段2: 重写-请求 → APP流量驱动轮询(秒级)
     } else {
-        await pollQr();
+        await pollQrLoop();     // 段3: 定时任务 → 兜底轮询(每分钟)
     }
 })()
     .catch((e) => $.logErr(e))
@@ -76,27 +80,40 @@ async function genQr() {
     }
 }
 
-// ===== 段2: 轮询扫码状态(定时任务, 每5秒一次, 最多10次/轮) =====
-async function pollQr() {
+// ===== 段2: APP流量驱动轮询(重写触发, 每次只轮询一次, ~0.3s, 不碰10s超时) =====
+async function pollQrOnce() {
+    const pending = $.getItem(PENDING_KEY, null);
+    if (!pending || !pending.auth_code) return $.log("- 无待确认的扫码任务");
+    if (Date.now() - pending.ts > QR_TTL) {
+        $.setItem(PENDING_KEY, "");
+        return $.msg("bilibili扫码", "- 二维码已过期", "请重新打开B站APP获取新二维码");
+    }
+    if (await tryConfirm(pending.auth_code)) {
+        $.setItem(PENDING_KEY, "");
+        return $.msg("bilibili扫码", "✅ 扫码确认成功", "cookie已写入, 每日任务将自动运行");
+    }
+}
+
+// ===== 段3: 定时任务兜底(每分钟触发, 每5秒轮询一次, 共3次/轮) =====
+async function pollQrLoop() {
     const pending = $.getItem(PENDING_KEY, null);
     if (!pending || !pending.auth_code) return $.log("- 无待确认的扫码任务");
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 3; i++) {
         if (Date.now() - pending.ts > QR_TTL) {
             $.setItem(PENDING_KEY, "");
             return $.msg("bilibili扫码", "- 二维码已过期", "请重新打开B站APP获取新二维码");
         }
-        const ok = await loginConfirm(pending.auth_code);
-        if (ok) {
+        if (await tryConfirm(pending.auth_code)) {
             $.setItem(PENDING_KEY, "");
             return $.msg("bilibili扫码", "✅ 扫码确认成功", "cookie已写入, 每日任务将自动运行");
         }
         await $.wait(5000);
     }
-    $.log("- 本轮轮询未确认, 等待下一轮");
+    $.log("- 本轮兜底轮询未确认");
 }
 
-async function loginConfirm(auth_code) {
+async function tryConfirm(auth_code) {
     const body = {
         appkey: "27eb53fc9058f8c3",
         auth_code,
