@@ -1,5 +1,8 @@
 [rewrite_local]
-^https?:\/\/app\.bilibili\.com\/x\/resource\/fingerprint\? url script-request-header https://raw.githubusercontent.com/ClydeTime/BiliBili/main/js/BiliBiliDailyBonus.js
+# APP cookie 抓取：匹配登录态接口（必然带 cookie）
+^https?:\/\/app\.bilibili\.com\/x\/v2\/account\/(myinfo|mine) url script-request-header https://raw.githubusercontent.com/ClydeTime/BiliBili/main/js/BiliBiliDailyBonus.js
+^https?:\/\/api\.bilibili\.com\/x\/member\/web\/exp\/reward url script-request-header https://raw.githubusercontent.com/ClydeTime/BiliBili/main/js/BiliBiliDailyBonus.js
+
 
 [MITM]
 hostname = %APPEND% app.bilibili.com
