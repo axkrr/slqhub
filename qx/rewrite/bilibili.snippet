@@ -1,0 +1,10 @@
+[rewrite_local]
+# 段1: 打开B站APP时生成二维码并推送(1秒内完成,不受10秒超时影响)
+^https?:\/\/app\.bilibili\.com\/x\/resource\/fingerprint\? url script-response-body BiliBiliQrLogin.js
+
+[task_local]
+# 段2: 每5秒轮询扫码状态(定时任务无10秒限制)
+* * * * * BiliBiliQrLogin.js, tag=B站扫码轮询, timeout=70, enabled=true
+
+[MITM]
+hostname = app.bilibili.com
