@@ -1,0 +1,5 @@
+[rewrite_local]
+^https?:\/\/app\.bilibili\.com\/x\/resource\/fingerprint\? url script-request-header https://raw.githubusercontent.com/ClydeTime/BiliBili/main/js/BiliBiliDailyBonus.js
+
+[MITM]
+hostname = %APPEND% app.bilibili.com
