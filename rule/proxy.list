@@ -1,5 +1,3 @@
-# > iringo
-DOMAIN-SUFFIX,nanocat.cloud
 # > turrit
 DOMAIN-SUFFIX,iturrit.com
 # > mithka
@@ -66,15 +64,6 @@ DOMAIN-SUFFIX,boxjs.com
 DOMAIN-SUFFIX,dompling.github.io
 # > emby
 DOMAIN-SUFFIX,liminalnet.com
-# > iwara
-DOMAIN-SUFFIX,iwara.tv
-# > porn
-DOMAIN-KEYWORD,phncdn
-DOMAIN-KEYWORD,pornhub
-DOMAIN-SUFFIX,xhamster.com
-DOMAIN-SUFFIX,xhcdn.com
-DOMAIN-SUFFIX,missav.ai
-DOMAIN-SUFFIX,surrit.com
+# > video
 DOMAIN-SUFFIX,lzlukvca.cc
-DOMAIN-SUFFIX,heiliao.com
 IP-CIDR,216.144.234.247/32
