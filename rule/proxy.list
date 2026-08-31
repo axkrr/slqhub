@@ -64,6 +64,4 @@ DOMAIN-SUFFIX,boxjs.com
 DOMAIN-SUFFIX,dompling.github.io
 # > emby
 DOMAIN-SUFFIX,liminalnet.com
-# > video
-DOMAIN-SUFFIX,lzlukvca.cc
 IP-CIDR,216.144.234.247/32
