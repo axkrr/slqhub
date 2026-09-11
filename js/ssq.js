@@ -40,13 +40,19 @@ cron "0 30 21 * * *" script-path=https://raw.githubusercontent.com/evilbutcher/Q
 【Icon】
 透明：https://raw.githubusercontent.com/evilbutcher/Quantumult_X/master/picture/ssq_tran.png
 彩色：https://raw.githubusercontent.com/58xinian/icon/master/Two_color_ball.png
+
+// update
+1.更新新接口
+2.关闭3D和七乐彩默认查询
+3.更新时间：2026-09-11
+updated by @axkrr
 */
 const $ = new API("ssq", true);
 const ERR = MYERR();
 const ssq = $.read("ssq") || true; //默认查询
 const dlt = $.read("dlt") || true; //默认查询
-const fc3d = $.read("3d") || true; //默认查询
-const qlc = $.read("qlc") || true; //默认查询
+const fc3d = $.read("3d") || false; //默认关闭
+const qlc = $.read("qlc") || false; //默认关闭
 const findlatest = $.read("new") || true; //默认仅查询当日开奖的彩票
 
 !(async () => {
