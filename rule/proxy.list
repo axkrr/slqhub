@@ -4,8 +4,6 @@ DOMAIN-SUFFIX,iturrit.com
 DOMAIN-SUFFIX,nekoko.it
 # > Pi
 DOMAIN-KEYWORD,minepi
-# > dns
-DOMAIN-SUFFIX,nextdns.io
 # > iios
 DOMAIN-SUFFIX,dpdns.org
 # > apkpure
@@ -31,8 +29,6 @@ DOMAIN-SUFFIX,xueshanlink.com
 DOMAIN-SUFFIX,905.jsy902.xyz
 # > kelee
 DOMAIN-SUFFIX,kelee.one
-# > yfamily
-DOMAIN-SUFFIX,yfamilys.com
 # > lxlad
 DOMAIN,i.lxlad.com
 # > user script
@@ -61,7 +57,7 @@ DOMAIN-SUFFIX,vercel.app
 DOMAIN-SUFFIX,sub.store
 DOMAIN-SUFFIX,script.hub
 DOMAIN-SUFFIX,boxjs.com
-DOMAIN-SUFFIX,dompling.github.io
+DOMAIN-SUFFIX,github.io
 # > emby
 DOMAIN-SUFFIX,liminalnet.com
 IP-CIDR,216.144.234.247/32
