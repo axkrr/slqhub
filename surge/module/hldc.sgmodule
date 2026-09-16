@@ -1,0 +1,12 @@
+#!name=哈啰单车
+#!desc=打开小程序-奖励中心触发获取token
+#!category=cookie
+#!author=@Sliverkiss,@axkrr
+#!icon=https://raw.githubusercontent.com/fmz200/wool_scripts/main/icons/apps/Category_Bike.png
+#!update=2026-09-16
+
+[Script]
+哈啰单车获取token = type=http-request, pattern=^https:\/\/api\.hellobike\.com\/api\?user\.taurus\.pointInfo, requires-body=1, max-size=0, timeout=10, script-path=https://gist.githubusercontent.com/Sliverkiss/4e0081f7b18a2cea9dbdf13545e60885/raw/d53857028ced29aed98affb5d4a602b2a8bf94cf/hldc.js
+
+[MITM]
+hostname = %APPEND% api.hellobike.com
