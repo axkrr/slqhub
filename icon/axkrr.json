@@ -1,6 +1,6 @@
 {
   "name": "axkrr图标库",
-  "description": "分辨率:144*144,搜索方式:app拼音缩写or英文全称,更新日期:2026-08-31",
+  "description": "分辨率:144*144,搜索方式:app拼音缩写or英文全称,更新日期:2026-09-19",
   "icons": [
     {
       "name": "avatar",
@@ -253,6 +253,10 @@
     {
       "name": "dw",
       "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/dw.png"
+    },
+    {
+      "name": "dzdp",
+      "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/dzdp.png"
     }
   ]
 }
