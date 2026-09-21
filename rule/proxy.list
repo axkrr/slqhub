@@ -59,6 +59,7 @@ DOMAIN-SUFFIX,script.hub
 DOMAIN-SUFFIX,boxjs.com
 DOMAIN-SUFFIX,github.io
 # > emby
+DOMAIN-SUFFIX,emby.wtf
 DOMAIN,aaa.yusen6.ccwu.cc
 DOMAIN-SUFFIX,liminalnet.com
 IP-CIDR,216.144.234.247/32
