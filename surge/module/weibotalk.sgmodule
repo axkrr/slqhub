@@ -1,0 +1,12 @@
+#!name=微博超话
+#!desc=获取cookie
+#!category=cookie
+#!author=@fmz200,@toulanboy,@Evilbutcher
+#!icon=https://raw.githubusercontent.com/axkrr/slqhub/main/icon/wb.png
+#!update=2026-09-08
+
+[Script]
+微博超话cookie获取 = type=http-request,pattern=^https?://m?api\.weibo\.c(n|om)\/2\/(flowlist|page\/button),requires-body=true,script-path=https://raw.githubusercontent.com/fmz200/wool_scripts/main/Scripts/weibo/weibotalk.cookie.js
+
+[MITM]
+hostname = %APPEND% api.weibo.cn, mapi.weibo.com
