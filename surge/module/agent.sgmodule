@@ -1,0 +1,14 @@
+#!name=中转站UA
+#!desc=AgentRouter User-Agent改写为 claude-cli/1.0.60 (external, cli)
+#!author=@axkrr
+#!version=1.0.0
+#!date=2026-09-29
+
+[Header Rewrite]
+http-request ^https?://ps\.air-outer\.com([:/]|$) header-del User-Agent
+http-request ^https?://ps\.air-outer\.com([:/]|$) header-add User-Agent "claude-cli/1.0.60 (external, cli)"
+http-request ^https?://agentrouter\.org([:/]|$) header-del User-Agent
+http-request ^https?://agentrouter\.org([:/]|$) header-add User-Agent "claude-cli/1.0.60 (external, cli)"
+
+[MITM]
+hostname = %APPEND% ps.air-outer.com, agentrouter.org
