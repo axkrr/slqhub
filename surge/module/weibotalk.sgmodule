@@ -1,5 +1,8 @@
 #!name=微博超话
-#!desc=获取cookie
+#!desc=获取cookie;
+1.打开微博APP-->底部栏"我的"-->中间的"超话社区"-->底部栏"我的"-->"关注",弹出通知,提示获取已关注超话列表成功。
+注意:需要点击"关注"标签页，等待列表加载完成后才会触发抓包。
+2.点进一个超话页面，手动签到一次。弹出通知,提示获取超话签到链接成功。若之前所有已经签到,请关注一个新超话进行签到。
 #!category=cookie
 #!author=@fmz200,@toulanboy,@Evilbutcher
 #!icon=https://raw.githubusercontent.com/axkrr/slqhub/main/icon/wb.png
