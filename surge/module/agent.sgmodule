@@ -2,7 +2,7 @@
 #!desc=AgentRouter User-Agent改写为 claude-cli/1.0.60 (external, cli)
 #!category=axkrr
 #!author=@axkrr
-#!icon=
+#!icon=https://raw.githubusercontent.com/axkrr/slqhub/main/icon/newapi.png
 #!date=2026-09-29
 
 [Header Rewrite]
