@@ -1,5 +1,5 @@
 /*
- * 国家电网 · 电费数据管道（Surge 版）
+ * 国家电网 · 电费数据管道
  * ==================================================================
  * 数据流：
  *   BoxJs「国家电网 · 设置」  →① 读 →  本脚本（登录 + 取数）  →② 写 →  BoxJs「国家电网 · 数据」
@@ -18,15 +18,75 @@
 /* ==================== 1. 配置：BoxJs 优先 ==================== */
 
 const CFG_PREFIX = '@sgcc.Cfg.';
+const NS_ROOT = 'sgcc';   // @ 后面的第一段，也就是真正落盘的那个键
 
+/*
+ * BoxJs 的 @ 命名空间语义（与它内部的 Env.js 完全一致）
+ * ------------------------------------------------------------------
+ *   @sgcc.Cfg.Phone   不是一个存储键！
+ *   Env.js 会把它拆成  rootKey = "sgcc"，路径 = "Cfg.Phone"
+ *   实际读写的是持久化键 "sgcc"，值是一个嵌套 JSON：{"Cfg":{"Phone":"…"}}
+ *
+ * 所以直接用 $persistentStore.read('@sgcc.Cfg.Phone') 是读不到的，
+ * 必须自己把 @ 拆开、读根键、再按路径从 JSON 里取值。
+ * 写入时同理：读根键 → 改路径 → 整个写回（这样才不会冲掉 Cfg 子树）。
+ */
+
+function lodashGet(obj, path, dft) {
+  const keys = String(path).replace(/\[(\d+)\]/g, '.$1').split('.');
+  let cur = obj;
+  for (let i = 0; i < keys.length; i++) {
+    cur = (cur == null) ? undefined : cur[keys[i]];
+    if (cur === undefined) return dft;
+  }
+  return cur;
+}
+function lodashSet(obj, path, val) {
+  const keys = String(path).replace(/\[(\d+)\]/g, '.$1').split('.');
+  let cur = obj;
+  for (let i = 0; i < keys.length - 1; i++) {
+    const k = keys[i];
+    if (cur[k] === null || typeof cur[k] !== 'object') cur[k] = {};
+    cur = cur[k];
+  }
+  cur[keys[keys.length - 1]] = val;
+  return obj;
+}
+
+function parseRoot(key) {
+  try { const raw = $persistentStore.read(key); return raw ? JSON.parse(raw) : null; } catch (_) { return null; }
+}
+
+// 读：支持 @sgcc.Cfg.Phone 与普通的裸键
 function readStore(key) {
   try {
-    const v = $persistentStore.read(key);
+    const m = /^@(.*?)\.(.*?)$/.exec(key);
+    let v;
+    if (m) {
+      const root = parseRoot(m[1]);
+      v = root ? lodashGet(root, m[2], null) : null;
+    } else {
+      v = $persistentStore.read(key);
+    }
     return (v == null || String(v) === '') ? null : String(v);
   } catch (_) { return null; }
 }
+
+// 写：@ 键走「读根键 → 改路径 → 写回」，普通键直接写
 function writeStore(key, val) {
-  try { return $persistentStore.write(String(val), key); } catch (_) { return false; }
+  try {
+    const m = /^@(.*?)\.(.*?)$/.exec(key);
+    if (!m) return $persistentStore.write(String(val), key);
+    let root = parseRoot(m[1]);
+    if (root === null || typeof root !== 'object') root = {};
+    lodashSet(root, m[2], String(val));
+    return $persistentStore.write(JSON.stringify(root), m[1]);
+  } catch (_) { return false; }
+}
+
+// 诊断用：列出根命名空间里现有的一级字段
+function rootKeys(rootKey) {
+  try { const o = parseRoot(rootKey); return o && typeof o === 'object' ? Object.keys(o) : []; } catch (_) { return []; }
 }
 
 // 调试用的 argument（可选，一般不用）
@@ -822,12 +882,20 @@ function notify(title, sub, body) {
 }
 
 (async () => {
-  // ---- 未配置：写状态、提醒、退出 ----
+  // ---- 未配置：写状态（带自诊断）、提醒、退出 ----
   if (!CFG.phone || !CFG.password) {
     const msg = '未配置账号。请打开 BoxJs → 「国家电网 · 设置」→ 填写 Phone 与 Password。';
-    writeStore(K_TEXT, `[未配置] ${fmtDate(Date.now())}\n${msg}`);
+    // 自诊断：把探测结果写进状态里，下次出问题不用猜
+    const diag = [
+      '',
+      '—— 自诊断 ——',
+      `${CFG_PREFIX}Phone    : ${readStore(CFG_PREFIX + 'Phone') ? '已读到' : '读不到'}`,
+      `${CFG_PREFIX}Password : ${readStore(CFG_PREFIX + 'Password') ? '已读到' : '读不到'}`,
+      `命名空间根键 "${NS_ROOT}" 里现有字段: ${rootKeys(NS_ROOT).join(' / ') || '(根键不存在)'}`,
+    ].join('\n');
+    writeStore(K_TEXT, `[未配置] ${fmtDate(Date.now())}\n${msg}${diag}`);
     notify('国家电网 · 未配置', '', msg);
-    console.log('[SGCC] ' + msg);
+    console.log('[SGCC] ' + msg + diag);
     return finish();
   }
 
