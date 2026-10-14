@@ -4,9 +4,9 @@
   "author": "@axkrr",
   "icon": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/avatar.png",
   "repo": "https://github.com/axkrr/slqhub",
-  "desc": "一卡通余额查询。token由模块自动抓取并存入BoxJS，无需手动填写。有效期约70天。",
+  "desc": "一卡通余额查询（token由模块自动抓取并存入BoxJS，无需手动填写，有效期约70天）；国家电网电费与登录数据（由 Surge 模块自动写入）。",
   "raw": "https://raw.githubusercontent.com/axkrr/slqhub/main/boxjs/axkrr.json",
-  "date": "更新日期：2026-06-24",
+  "date": "更新日期：2026-10-14",
   "apps": [
     {
       "id": "CQU.CardBalance",
@@ -44,6 +44,62 @@
       ],
       "icons": [
         "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/card.png"
+      ],
+      "author": "@axkrr",
+      "repo": "https://github.com/axkrr/slqhub"
+    },
+    {
+      "id": "sgcc.Bill",
+      "name": "国家电网 · 电费",
+      "keys": [
+        "@sgcc.Bill.Text",
+        "@sgcc.Bill.Data"
+      ],
+      "settings": [
+        {
+          "id": "@sgcc.Bill.Text",
+          "name": "最近一次电费摘要",
+          "type": "textarea",
+          "val": "",
+          "desc": "由 Surge 脚本 SGCC.surge.js 每次运行时自动覆盖写入，只读参考。",
+          "placeholder": "等待 Surge 脚本写入"
+        },
+        {
+          "id": "@sgcc.Bill.Data",
+          "name": "电费原始数据 (JSON)",
+          "type": "textarea",
+          "val": "",
+          "desc": "{\"updated\":时间戳,\"accounts\":[各户号完整数据]}，含 31 天日电量与 24 个月账单。",
+          "placeholder": "等待 Surge 脚本写入"
+        }
+      ],
+      "author": "@axkrr",
+      "repo": "https://github.com/axkrr/slqhub"
+    },
+    {
+      "id": "sgcc.Session",
+      "name": "国家电网 · 登录",
+      "keys": [
+        "@sgcc.Session.Text",
+        "@sgcc.Session.Data"
+      ],
+      "settings": [
+        {
+          "id": "@sgcc.Session.Text",
+          "name": "登录状态",
+          "type": "textarea",
+          "val": "",
+          "desc": "由 Surge 脚本 SGCC.login.js 每次运行时自动覆盖写入（手机号已打码）。",
+          "placeholder": "等待 Surge 脚本写入"
+        },
+        {
+          "id": "@sgcc.Session.Data",
+          "name": "会话凭证 (JSON)",
+          "type": "textarea",
+          "val": "",
+          "desc": "含 token / userId / 省份 / 到期时间 / 绑定户号列表。token 为明文，注意隐私，勿截图外发。",
+          "placeholder": "等待 Surge 脚本写入"
+        }
       ],
       "author": "@axkrr",
       "repo": "https://github.com/axkrr/slqhub"
