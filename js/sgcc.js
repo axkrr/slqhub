@@ -1,54 +1,81 @@
 /*
- * 网上国网 · 登录（Surge 最小版）
- * ------------------------------------------------------------------
- * 只做三件事：登录 → 拿会话凭证 → 展示/落盘。
- * 不查电费、不算阶梯、不画界面。
+ * 国家电网 · 电费数据管道（Surge 版）
+ * ==================================================================
+ * 数据流：
+ *   BoxJs「国家电网 · 设置」  →① 读 →  本脚本（登录 + 取数）  →② 写 →  BoxJs「国家电网 · 数据」
+ *                                                                        →③ 读 →  Scripting / Scriptable 组件
+ *
+ * 依据：Surge 官方手册 —— $persistentStore 带显式 key 时是全脚本共享的存储；
+ *       BoxJs 没有 datas 聚合 blob，它的数据就是共享存储里一个个裸 key。
+ *       因此本脚本直接 $persistentStore.read('@sgcc.Cfg.Phone') 就能读到
+ *       你在 BoxJs 界面填的值，不需要任何模块参数。
  *
  * 协议与设备令牌算法移植自 stevenjoezhang/hass-state-grid (MIT License)
  * 原 Scriptable 脚本：脑瓜 @anker1209
- * ------------------------------------------------------------------
+ * ==================================================================
  */
 
-/* ==================== 1. 模块参数 ==================== */
+/* ==================== 1. 配置：BoxJs 优先 ==================== */
 
+const CFG_PREFIX = '@sgcc.Cfg.';
+
+function readStore(key) {
+  try {
+    const v = $persistentStore.read(key);
+    return (v == null || String(v) === '') ? null : String(v);
+  } catch (_) { return null; }
+}
+function writeStore(key, val) {
+  try { return $persistentStore.write(String(val), key); } catch (_) { return false; }
+}
+
+// 调试用的 argument（可选，一般不用）
 const ARG = (() => {
   const o = {};
   const raw = (typeof $argument === 'string' && $argument) ? $argument : '';
   raw.split('&').forEach((seg) => {
-    if (!seg) return;
     const i = seg.indexOf('=');
-    let k, v;
-    if (i < 0) { k = seg.trim(); v = ''; } else { k = seg.slice(0, i).trim(); v = seg.slice(i + 1); }
-    if (!k) return;
-    try { v = decodeURIComponent(v); } catch (_) { }
-    o[k] = v;
+    if (i < 0) return;
+    try { o[seg.slice(0, i).trim().toLowerCase()] = decodeURIComponent(seg.slice(i + 1)); } catch (_) { }
   });
   return o;
 })();
 
-function argText(v) { const s = String(v == null ? '' : v).trim(); return /^(-|none)$/i.test(s) ? '' : s; }
+// 取值优先级：BoxJs 设置 > argument（调试） > 默认值
+function cfg(name, dft) {
+  const v = readStore(CFG_PREFIX + name);
+  if (v !== null) return v;
+  const a = ARG[name.toLowerCase()];
+  if (a != null && String(a).trim() !== '' && !/^(-|none)$/i.test(String(a).trim())) return String(a).trim();
+  return dft;
+}
+function cfgNum(name, dft) { const n = Number(cfg(name, dft)); return Number.isFinite(n) && n > 0 ? n : dft; }
+function cfgBool(name, dft) { return String(cfg(name, dft)).trim().toLowerCase() !== 'false'; }
 
 const CFG = {
-  phone: argText(ARG.phone).replace(/^(\+?86)?\s*/, '').replace(/\D/g, ''),
-  password: argText(ARG.password),
-  sms: argText(ARG.sms).replace(/\D/g, ''),          // 新设备风控时的 6 位验证码
-  action: (argText(ARG.action) || 'status').toLowerCase(), // status | login | clear
-  notify: argText(ARG.notify) === 'true',
-  policy: argText(ARG.policy) || 'DIRECT',
+  phone: cfg('Phone', '').replace(/^(\+?86)?\s*/, '').replace(/\D/g, ''),
+  password: cfg('Password', ''),
+  sms: cfg('Sms', '').replace(/\D/g, ''),
+  account: Math.max(0, Math.floor(cfgNum('Account', 1)) - 1),
+  stepMode: cfg('StepMode', '月'),
+  step_2: cfgNum('Step2', 200),
+  step_3: cfgNum('Step3', 400),
+  notify: cfgBool('Notify', 'true'),
+  policy: cfg('Policy', 'DIRECT'),
 };
 
 /* ==================== 2. Surge 存储 / HTTP 适配 ==================== */
 
-const SP = 'sgcc.';
+const SP = 'sgcc.';   // 脚本内部状态（设备指纹/会话）的前缀
 
-function storeGetJSON(key) {
+function stateGet(key) {
   try { const s = $persistentStore.read(SP + key); return s ? JSON.parse(s) : null; } catch (_) { return null; }
 }
-function storeSetJSON(key, val) {
+function stateSet(key, val) {
   try { $persistentStore.write(JSON.stringify(val), SP + key); } catch (_) { }
 }
-function storeDel(key) { try { $persistentStore.write(null, SP + key); } catch (_) { } }
 
+// 把 $httpClient.post 包成 Promise，形状与原脚本期望的 Request 对齐
 function surgePost(url, opt) {
   return new Promise((resolve, reject) => {
     const o = {
@@ -68,14 +95,11 @@ function surgePost(url, opt) {
   });
 }
 
-// 原脚本 SgApp 依赖的 ctx：{ env, storage, http }
+// 原脚本 SgApp 依赖的 ctx
 const CTX = {
   env: { SGCC_SMS: CFG.sms, SGCC_POLICY: CFG.policy },
-  storage: {
-    getJSON: (k) => storeGetJSON(k),
-    setJSON: (k, v) => { storeSetJSON(k, v); },
-  },
-  http: { post: (url, req) => surgePost(url, req) },
+  storage: { getJSON: stateGet, setJSON: stateSet },
+  http: { post: surgePost },
 };
 
 var SgccProtocol = (() => {
@@ -605,135 +629,269 @@ async function queryAccount(app, a) {
 
   return { SgApp, queryAccount, SgError, K, md5hex };
 })();
-/* ==================== 3. 登录 ==================== */
+/* ==================== 3. 取数 ==================== */
 
-function finish(obj) { try { $done(obj); } catch (_) { } }
+async function fetchAll() {
+  const app = new SgccProtocol.SgApp(CTX, CFG.phone, CFG.password);
+  const sess = await app.ensure();
+  const accts = (sess && sess.accounts) || [];
+  if (!accts.length) throw new Error('该账号未绑定任何用电户号');
+  const out = [];
+  for (const a of accts.slice(0, 6)) {
+    try { out.push(await SgccProtocol.queryAccount(app, a)); }
+    catch (e) { if (!out.length && a === accts[accts.length - 1]) throw e; }
+  }
+  if (!out.length) throw new Error('户号数据查询失败');
+  return { accounts: out, sess: sess };
+}
 
-function panel(title, content, style, color, icon) {
-  const res = { title: title, content: content, icon: icon || 'bolt.circle.fill', 'icon-color': color || '#0db38e' };
-  if (style) res.style = style;
-  finish(res);
-}
-function fail(title, content) {
-  panel(title, content, 'error', '#ff3b30', 'exclamationmark.triangle.fill');
+/* ==================== 4. 指标推导 ==================== */
+
+function ymd2(y, m) { return `${y}${String(m).padStart(2, '0')}`; }
+
+function sumMonth(list, y, m) {
+  const ym = ymd2(y, m);
+  return list.filter((x) => String(x.d).startsWith(ym)).reduce((s, x) => s + (Number(x.v) || 0), 0);
 }
 
-function maskPhone(p) {
-  const s = String(p || '');
-  return s.length >= 7 ? s.slice(0, 3) + '****' + s.slice(-4) : s;
+// 当月用电（本月无数据时回落到上月，逻辑同原脚本 getSumForCurrentMonth）
+function sumCurrentMonth(days, months) {
+  const now = new Date();
+  const y = now.getFullYear(), m = now.getMonth() + 1;
+  let sum = sumMonth(days, y, m);
+  if (sum === 0) {
+    const py = m === 1 ? y - 1 : y;
+    const pm = m === 1 ? 12 : m - 1;
+    if (months.some((i) => String(i.m) === ymd2(py, pm))) sum = 0;
+    else sum = sumMonth(days, py, pm);
+  }
+  return sum;
 }
-function fmtDate(ms) {
-  const d = new Date(ms);
+
+// 双月阶梯累计（逻辑同原脚本 getBimonthlyStepEle）
+function bimonthlyBase(months, currentMonthEle) {
+  const now = new Date();
+  const y = now.getFullYear(), m = now.getMonth() + 1;
+  const find = (yy, mm) => months.find((i) => String(i.m) === ymd2(yy, mm));
+  if (m % 2 === 1) {
+    let py = y, pm = m - 1;
+    if (pm === 0) { py -= 1; pm = 12; }
+    if (find(py, pm)) return currentMonthEle;
+    let tz = py, tm = pm - 1;
+    if (tm === 0) { tz -= 1; tm = 12; }
+    const tza = find(tz, tm);
+    return tza ? tza.v + currentMonthEle : currentMonthEle;
+  }
+  const prev = find(y, m - 1);
+  return prev ? prev.v + currentMonthEle : currentMonthEle;
+}
+
+function sparkline(values) {
+  if (!values.length) return '';
+  const CH = '▁▂▃▄▅▆▇█';
+  const max = Math.max.apply(null, values.concat([0.000001]));
+  return values.map((v) => CH[Math.max(0, Math.min(7, Math.round((Number(v) || 0) / max * 7)))]).join('');
+}
+
+function fmtDate(ts) {
+  const d = new Date(ts);
   const p = (n) => String(n).padStart(2, '0');
   return `${p(d.getMonth() + 1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
 }
-function fmtLeft(ms) {
-  const m = Math.max(0, Math.round(ms / 60000));
-  if (m < 60) return m + ' 分钟';
-  if (m < 1440) return Math.floor(m / 60) + ' 小时' + (m % 60 ? ' ' + (m % 60) + ' 分' : '');
-  const d = Math.floor(m / 1440), h = Math.floor((m % 1440) / 60);
-  return d + ' 天' + (h ? ' ' + h + ' 小时' : '');
+
+// 把国网原始响应压成组件好用的扁平结构
+function deriveAccount(billData, sess) {
+  const days = (() => {
+    const raw = ((billData.dayElecQuantity31 && billData.dayElecQuantity31.sevenEleList) || [])
+      .filter((x) => x && x.dayElePq !== '-' && x.dayElePq != null)
+      .map((x) => ({ d: String(x.day || ''), v: Number(parseFloat(x.dayElePq) || 0) }));
+    // 按日期去重（后到的覆盖先到的），防止区间重叠导致同一天出现两次
+    const byDay = Object.create(null);
+    raw.forEach((x) => { if (x.d) byDay[x.d] = x; });
+    return Object.keys(byDay).sort().map((k) => byDay[k]);
+  })();
+
+  const months = ((billData.monthElecQuantity && billData.monthElecQuantity.mothEleList) || [])
+    .map((x) => ({ m: String(x.month || ''), v: Number(parseFloat(x.monthEleNum) || 0), c: Number(parseFloat(x.monthEleCost) || 0) }));
+
+  const bill = billData.eleBill || {};
+  const info = billData.userInfo || {};
+  const isOverdue = !!billData.arrearsOfFees;
+  const isPostPaid = Object.prototype.hasOwnProperty.call(bill, 'accountBalance');
+
+  const sumMoney = Number(bill.sumMoney || 0).toFixed(2);
+  const accountBalance = Number(bill.accountBalance || 0).toFixed(2);
+
+  const currentMonthUsage = sumCurrentMonth(days, months);
+
+  // 最近一个「已结算」月份作为上期
+  const nowYm = (() => { const d = new Date(); return ymd2(d.getFullYear(), d.getMonth() + 1); })();
+  const sorted = months.slice().sort((a, b) => (String(a.m) < String(b.m) ? -1 : 1));
+  const validPast = sorted.filter((x) => String(x.m) < nowYm && (x.c > 0 || x.v > 0));
+  const lastMonth = validPast.length ? validPast[validPast.length - 1] : (sorted[sorted.length - 1] || {});
+
+  const di = (billData.monthElecQuantity && billData.monthElecQuantity.dataInfo) || {};
+  const yearUsage = parseFloat(di.totalEleNum || 0) + Math.round(currentMonthUsage);
+  const yearFee = Number(parseFloat(di.totalEleCost || 0));
+
+  let stepEle = currentMonthUsage;
+  if (CFG.stepMode === '双月') stepEle = bimonthlyBase(months, currentMonthUsage);
+  else if (CFG.stepMode !== '月') stepEle = yearUsage;
+  const stepLevel = stepEle > CFG.step_3 ? 3 : stepEle > CFG.step_2 ? 2 : 1;
+
+  const last7 = days.slice(-7);
+
+  const consName = (() => {
+    const rn = String(info.consName_dst || info.consName || '');
+    return (rn && rn.length <= 12 && !/[:：]/.test(rn)) ? rn : '';
+  })();
+
+  return {
+    consNo: String(info.consNo_dst || info.consNo || ''),
+    consName: consName,
+    orgName: String(info.orgName || ''),
+    isOverdue: isOverdue,
+    isPostPaid: isPostPaid,
+    balance: isOverdue ? '-' + Math.abs(sumMoney) : sumMoney,
+    remainFee: isPostPaid ? accountBalance : sumMoney,
+    lastMonthFee: Number(lastMonth.c || 0).toFixed(2),
+    lastMonthUsage: Number(lastMonth.v || 0),
+    currentMonthUsage: Number(currentMonthUsage.toFixed(2)),
+    yearUsage: yearUsage,
+    yearFee: yearFee,
+    stepEle: Number(stepEle.toFixed(0)),
+    stepLevel: stepLevel,
+    step2: CFG.step_2,
+    step3: CFG.step_3,
+    spark: sparkline(last7.map((x) => x.v)),
+    last7Sum: Number(last7.reduce((s, x) => s + x.v, 0).toFixed(2)),
+    days: days,
+    months: months,
+    billDate: String(bill.date || bill.amtTime || ''),
+  };
 }
 
-const HASH = () => SgccProtocol.md5hex(CFG.phone).slice(0, 8);
-const SESS_KEY = () => 'sgcc_app_sess_' + HASH();   // 实际存储键为 sgcc. + 此值
-const SMS_KEY = () => 'sgcc_app_sms_' + HASH();
+/* ==================== 5. 输出到 BoxJs ==================== */
 
-function renderSuccess(sess, note) {
-  const accts = sess.accounts || [];
-  const left = Number(sess.exp || 0) - Date.now();
+const K_JSON = '@sgcc.Data.Json';
+const K_TEXT = '@sgcc.Data.Text';
+
+function money(v) { const n = Number(v); return (n < 0 ? '-¥' : '¥') + Math.abs(n).toFixed(2); }
+
+function buildJson(accounts, sess, idx) {
+  return {
+    ok: true,
+    updated: Date.now(),
+    account: idx,
+    count: accounts.length,
+    accounts: accounts,
+  };
+}
+
+function buildText(json) {
   const lines = [];
-  lines.push('✅ 登录成功');
-  if (note) lines.push(note);
-  lines.push('');
-  lines.push('手机号：' + maskPhone(CFG.phone));
-  lines.push('用户ID：' + (sess.userId || '-'));
-  lines.push('省份编码：' + (sess.province || '-'));
-  lines.push('凭证：' + String(sess.token || '').slice(0, 10) + '…');
-  lines.push('有效期：' + fmtLeft(left) + '（至 ' + fmtDate(Number(sess.exp || 0)) + '）');
-  lines.push('');
-  lines.push('绑定户号（' + accts.length + '）');
-  if (!accts.length) lines.push('  （该账号未绑定户号）');
-  accts.slice(0, 8).forEach((a, i) => {
-    lines.push(`  ${i + 1}. ${a.consNo}  ${a.name || ''}`.trimEnd());
+  lines.push(`[成功] ${fmtDate(json.updated)} · ${json.count} 个户号`);
+  json.accounts.forEach((a, i) => {
+    const mark = i === json.account ? '▶ ' : '   ';
+    const who = [a.consName, a.consNo].filter(Boolean).join(' · ');
+    lines.push('');
+    lines.push(`${mark}${who}${a.orgName ? '（' + a.orgName.replace(/^国网|有限公司/g, '') + '）' : ''}`);
+    if (a.isOverdue) lines.push(`   ⚠️ 欠费 ${money(a.balance)}`);
+    else lines.push(`   电费余额 ${money(a.isPostPaid ? a.remainFee : a.balance)}`);
+    lines.push(`   本月用电 ${a.currentMonthUsage} 度`);
+    lines.push(`   上期电费 ${money(a.lastMonthFee)}（${a.lastMonthUsage} 度）`);
+    lines.push(`   年累计 ${a.yearUsage} 度 / ${money(a.yearFee)}`);
+    lines.push(`   阶梯 [${['一', '二', '三'][a.stepLevel - 1] || '-'}档] ${a.stepEle} / ${a.stepLevel === 1 ? a.step2 : a.step3} 度`);
+    if (a.spark) lines.push(`   近7日 ${a.spark} ${a.last7Sum} 度`);
   });
-  if (accts.length > 8) lines.push('  … 另有 ' + (accts.length - 8) + ' 个');
-  lines.push('');
-  lines.push(fmtDate(Date.now()) + ' · 会话已写入 ' + SP + SESS_KEY());
   return lines.join('\n');
 }
 
-function renderFailure(err) {
-  const code = String((err && err.code) || '');
-  // 原协议层里的文案是写给 Scriptable 小组件的，这里换成 Surge 的指引
-  const msg = String((err && err.message) || err)
-    .replace(/，?\s*请在小组件「账户设置」中填入\s*6?\s*位验证码并刷新[！!。]?/g, '')
-    .replace(/小组件/g, '面板')
-    .trim();
-  const lines = ['❌ 登录失败'];
-  if (code) lines.push('错误码：' + code);
-  lines.push('');
-  lines.push(msg);
-  lines.push('');
-  if (code === '4006' || /验证码|新设备|短信|RK00/i.test(msg)) {
-    lines.push('这是国网的「新设备安全验证」，脚本已自动下发短信。');
-    lines.push('处理方式：长按本模块 → 编辑参数 → 把收到的 6 位验证码');
-    lines.push('填入 sms，再点面板刷新按钮。');
-  } else if (code === 'sms_fail') {
-    lines.push('国网短信网关繁忙，稍后点刷新重试即可。');
-  } else if (code === 'auth') {
-    lines.push('账号密码可能不对，或该账号需要先在网上国网 App 里完成实名/绑定。');
-  } else {
-    lines.push('登录接口：emss-uia-center-front/member/c2/f01');
-    lines.push('可在 Surge「脚本日志」里搜索 [SGCC] 查看完整堆栈。');
-  }
-  lines.push('');
-  lines.push(fmtDate(Date.now()) + ' · 详情见 ' + SP + 'lastError');
-  return lines.join('\n');
+/* ==================== 6. 主流程 ==================== */
+
+let doneFlag = false;
+function finish(res) {
+  if (doneFlag) return;
+  doneFlag = true;
+  try { $done(res || {}); } catch (_) { }
 }
 
-/* ==================== 4. 主流程 ==================== */
+function notify(title, sub, body) {
+  if (!CFG.notify) return;
+  try { $notification.post(title, sub, body); } catch (_) { }
+}
 
 (async () => {
-  if (CFG.action === 'clear') {
-    storeDel(SESS_KEY());
-    storeDel(SMS_KEY());
-    storeDel('lastError');
-    return panel('网上国网 · 登录', '已清除本地会话与验证码记录。\n设备指纹已保留（避免触发陌生设备风控）。\n\n下次刷新会重新登录。', 'info', '#ff9500', 'trash.circle.fill');
-  }
-
+  // ---- 未配置：写状态、提醒、退出 ----
   if (!CFG.phone || !CFG.password) {
-    return fail('网上国网 · 登录', '未配置账号。\n\n长按本模块 → 编辑参数，填写 phone 与 password 后刷新。');
+    const msg = '未配置账号。请打开 BoxJs → 「国家电网 · 设置」→ 填写 Phone 与 Password。';
+    writeStore(K_TEXT, `[未配置] ${fmtDate(Date.now())}\n${msg}`);
+    notify('国家电网 · 未配置', '', msg);
+    console.log('[SGCC] ' + msg);
+    return finish();
   }
 
-  if (CFG.action === 'login') {
-    storeDel(SESS_KEY());   // 强制重新登录
-    console.log('[SGCC] action=login，已清除旧会话，重新登录');
-  }
-
-  const cached = storeGetJSON(SESS_KEY());
-  let app, sess;
+  let bundle;
   try {
-    app = new SgccProtocol.SgApp(CTX, CFG.phone, CFG.password);
-    sess = await app.ensure();
+    bundle = await fetchAll();
   } catch (e) {
-    storeSetJSON('lastError', { ts: Date.now(), action: CFG.action, code: String((e && e.code) || ''), message: String((e && e.message) || e) });
-    const body = renderFailure(e);
-    if (CFG.notify) $notification.post('网上国网 · 登录失败', maskPhone(CFG.phone), String((e && e.message) || e));
-    const style = (String(e && e.code) === '4006' || /验证码|新设备/.test(String(e && e.message))) ? 'alert' : 'error';
-    const color = style === 'alert' ? '#ff9500' : '#ff3b30';
-    return panel('网上国网 · 登录失败', body, style, color, 'exclamationmark.triangle.fill');
+    const code = String((e && e.code) || '');
+    const raw = String((e && e.message) || e);
+    const msg = raw
+      .replace(/，?\s*请在小组件「账户设置」中填入\s*6?\s*位验证码并刷新[！!。]?/g, '')
+      .replace(/小组件/g, 'BoxJs')
+      .trim();
+
+    let hint;
+    if (code === '4006' || /验证码|新设备|短信|RK00/i.test(msg)) {
+      hint = '国网「新设备安全验证」已触发，短信已下发。\n请把收到的 6 位验证码填入 BoxJs「国家电网 · 设置」→ Sms，然后等待下次运行。';
+    } else if (code === 'sms_fail') {
+      hint = '国网短信网关繁忙，下次运行会自动重试。';
+    } else if (code === 'auth') {
+      hint = '账号或密码可能不对，请检查 BoxJs 里的 Phone / Password。';
+    } else {
+      hint = '可在 Surge 脚本日志里搜索 [SGCC] 查看完整堆栈。';
+    }
+
+    writeStore(K_TEXT, `[失败] ${fmtDate(Date.now())}\n${msg}\n\n${hint}\n\n（${K_JSON} 仍是上一次成功的数据，组件不受影响）`);
+    notify('国家电网 · 取数失败', code || '', msg);
+    console.log('[SGCC] 取数失败 ' + code + ' ' + msg);
+    return finish();
   }
 
-  // 顺带存一份固定键，方便其它脚本/模块直接读
-  storeSetJSON('session', sess);
+  // ---- 推导 + 写回 ----
+  const list = bundle.accounts;
+  const idx = Math.min(CFG.account, list.length - 1);
+  let derived;
+  try {
+    derived = list.map((b) => deriveAccount(b, bundle.sess));
+  } catch (e) {
+    writeStore(K_TEXT, `[失败] ${fmtDate(Date.now())}\n数据解析失败：${(e && e.message) || e}`);
+    notify('国家电网 · 解析失败', '', String((e && e.message) || e));
+    return finish();
+  }
 
-  const reused = cached && cached.token && cached.token === sess.token;
-  if (CFG.notify) $notification.post('网上国网 · 登录成功', maskPhone(CFG.phone), (sess.accounts || []).length + ' 个户号');
+  const json = buildJson(derived, bundle.sess, idx);
+  writeStore(K_JSON, JSON.stringify(json));
+  writeStore(K_TEXT, buildText(json));
+  console.log(`[SGCC] 已写入 ${K_JSON} / ${K_TEXT}，共 ${derived.length} 个户号`);
 
-  panel('网上国网 · 登录', renderSuccess(sess, reused ? '（复用未过期会话，未重新登录）' : '（已发起全新登录）'),
-    'info', '#0db38e', 'checkmark.circle.fill');
+  // ---- 欠费只在「出现或金额变化」时推一次，避免每天重复打扰 ----
+  const seen = stateGet('oweSeen') || {};
+  const next = {};
+  derived.forEach((a) => {
+    if (!a.isOverdue) return;
+    const owe = Math.abs(Number(a.balance));
+    next[a.consNo] = owe;
+    if (seen[a.consNo] !== owe) {
+      notify('国家电网 · 有欠费', a.consName || a.consNo, `¥${owe.toFixed(2)}（${a.orgName || ''}）`);
+    }
+  });
+  stateSet('oweSeen', next);
+
+  finish();
 })().catch((e) => {
-  storeSetJSON('lastError', { ts: Date.now(), message: String((e && e.message) || e) });
-  fail('网上国网 · 登录', '脚本异常：' + ((e && e.message) || e));
+  console.log('[SGCC] 脚本异常 ' + ((e && e.stack) || e));
+  writeStore(K_TEXT, `[异常] ${fmtDate(Date.now())}\n${(e && e.message) || e}`);
+  finish();
 });
