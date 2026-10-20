@@ -4,7 +4,7 @@
   "author": "@axkrr",
   "icon": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/avatar.png",
   "repo": "https://github.com/axkrr/slqhub",
-  "desc": "一卡通余额查询（token由模块自动抓取并存入BoxJS，无需手动填写，有效期约70天）；国家电网电费数据（账号密码在BoxJS里填，Surge脚本定时抓取，供组件读取）。",
+  "desc": "一卡通余额查询",
   "raw": "https://raw.githubusercontent.com/axkrr/slqhub/main/boxjs/axkrr.json",
   "date": "更新日期：2026-10-14",
   "apps": [
@@ -44,124 +44,6 @@
       ],
       "icons": [
         "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/card.png"
-      ],
-      "author": "@axkrr",
-      "repo": "https://github.com/axkrr/slqhub"
-    },
-    {
-      "id": "sgcc.Cfg",
-      "name": "国家电网 · 设置",
-      "keys": [
-        "@sgcc.Cfg.Phone",
-        "@sgcc.Cfg.Password",
-        "@sgcc.Cfg.Sms",
-        "@sgcc.Cfg.Account",
-        "@sgcc.Cfg.StepMode",
-        "@sgcc.Cfg.Step2",
-        "@sgcc.Cfg.Step3",
-        "@sgcc.Cfg.Notify"
-      ],
-      "settings": [
-        {
-          "id": "@sgcc.Cfg.Phone",
-          "name": "手机号",
-          "type": "text",
-          "val": "",
-          "desc": "网上国网 App 的登录手机号，不用加 +86",
-          "placeholder": "13800138000"
-        },
-        {
-          "id": "@sgcc.Cfg.Password",
-          "name": "密码",
-          "type": "text",
-          "val": "",
-          "desc": "网上国网 App 的登录密码。明文存储，注意别把备份文件外发。",
-          "placeholder": "登录密码"
-        },
-        {
-          "id": "@sgcc.Cfg.Sms",
-          "name": "短信验证码",
-          "type": "text",
-          "val": "",
-          "desc": "平时留空。国网判定为「新设备」时会自动下发短信，把收到的 6 位数字填这里，等下次运行即可；用完可以清空。",
-          "placeholder": "平时留空"
-        },
-        {
-          "id": "@sgcc.Cfg.Account",
-          "name": "显示第几个户号",
-          "type": "number",
-          "val": 1,
-          "min": 1,
-          "max": 6,
-          "desc": "账号下绑定了多个户号时，1 表示把第 1 个户号标记为默认。数据里其实所有户号都给了。"
-        },
-        {
-          "id": "@sgcc.Cfg.StepMode",
-          "name": "阶梯电量口径",
-          "type": "radios",
-          "val": "月",
-          "items": [
-            { "key": "月", "label": "按月" },
-            { "key": "双月", "label": "按双月" },
-            { "key": "年", "label": "按年累计" }
-          ],
-          "desc": "各地阶梯电价周期不同，按你家电费单上的口径选"
-        },
-        {
-          "id": "@sgcc.Cfg.Step2",
-          "name": "第二档起始度数",
-          "type": "number",
-          "val": 200,
-          "min": 1,
-          "max": 100000,
-          "desc": "累计用电超过这个值进入第二档。各省标准不同，按你家电费单填。"
-        },
-        {
-          "id": "@sgcc.Cfg.Step3",
-          "name": "第三档起始度数",
-          "type": "number",
-          "val": 400,
-          "min": 1,
-          "max": 100000,
-          "desc": "累计用电超过这个值进入第三档"
-        },
-        {
-          "id": "@sgcc.Cfg.Notify",
-          "name": "推送通知",
-          "type": "boolean",
-          "val": true,
-          "desc": "取数失败、未配置账号、以及新出现的欠费时推送系统通知"
-        }
-      ],
-      "author": "@axkrr",
-      "repo": "https://github.com/axkrr/slqhub"
-    },
-    {
-      "id": "sgcc.Data",
-      "name": "国家电网 · 数据",
-      "keys": [
-        "@sgcc.Data.Text",
-        "@sgcc.Data.Json"
-      ],
-      "settings": [
-        {
-          "id": "@sgcc.Data.Text",
-          "name": "最近一次运行结果",
-          "type": "textarea",
-          "val": "",
-          "rows": 10,
-          "autoGrow": true,
-          "desc": "Surge 脚本每次运行都会覆盖这里。成功显示各户号电费明细，失败会写明原因。不用翻日志就能看状态。"
-        },
-        {
-          "id": "@sgcc.Data.Json",
-          "name": "电费数据 (JSON)",
-          "type": "textarea",
-          "val": "",
-          "rows": 10,
-          "autoGrow": true,
-          "desc": "给组件读的结构化数据。取数失败时不会被覆盖，所以组件始终能拿到上一次成功的数据。"
-        }
       ],
       "author": "@axkrr",
       "repo": "https://github.com/axkrr/slqhub"
