@@ -1,13 +1,11 @@
-#!name=Baidu WAP → PC Share Link
-#!desc=访问百度网盘移动端分享链接 /wap/link?surl=XXX 时，改写 User-Agent 为桌面版并 302 到 PC 分享页 /s/XXX，让 LinkSwift 脚本生效。同时处理 yun.baidu.com。
+#!name=Baidu WAP to PC
+#!desc=百度网盘移动端分享链接为桌面版让LinkSwift生效
 #!system=ios
 #!date=2026-10-24
 
 [Header]
-# 访问 pan.baidu.com 时统一使用桌面 UA（避免 /s/ 被 302 回 /wap/link）
 ^https?://pan\.baidu\.com/ request-header User-Agent Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
 
 [Rewrite]
-# 移动端分享链接 → PC 端链接（保留 pwd 提取码，两种参数顺序都覆盖）
 ^https?://(?:pan|yun)\.baidu\.com/wap/link\?surl=([^&\s]+)&pwd=([^&\s]+).* url 302 https://pan.baidu.com/s/$1?pwd=$2
 ^https?://(?:pan|yun)\.baidu\.com/wap/link\?surl=([^&\s]+).*            url 302 https://pan.baidu.com/s/$1
