@@ -9,3 +9,6 @@
 [Rewrite]
 ^https?://(?:pan|yun)\.baidu\.com/wap/link\?surl=([^&\s]+)&pwd=([^&\s]+).* url 302 https://pan.baidu.com/s/$1?pwd=$2
 ^https?://(?:pan|yun)\.baidu\.com/wap/link\?surl=([^&\s]+).*            url 302 https://pan.baidu.com/s/$1
+
+[MITM]
+hostname = %APPEND% pan.baidu.com, yun.baidu.com
