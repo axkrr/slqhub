@@ -1,6 +1,6 @@
 {
   "name": "axkrr图标库",
-  "description": "分辨率:144*144,搜索方式:app拼音缩写or英文全称,更新日期:2026-09-29",
+  "description": "分辨率:144*144,搜索方式:app拼音缩写or英文全称,更新日期:2026-10-29",
   "icons": [
     {
       "name": "avatar",
@@ -265,6 +265,10 @@
     {
       "name": "newapi",
       "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/newapi.png"
+    },
+    {
+      "name": "zgnyyh",
+      "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/zgnyyh.png"
     }
   ]
 }
