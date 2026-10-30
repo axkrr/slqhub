@@ -56,7 +56,6 @@ DOMAIN-SUFFIX,workers.dev
 # > vercel
 DOMAIN-SUFFIX,vercel.app
 # > backend service
-DOMAIN-SUFFIX,kelee.one
 DOMAIN-SUFFIX,sub.store
 DOMAIN-SUFFIX,script.hub
 DOMAIN-SUFFIX,boxjs.com
