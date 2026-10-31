@@ -1,15 +1,11 @@
+# > insav
+DOMAIN,wuma.ehkj72.com
 # > yfamily
 DOMAIN-SUFFIX,yfamilys.com
 # > agent router
 DOMAIN-SUFFIX,agentrouter.org
-# > turrit
-DOMAIN-SUFFIX,iturrit.com
-# > mithka
-DOMAIN-SUFFIX,nekoko.it
 # > Pi
 DOMAIN-KEYWORD,minepi
-# > iios
-DOMAIN-SUFFIX,dpdns.org
 # > apkpure
 DOMAIN-SUFFIX,apkpure.com
 # > dump
@@ -38,10 +34,6 @@ DOMAIN-SUFFIX,greasyfork.org
 DOMAIN-SUFFIX,sleazyfork.org
 # > pkc
 DOMAIN,agent.curtin.top
-# > themebox
-DOMAIN,api-tool.imtheme.cn
-# > lcsign
-DOMAIN,support.lcsignx.com
 # > qiuchen store
 DOMAIN-SUFFIX,ghcr.io
 # > homebrew
