@@ -47,6 +47,11 @@ function reqTimeout() {
 const UA = "Weibo/52588 (iPhone; iOS 14.5; Scale/3.00)";
 const MASK = true;        // 日志里是否打码 s / gsid / Cookie（排查时可改成 false）
 
+// Loon 在 $done() 时会立刻销毁脚本上下文，紧挨着的本地通知偶尔投递不出去（Surge 不会）。
+// 收尾前留 300ms 让通知落地，不影响任何签到逻辑，总耗时增加可忽略。
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+async function finish() { await sleep(300); $.done(); }
+
 function mask(v) { return MASK && v ? `${v.slice(0, 6)}***(${v.length})` : v; }
 function cut(s, n) { n = n || 160; return String(s == null ? "" : s).replace(/\s+/g, " ").slice(0, n); }
 
@@ -58,7 +63,7 @@ function cut(s, n) { n = n || 160; return String(s == null ? "" : s).replace(/\s
     // 注意：$persistentStore 是「按 App 隔离」的，Egern 里抓到的 token Surge 读不到，反之亦然
     $.msg($.name, "❌ 读不到 " + TOKEN_KEY,
       "当前 App 的持久化存储里没有这个变量。Surge 与 Egern 的存储互不相通，必须在当前 App 里重新抓一次（打开微博 -> 我的 触发 users/show）。");
-    return $.done();
+    return finish();
   }
 
   let list;
@@ -66,11 +71,11 @@ function cut(s, n) { n = n || 160; return String(s == null ? "" : s).replace(/\s
     list = JSON.parse(raw);
   } catch (e) {
     $.msg($.name, "❌ token 不是合法 JSON", cut(e) + " | " + cut(raw, 80));
-    return $.done();
+    return finish();
   }
   if (!Array.isArray(list) || list.length === 0) {
     $.msg($.name, "❌ token 结构不是非空数组", "实际：" + cut(raw, 120));
-    return $.done();
+    return finish();
   }
 
   $.log(`token: ${list.length} 个账号`);
@@ -82,7 +87,7 @@ function cut(s, n) { n = n || 160; return String(s == null ? "" : s).replace(/\s
       $.msg($.name, "❌ 脚本内部异常", cut(e && e.message ? e.message : e, 120));
     }
   }
-  $.done();
+  await finish();
 })();
 
 async function handleOne(item) {
@@ -143,7 +148,8 @@ async function handleOne(item) {
     if (t.final) break;          // 明确的业务错误（比如风控），不用再换姿势
   }
 
-  $.msg($.name, `[${username}]本次运行结果：${text}`, "", avatar ? { "media-url": avatar } : {});
+  // 标题=脚本名，副标题=账号昵称，正文=本次结果，多账号时一眼可分
+  $.msg($.name, username, text, avatar ? { "media-url": avatar } : {});
 }
 
 // ---------- 工具 ----------
