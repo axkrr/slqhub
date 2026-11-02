@@ -25,11 +25,25 @@
  *  5. 签到 POST 失败会自动回退（POST+Cookie -> GET），因为上游几个实现（OreosLab / FoKit）
  *     用的本来就是 GET，回退能一次定位是「方法问题」还是「账号/风控问题」。
  *  6. 开头打印环境自检：运行环境、token 条数、每个账号的 uid 与 header 名（不打印值）。
+ *  7. 【多平台适配】$httpClient 的 timeout 单位并不统一：
+ *     Surge / Stash / Shadowrocket / Egern 用「秒」，Loon / Quantumult X 用「毫秒」。
+ *     原脚本固定传 30（按秒理解），到 Loon 上等于 30 毫秒，请求刚发出就被判超时。
+ *     现改为 reqTimeout() 在运行时按平台换算，四个平台共用同一份脚本，无需手改。
  */
 const $ = new Env("微博签到");
 
 const TOKEN_KEY = "fmz200_weibo_token";
-const REQ_TIMEOUT = 30;   // 秒
+// ---- 超时：各平台 $httpClient 的 timeout 单位不一致 ----
+//   Surge / Stash / Shadowrocket / Egern → 秒
+//   Loon / Quantumult X                  → 毫秒
+// 原脚本写死 30（按「秒」理解），在 Loon / QX 上会被解释为 30 毫秒，
+// 请求刚发出就判超时（日志里 35ms 就报 Request timeout 即此原因）。
+const REQ_TIMEOUT_SEC = 30;
+function reqTimeout() {
+  const ms = REQ_TIMEOUT_SEC * 1000;
+  if (typeof $loon !== "undefined" || typeof $task !== "undefined") return ms; // Loon / Quantumult X
+  return REQ_TIMEOUT_SEC; // Surge / Stash / Shadowrocket / Egern
+}
 const UA = "Weibo/52588 (iPhone; iOS 14.5; Scale/3.00)";
 const MASK = true;        // 日志里是否打码 s / gsid / Cookie（排查时可改成 false）
 
@@ -37,7 +51,7 @@ function mask(v) { return MASK && v ? `${v.slice(0, 6)}***(${v.length})` : v; }
 function cut(s, n) { n = n || 160; return String(s == null ? "" : s).replace(/\s+/g, " ").slice(0, n); }
 
 (async function main() {
-  $.log("", `🔔 ${$.name} 开始 · 环境=${$.getEnv()} · 单请求超时=${REQ_TIMEOUT}s`);
+  $.log("", `🔔 ${$.name} 开始 · 环境=${$.getEnv() || "Egern/其他"} · 单请求超时=${REQ_TIMEOUT_SEC}s（实际传参 ${reqTimeout()}）`);
 
   const raw = $.getdata(TOKEN_KEY);
   if (!raw) {
@@ -168,7 +182,7 @@ function parseSign(body) {
 
 function req(method, opts) {
   const o = clone(opts);
-  o.timeout = REQ_TIMEOUT;   // Surge $httpClient 默认 5s，必须显式给
+  o.timeout = reqTimeout();  // Loon/QX 传毫秒，Surge/Stash/SR/Egern 传秒（默认 5s，必须显式给）
   return new Promise((resolve) => {
     const t0 = Date.now();
     const cb = (error, response, data) =>
