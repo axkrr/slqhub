@@ -47,8 +47,8 @@ function reqTimeout() {
 const UA = "Weibo/52588 (iPhone; iOS 14.5; Scale/3.00)";
 const MASK = true;        // 日志里是否打码 s / gsid / Cookie（排查时可改成 false）
 
-// Loon 在 $done() 时会立刻销毁脚本上下文，紧挨着的本地通知偶尔投递不出去（Surge 不会）。
-// 收尾前留 300ms 让通知落地，不影响任何签到逻辑，总耗时增加可忽略。
+// 保留原有收尾等待，便于此次仅对照头像附件这一变量。
+// 注意：等待 300ms 并不能保证通知投递，也不能解决图片下载/解码失败。
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 async function finish() { await sleep(300); $.done(); }
 
@@ -149,7 +149,8 @@ async function handleOne(item) {
   }
 
   // 标题=脚本名，副标题=账号昵称，正文=本次结果，多账号时一眼可分
-  $.msg($.name, username, text, avatar ? { "media-url": avatar } : {});
+  // Loon 图片下载/解码失败会取消整条图片通知；在 Loon 只发文字，其他平台保持原样。
+  $.msg($.name, username, text, !$.isLoon() && avatar ? { "media-url": avatar } : {});
 }
 
 // ---------- 工具 ----------
