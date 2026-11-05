@@ -1,26 +1,9 @@
-/********************************
-携程旅行签到脚本
-
-支持多账号，支持Node.js，支持Bark推送。
-配置脚本后登陆"携程旅行"微信小程序或"携程网页版"(https://m.ctrip.com/)即可获取账号授权。多账号请勿"退出登陆"。
-
-脚本作者：@NobyDa
-更新时间：2024/05/09
-平台兼容：Surge / QuantumultX / Loon / Stash / Node.js
-模块依赖(Node.js)：iconv-lite / got@11.8.3 / tough-cookie
-环境变量(Node.js)：CTRIP_AUTH / CTRIP_BARK_KEY
-
-*********************************
-Surge(iOS 5.9.0+/macOS 5.5.0+)模块：
-https://raw.githubusercontent.com/NobyDa/Script/master/Surge/Module/CtripDailyBonus.sgmodule
-
-*********************************
-QuantumultX 任务仓库(Gallery)订阅：
-https://raw.githubusercontent.com/NobyDa/Script/master/NobyDa_BoxJs.json
-
-工具&分析->HTTP请求->右上角添加任务仓库->选择携程脚本添加定时任务和附加组件
-
-*********************************/
+/**
+ * @name xclx
+ * @desc cookie
+ * @author @NobyDa
+ * @update 2024-05-09
+*/
 
 const $ = new Env('CTRIP_DAILY_BONUS');
 const barkKey = $.isNode() && process.env['CTRIP_BARK_KEY'] || ''; // bark key
