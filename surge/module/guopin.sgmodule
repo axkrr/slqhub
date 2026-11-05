@@ -1,0 +1,19 @@
+#!name=国聘
+#!desc=应用净化
+#!category=axkrr
+#!author=axkrr
+#!icon=https://raw.githubusercontent.com/axkrr/slqhub/main/icon/gp.png
+#!update=2026-11-05
+
+
+
+[Rule]
+# 广告素材域名
+DOMAIN,iguopin-base.oss-cn-beijing.aliyuncs.com,REJECT-TINYGIF
+
+[Script]
+# 拦截业务接口响应
+guopin-api-clean = type=http-response, pattern=^https://appv5-api\.iguopin\.com/api$, requires-body=true, max-size=262144, script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/guopin.js, timeout=20, argument=
+
+[MITM]
+hostname = appv5-api.iguopin.com
