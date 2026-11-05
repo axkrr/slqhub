@@ -1,52 +1,10 @@
-/*
-【彩票查询】@evilbutcher, @Phantom
-
-【仓库地址】https://github.com/evilbutcher/Quantumult_X/tree/master（欢迎star🌟）；https://github.com/sjzcook/phantom（欢迎star🌟）
-
-【BoxJs】https://raw.githubusercontent.com/evilbutcher/Quantumult_X/master/evilbutcher.boxjs.json
-
-【致谢】
-感谢Peng-YM的OpenAPI.js！
-
-⚠️【免责声明】
-------------------------------------------
-1、此脚本仅用于学习研究，不保证其合法性、准确性、有效性，请根据情况自行判断，本人对此不承担任何保证责任。
-2、由于此脚本仅用于学习研究，您必须在下载后 24 小时内将所有内容从您的计算机或手机或任何存储设备中完全删除，若违反规定引起任何事件本人对此均不负责。
-3、请勿将此脚本用于任何商业或非法目的，若违反规定请自行对此负责。
-4、此脚本涉及应用与本人无关，本人对因此引起的任何隐私泄漏或其他后果不承担任何责任。
-5、本人对任何脚本引发的问题概不负责，包括但不限于由脚本错误引起的任何损失和损害。
-6、如果任何单位或个人认为此脚本可能涉嫌侵犯其权利，应及时通知并提供身份证明，所有权证明，我们将在收到认证文件确认后删除此脚本。
-7、所有直接或间接使用、查看此脚本的人均应该仔细阅读此声明。本人保留随时更改或补充此声明的权利。一旦您使用或复制了此脚本，即视为您已接受此免责声明。
-
-
-【使用说明】
-添加任务即可使用
-
-【Surge】
------------------
-[Script]
-彩票查询 = type=cron,cronexp=0 30 21 * * * ,script-path=https://raw.githubusercontent.com/evilbutcher/Quantumult_X/master/check_in/ssq/ssq.js
-
-【Loon】
------------------
-[Script]
-cron "0 30 21 * * *" script-path=https://raw.githubusercontent.com/evilbutcher/Quantumult_X/master/check_in/ssq/ssq.js, tag=彩票查询
-
-【Quantumult X】
------------------
-[task_local]
-0 30 21 * * *  https://raw.githubusercontent.com/evilbutcher/Quantumult_X/master/check_in/ssq/ssq.js, tag=彩票查询
-
-【Icon】
-透明：https://raw.githubusercontent.com/evilbutcher/Quantumult_X/master/picture/ssq_tran.png
-彩色：https://raw.githubusercontent.com/58xinian/icon/master/Two_color_ball.png
-
-// update
-1.更新新接口
-2.关闭3D和七乐彩默认查询
-3.更新时间：2026-09-11
-updated by @axkrr
+/**
+ * @name cpcx
+ * @desc 彩票查询
+ * @author @evilbutcher, @Phantom，axkrr
+ * @update 2026-09-11
 */
+
 const $ = new API("ssq", true);
 const ERR = MYERR();
 const ssq = $.read("ssq") || true; //默认查询
