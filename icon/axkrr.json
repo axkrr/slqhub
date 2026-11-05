@@ -277,6 +277,10 @@
     {
       "name": "gp",
       "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/gp.png"
+    },
+    {
+      "name": "scripting",
+      "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/scripting.png"
     }
   ]
 }
