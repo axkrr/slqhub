@@ -1,54 +1,21 @@
 /**
- * 微博每日签到 —— Surge 兼容修复版（基于 fmz200/wool_scripts/Scripts/weibo/weibo_signin.js）
- *
- * 使用前先在 Surge 里确认两件事：
- *
- *  [Script]
- *  # ① 抓 token（type=http-request，必须开 MITM，否则这条永远不触发，存储里就没有 fmz200_weibo_token）
- *  微博-获取cookie = type=http-request, pattern=^https:\/\/m?api\.weibo\.c(n|om)\/\d\/users\/show, script-path=https://raw.githubusercontent.com/fmz200/wool_scripts/main/Scripts/cookie/get_cookie.js, timeout=60
- *  # ② 每日签到（timeout 一定要写！Surge 的脚本默认超时只有 5 秒）
- *  微博每日签到 = type=cron, cronexp="0 8 * * *", script-path=<本文件路径或 URL>, wake-system=true, timeout=60
- *
- *  [MITM]
- *  hostname = %APPEND% api.weibo.cn
- *
- * 相对原版的改动（都是为了排查/规避「Egern 正常、Surge 直接返回 result null」）：
- *  1. !cache 分支补上 return。原版 `if (!cache) { $.msg(); $.done(); }` 没有 return，
- *     接着会 JSON.parse(null) -> null，然后 `for (const item of null)` 抛 TypeError。
- *     脚本一抛异常，Surge 会立刻中止本次运行（uncaught exception aborts the session），
- *     在运行结果里就是「什么都没做 / result null」。这是最容易在 Surge 复现的一条。
- *  2. 每个请求显式带 timeout。Surge 的 $httpClient 默认只有 5 秒；cron 脚本整体默认也只有 5 秒。
- *  3. 签到 URL 不再做 decode -> 重新拼接。原版 parseUrlParams 会 decodeURIComponent，
- *     把 s/gsid 里的 %2B 变成 +、%26 变成 &，重新拼进 URL 就改了签名参数。
- *     现在直接取原 URL 里「仍然带编码」的原始子串，和抓包时一模一样。
- *  4. 不再吞错误：error / 状态码 / 原始 body 全部进日志；失败时通知里带原始返回片段。
- *  5. 签到 POST 失败会自动回退（POST+Cookie -> GET），因为上游几个实现（OreosLab / FoKit）
- *     用的本来就是 GET，回退能一次定位是「方法问题」还是「账号/风控问题」。
- *  6. 开头打印环境自检：运行环境、token 条数、每个账号的 uid 与 header 名（不打印值）。
- *  7. 【多平台适配】$httpClient 的 timeout 单位并不统一：
- *     Surge / Stash / Shadowrocket / Egern 用「秒」，Loon / Quantumult X 用「毫秒」。
- *     原脚本固定传 30（按秒理解），到 Loon 上等于 30 毫秒，请求刚发出就被判超时。
- *     现改为 reqTimeout() 在运行时按平台换算，四个平台共用同一份脚本，无需手改。
- */
+ * @name wb
+ * @desc checkin
+ * @author fmz200，axkrr
+ * @update 2026-09-08
+*/
+
 const $ = new Env("微博签到");
 
 const TOKEN_KEY = "fmz200_weibo_token";
-// ---- 超时：各平台 $httpClient 的 timeout 单位不一致 ----
-//   Surge / Stash / Shadowrocket / Egern → 秒
-//   Loon / Quantumult X                  → 毫秒
-// 原脚本写死 30（按「秒」理解），在 Loon / QX 上会被解释为 30 毫秒，
-// 请求刚发出就判超时（日志里 35ms 就报 Request timeout 即此原因）。
 const REQ_TIMEOUT_SEC = 30;
 function reqTimeout() {
   const ms = REQ_TIMEOUT_SEC * 1000;
-  if (typeof $loon !== "undefined" || typeof $task !== "undefined") return ms; // Loon / Quantumult X
-  return REQ_TIMEOUT_SEC; // Surge / Stash / Shadowrocket / Egern
+  if (typeof $loon !== "undefined" || typeof $task !== "undefined") return ms;
+  return REQ_TIMEOUT_SEC;
 }
 const UA = "Weibo/52588 (iPhone; iOS 14.5; Scale/3.00)";
-const MASK = true;        // 日志里是否打码 s / gsid / Cookie（排查时可改成 false）
-
-// 保留原有收尾等待，便于此次仅对照头像附件这一变量。
-// 注意：等待 300ms 并不能保证通知投递，也不能解决图片下载/解码失败。
+const MASK = true;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 async function finish() { await sleep(300); $.done(); }
 
@@ -60,7 +27,6 @@ function cut(s, n) { n = n || 160; return String(s == null ? "" : s).replace(/\s
 
   const raw = $.getdata(TOKEN_KEY);
   if (!raw) {
-    // 注意：$persistentStore 是「按 App 隔离」的，Egern 里抓到的 token Surge 读不到，反之亦然
     $.msg($.name, "❌ 读不到 " + TOKEN_KEY,
       "当前 App 的持久化存储里没有这个变量。Surge 与 Egern 的存储互不相通，必须在当前 App 里重新抓一次（打开微博 -> 我的 触发 users/show）。");
     return finish();
@@ -102,7 +68,7 @@ async function handleOne(item) {
     return;
   }
 
-  // ---------- 1. 用户信息 ----------
+  // 用户信息
   const info = await req("GET", { url: signUrl, headers: clone(headers) });
   $.log(`[${uid}] 用户信息 HTTP ${status(info)} / ${info.ms}ms / err=${info.error || "无"}`);
   $.log(`[${uid}] 用户信息 body=${cut(info.data)}`);
@@ -120,8 +86,7 @@ async function handleOne(item) {
   const username = user.name || uid;
   const avatar = user.avatar_hd || user.avatar_large || user.profile_image_url || "";
 
-  // ---------- 2. 每日签到 ----------
-  // 关键：s / gsid / from / uid 直接取原 URL 的原始子串（保留编码），不 decode
+  // 每日签到
   const token = ["from", "uid", "s", "gsid"].map((k) => `${k}=${rawParam(signUrl, k)}`).join("&");
   const url = `https://api.weibo.cn/2/checkin/add?c=iphone&${token}`;
   $.log(`[${uid}] 签到 URL：${url.replace(/s=[^&]*/, "s=" + mask(rawParam(signUrl, "s"))).replace(/gsid=[^&]*/, "gsid=" + mask(rawParam(signUrl, "gsid")))}`);
@@ -145,17 +110,10 @@ async function handleOne(item) {
     const t = parseSign(r.data);
     if (t.ok) { text = t.msg; break; }
     text = t.msg;
-    if (t.final) break;          // 明确的业务错误（比如风控），不用再换姿势
-  }
-
-  // 标题=脚本名，副标题=账号昵称，正文=本次结果，多账号时一眼可分
-  // Loon 图片下载/解码失败会取消整条图片通知；在 Loon 只发文字，其他平台保持原样。
+    if (t.final) break;
   $.msg($.name, username, text, !$.isLoon() && avatar ? { "media-url": avatar } : {});
 }
 
-// ---------- 工具 ----------
-
-// 从原始 URL 的 query 里按名取「未解码」的原始值
 function rawParam(url, name) {
   const q = String(url).indexOf("?");
   if (q < 0) return "";
@@ -182,14 +140,13 @@ function parseSign(body) {
     return { ok: true, final: true, msg: `连续签到[${d.continuous != null ? d.continuous : "?"}]天，本次收益[${pts}]积分` };
   }
   if (j.errno === 30000) return { ok: true, final: true, msg: j.errmsg || "今天已签到" };
-  // 其它情况：把原始信息带出来，方便判断是签名/登录态问题还是风控
   const why = j.errmsg || j.msg || JSON.stringify(j);
   return { ok: false, final: false, msg: `签到未成功：${cut(why, 100)}` };
 }
 
 function req(method, opts) {
   const o = clone(opts);
-  o.timeout = reqTimeout();  // Loon/QX 传毫秒，Surge/Stash/SR/Egern 传秒（默认 5s，必须显式给）
+  o.timeout = reqTimeout();
   return new Promise((resolve) => {
     const t0 = Date.now();
     const cb = (error, response, data) =>
