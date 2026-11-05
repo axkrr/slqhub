@@ -1,6 +1,10 @@
-// 腾讯视频净化 · Surge 适配 · 2026-11-01
-// 原作者：@ZenMoFiShi；Surge 适配：@axkrr
-// 来源：https://raw.githubusercontent.com/ZenmoFeiShi/Qx/refs/heads/main/Txvideoad.js
+/**
+ * @name txsp
+ * @desc 腾讯视频净化
+ * @author ZenMoFiShi，axkrr
+ * @update 2026-11-01
+*/
+
 (() => {
   const TAB_DROP_KEYS = ["smallvideo_entrance", "goods_entrance"];
   const TAB_DROP_TITLES = ["短剧", "好物"];
