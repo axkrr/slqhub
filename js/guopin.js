@@ -1,102 +1,233 @@
 /**
- * 国聘 /api 广告配置接口净化脚本（Surge / Loon 共用）
- * 只处理 https://appv5-api.iguopin.com/api 的响应，其余一律放行。
+ * 国聘 App 广告净化器 v3.1
+ * Surge 5 / Loon 3.x · http-response 脚本 · 单请求 · 零跨请求状态
+ * ================================================================
+ * 一、为什么不能按域名或按 /ads/ 路径拉黑
+ *   iguopin-base 的 87 张图全部落在 /ads/ 目录下，其中 24 张是 105~320px 的
+ *   功能图标（首页金刚区、设置页图标），63 张才是 600~8268px 的广告大图。
+ *   同一个域、同一个目录、同一个租户、同样的扩展名 —— 路径层面完全不可分。
+ *   任何按域名 / 按 /ads/ 的拦截都会连带杀掉图标，
+ *   这就是 v1「首页一堆空占位 + 设置页图标消失」的真实机制。
  *
- * 两态：
- *   MODE = "discover" —— 记录模式：原样放行，打印每条响应的「相对启动时ms / b64len / 前缀」，
- *                        用来确认脚本生效并对照 API_FINGERPRINTS.md 锁定广告接口。
- *   MODE = "enforce"  —— 生产模式：命中 RULES 的响应，body 换成中性密文（或整体 REJECT），
- *                        让开屏/广告位数据源为空，触发 App 无广告兜底 → 跳过倒计时、直达主页。
+ * 二、真正的判据是「图片真实像素尺寸」
+ *   只读文件头：PNG 的 IHDR、JPEG 的 SOF0/1/2。不解码像素，单张 < 1ms。
+ *   两份抓包 121 个唯一图片样本，分布有干净分界：
+ *       功能图标  105x105 ~ 320x320，体积   2980 ~ 18332 B
+ *       广告大图  600x686 ~ 8268x2185，体积 18006 ~ 999995 B
+ *       400~600px 区间：0 个样本（天然分界线）
  *
- * 为什么用密文替换而非改字段：/api 全站 AES256，MITM 只见 base64 密文，看不到明文 JSON。
+ * 三、为什么命中后必须返回失败，绝不能返回 1x1 透明图
+ *   返回 200 + tinygif，加载器判定「图片加载成功」，SDK 继续走成功分支：
+ *   容器保留 → 信息流留白块常驻；开屏 VC 照建 → 倒计时照跑。
+ *   这就是 v1「图拦住了、倒计时还在、一堆空占位」的机制，不是玄学。
+ *   返回失败才会走加载失败分支：预取失败 → 开屏整块跳过 → 直接进主页。
+ *
+ * 四、零跨请求状态
+ *   v1 用 persistentStore 做时间窗，Loon 日志出现 +98668ms，
+ *   说明计时根本没走对，命中永远是 "-"。本版删除所有跨请求状态，
+ *   每张图独立判定，不依赖先后顺序、不依赖会话。
+ * ================================================================
  */
 
-var MODE   = "discover";        // 改这里：discover / enforce
-var ACTION = "replace";         // replace=换成中性密文(更自然) / reject=让接口失败(走兜底)
-var SESSION_GAP_MS = 30000;     // 距上一条 /api 超过 30s 视为一次新的冷启动，自动重置计时
+var CFG = {
+  /* ── 净化范围 ──────────────────────────────────────────────
+   * preset 'splash' : 只杀开屏全屏竖图 —— 装上先跑这个，验证开屏是否直进主页
+   * preset 'full'   : 开屏 + 信息流横幅 + 活动弹窗 —— 验证通过后改这里
+   */
+  preset: 'splash',
 
-/* 中性密文：来自真实抓包的最短幂等合法密文（f234e9e2, dec=144）。
-   若 App 有异常，从 neutral_bodies.json 里换另一个 body 填到这里。 */
-var NEUTRAL = "WyWZiC+G3vACcLVZXFPo7k0Qo8XB8HYud0Rxw0I/WOytlZ9qzPQqK9D9AqMPActQ9tv78GvhzhF3GrSnMDPskV2SLTOHi9zjHhU4oNtGy2P2ch+S+I4Qtx5Rg6KzRbMbJ4+smhKWH1Wu/HeK9VXyywaP1Nwdlvw71/PlftJf1iYEl1Or5LqHF6GcdlSgp4mp";
+  /* ── 失败方式（按顺序试，一般停在第一步）───────────────────
+   * action 'status'   : 直接返回 CFG.status（默认 404）—— 首选，最快
+   * action 'redirect' : 302 跳到 127.0.0.1:9，连接立刻被拒 ——
+   *                     某些 SDK 只在「网络错误」时跳过广告，
+   *                     对 404 反而重试，这种情况改这一行
+   * action 'empty'    : 返回 200 + 0 字节 —— 最后手段
+   */
+  action: 'status',
+  status: 404,
 
-/* 锁定规则（确定性纯数据）。判定函数只依赖 (elapsedMs, b64len)，可单测。
-   来自本次抓包推断；以 discover 实测为准，按需增删。
-   minLen/maxLen 是 $response.body（base64 文本）长度，见 API_FINGERPRINTS.md。
-   name 仅用于日志标注。 */
-var RULES = [
-  // 首要：+1484ms / b64len=86016 的广告素材/广告位清单接口（广告图下载前 380ms）
-  { name: "splash-ad-list", minMs: 300,  maxMs: 2600, minLen: 80000, maxLen: 92000, action: "replace" },
-  // 可选：全局开关（b64len=3328，重复 4 次，可能含开屏总开关/倒计时秒数）。默认注释，实测再开。
-  // { name: "global-switch", minMs: 0, maxMs: 20000, minLen: 3000, maxLen: 3600, action: "replace" },
-  // 可选：启动首个大配置（b64len=50412）。默认注释，实测再开。
-  // { name: "launch-config", minMs: 0, maxMs: 1200, minLen: 48000, maxLen: 53000, action: "replace" }
-];
+  /* ── 日志：verbose=true 时每张图打一行，装完先看日志确认命中 ── */
+  verbose: true,
 
-/* ===== 判定：纯函数，不依赖运行时环境，test_rules.py 里等价复刻并单测 ===== */
-function classify(elapsedMs, b64len) {
-  for (var i = 0; i < RULES.length; i++) {
-    var r = RULES[i];
-    if (elapsedMs >= r.minMs && elapsedMs <= r.maxMs &&
-        b64len  >= r.minLen && b64len  <= r.maxLen) return r;
+  /* ── 阈值（不要动，全部由 121 张实测样本反推）──────────────
+   * iconMaxPx    400   最长边 ≤400px 一律放行，实测功能图标最大 320px
+   * adMinPx      600   最长边 <600px 不动，实测 400~600 区间零样本
+   * adMinBytes 30000   体积 <30KB 不动，实测图标最大 18332B、广告最小 56097B
+   * splashAspect 1.35  高/宽 ≥1.35 视为竖图
+   * splashMinPx  1000  且最长边 ≥1000px → 开屏全屏图（实测 2000x3557，ar=1.78）
+   */
+  iconMaxPx: 400,
+  adMinPx: 600,
+  adMinBytes: 30000,
+  splashAspect: 1.35,
+  splashMinPx: 1000
+};
+
+/* 只治理这两个真正承载广告素材的 OSS 域；其余域一个字节都不碰 */
+var HOST_BASE = 'iguopin-base.oss-cn-beijing.aliyuncs.com';
+var HOST_ACT  = 'hdjz-private.oss-cn-beijing.aliyuncs.com';
+
+/* 路径保护：用户头像 / 企业 logo / App 内置图标，永久放行 */
+var PROTECT_RE = /\/avatar[\/%]|\/logo[\/%]|app\/icon-/i;
+
+/* 空 body：用空字符串最稳，Surge/Loon 都按 0 字节处理 */
+function emptyBody() { return ''; }
+
+/* ---------------------------------------------------------------
+ * URL 拆分（不依赖全局 URL 对象，Surge/Loon 的 JS 引擎不一定有）
+ * --------------------------------------------------------------- */
+function splitUrl(url) {
+  var m = /^(?:https?:)?\/\/([^\/?#]+)([^?#]*)/i.exec(url || '');
+  if (!m) return null;
+  return { host: m[1].toLowerCase(), path: m[2] || '/' };
+}
+function decodePath(p) {
+  try { return decodeURIComponent(p); } catch (e) { return p; }
+}
+
+/* ---------------------------------------------------------------
+ * body 归一化
+ *   Surge: binary-body-mode=1 时 $response.body 是 Uint8Array
+ *   Loon : binary-body-mode=true 时同样是字节数组；字符串按 latin1 还原
+ * --------------------------------------------------------------- */
+function toBytes(body) {
+  if (!body) return null;
+  if (typeof body === 'string') {
+    var n = body.length, out = new Uint8Array(n);
+    for (var i = 0; i < n; i++) out[i] = body.charCodeAt(i) & 0xff;
+    return out;
+  }
+  if (typeof ArrayBuffer !== 'undefined') {
+    if (body instanceof ArrayBuffer) return new Uint8Array(body);
+    if (ArrayBuffer.isView && ArrayBuffer.isView(body)) {
+      return new Uint8Array(body.buffer, body.byteOffset || 0, body.byteLength);
+    }
   }
   return null;
 }
 
-/* ===== 冷启动计时（跨请求持久化；无 $persistentStore 时退化到单实例内存） ===== */
-var store = (typeof $persistentStore !== "undefined" && $persistentStore) ? $persistentStore : null;
-function readNum(k) {
-  var v = store ? store.read(k) : (globalThis && globalThis.__GP ? globalThis.__GP[k] : null);
-  return v ? Number(v) : 0;
-}
-function writeNum(k, v) {
-  if (store) { store.write(String(v), k); }
-  else { globalThis.__GP = globalThis.__GP || {}; globalThis.__GP[k] = v; }
-}
-function log(s) { if (typeof console !== "undefined" && console.log) console.log(s); }
+/* ---------------------------------------------------------------
+ * 只读文件头求尺寸
+ * --------------------------------------------------------------- */
+function imageSize(b) {
+  if (!b || b.length < 24) return null;
 
-var now   = Date.now();
-var last  = readNum("gp_last_api_ts");
-var start = readNum("gp_launch_ts");
-if (!start || !last || (now - last) > SESSION_GAP_MS) { start = now; writeNum("gp_launch_ts", start); }
-writeNum("gp_last_api_ts", now);
-var elapsedMs = now - start;
-
-/* ===== 取响应体长度（base64 文本）。Surge/Loon 的 $response.body 通常为已解压字符串 ===== */
-var body = (typeof $response !== "undefined" && $response && $response.body != null) ? String($response.body) : "";
-var b64len = body.length;
-var prefix = body.slice(0, 28);
-
-function cleanedHeaders(headers) {
-  var h = {}, k, lk;
-  for (k in headers) {
-    if (!Object.prototype.hasOwnProperty.call(headers, k)) continue;
-    lk = String(k).toLowerCase();
-    // 去掉传输层编码/长度，避免客户端对替换后的非 gzip 数据二次解压出错；保留 data-encrypt
-    if (lk === "content-encoding" || lk === "content-length" || lk === "transfer-encoding") continue;
-    h[k] = headers[k];
+  /* PNG: 89 50 4E 47 ... IHDR 的宽高在偏移 16 / 20 */
+  if (b[0] === 0x89 && b[1] === 0x50 && b[2] === 0x4e && b[3] === 0x47) {
+    var pw = ((b[16] << 24) | (b[17] << 16) | (b[18] << 8) | b[19]) >>> 0;
+    var ph = ((b[20] << 24) | (b[21] << 16) | (b[22] << 8) | b[23]) >>> 0;
+    return (pw && ph) ? { w: pw, h: ph } : null;
   }
-  return h;
-}
-function finish(newBody) {
-  var headers = cleanedHeaders((typeof $response !== "undefined" && $response && $response.headers) ? $response.headers : {});
-  // 显式置 data-encrypt，确保 App 仍按加密分支处理中性密文
-  headers["data-encrypt"] = "AES256";
-  $done({ body: newBody, headers: headers });
-}
 
-var rule = classify(elapsedMs, b64len);
-
-if (MODE === "discover") {
-  log("[国聘 discover] +" + elapsedMs + "ms b64len=" + b64len + " prefix=" + prefix +
-      " hit=" + (rule ? rule.name : "-") + " (本模式原样放行)");
-  $done({});
-} else if (rule) {
-  log("[国聘 enforce] 命中 " + rule.name + " +" + elapsedMs + "ms b64len=" + b64len);
-  if (ACTION === "reject") {
-    $done({ status: "HTTP/1.1 204 No Content", headers: {}, body: "" });
-  } else {
-    finish(NEUTRAL);
+  /* JPEG: FF D8 ... 扫到 SOF0/SOF1/SOF2 取宽高 */
+  if (b[0] === 0xff && b[1] === 0xd8) {
+    var i = 2, guard = 0;
+    while (i < b.length - 9 && guard++ < 8192) {
+      if (b[i] !== 0xff) { i++; continue; }
+      var m = b[i + 1];
+      if (m >= 0xc0 && m <= 0xcf && m !== 0xc4 && m !== 0xc8 && m !== 0xcc) {
+        var hh = (b[i + 5] << 8) | b[i + 6];
+        var ww = (b[i + 7] << 8) | b[i + 8];
+        return (ww && hh) ? { w: ww, h: hh } : null;
+      }
+      if (m === 0xd8 || m === 0xd9 || m === 0x01 || (m >= 0xd0 && m <= 0xd7)) { i += 2; continue; }
+      var seg = (b[i + 2] << 8) | b[i + 3];
+      if (seg < 2) return null;
+      i += 2 + seg;
+    }
   }
-} else {
-  $done({});  // 未命中（含首页职位流大响应）原样放行
+  return null;
 }
+
+/* ---------------------------------------------------------------
+ * 判定
+ * --------------------------------------------------------------- */
+function verdict(sz, n, host) {
+  var maxEdge = Math.max(sz.w, sz.h);
+  var ar = sz.h / sz.w;
+
+  if (maxEdge <= CFG.iconMaxPx) return { act: 'PASS', why: 'icon' };
+  if (n < CFG.adMinBytes)       return { act: 'PASS', why: 'small' };
+  if (maxEdge < CFG.adMinPx)    return { act: 'PASS', why: 'edge' };
+
+  /* 开屏全屏竖图 —— 主目标，两个 preset 都杀 */
+  if (ar >= CFG.splashAspect && maxEdge >= CFG.splashMinPx) {
+    return { act: 'KILL', why: 'splash' };
+  }
+  /* 其余按预设决定 */
+  if (CFG.preset === 'splash') return { act: 'PASS', why: 'preset-splash' };
+  if (host === HOST_BASE) return { act: 'KILL', why: 'banner' };
+  if (host === HOST_ACT)  return { act: 'KILL', why: 'activity' };
+  return { act: 'PASS', why: 'host' };
+}
+
+/* ---------------------------------------------------------------
+ * 构造失败响应
+ * --------------------------------------------------------------- */
+function fail() {
+  if (CFG.action === 'redirect') {
+    /* 跳到本地死端口：NSURLSession 立刻拿到 connection refused，
+       比 HTTP 404 更像「网络错误」，SDK 更容易走 skip 分支 */
+    return $done({
+      status: 302,
+      headers: { 'Location': 'http://127.0.0.1:9/_', 'Content-Length': '0' },
+      body: emptyBody()
+    });
+  }
+  if (CFG.action === 'empty') {
+    return $done({ status: 200, headers: { 'Content-Length': '0' }, body: emptyBody() });
+  }
+  /* 默认：硬失败。带长缓存，重试时秒失败，不再打到 OSS */
+  return $done({
+    status: CFG.status,
+    headers: { 'Content-Length': '0', 'Cache-Control': 'public, max-age=86400' },
+    body: emptyBody()
+  });
+}
+
+/* ---------------------------------------------------------------
+ * 主流程
+ * --------------------------------------------------------------- */
+(function main() {
+  var req = null, resp = null;
+  try { req = $request; } catch (e) {}
+  try { resp = $response; } catch (e) {}
+
+  var hp = splitUrl((req && req.url) || '');
+  if (!hp) return $done({});
+
+  var host = hp.host;
+  if (host !== HOST_BASE && host !== HOST_ACT) return $done({});
+
+  var path = decodePath(hp.path);
+  if (PROTECT_RE.test(path)) {
+    if (CFG.verbose) console.log('[国聘净化] PASS protect ' + path.slice(-36));
+    return $done({});
+  }
+
+  var code = (resp && (resp.status || resp.statusCode)) || 200;
+  if (code !== 200 && code !== 206) return $done({});
+
+  var raw = resp ? (resp.body !== undefined && resp.body !== null ? resp.body : resp.bodyBytes) : null;
+  var bytes = toBytes(raw);
+  if (!bytes || bytes.length < 64) {
+    if (CFG.verbose) {
+      console.log('[国聘净化] PASS no-body(' + (bytes ? bytes.length : 0) +
+        ') 检查脚本参数 binary-body-mode / requires-body');
+    }
+    return $done({});
+  }
+
+  var sz = imageSize(bytes);
+  if (!sz) return $done({});   /* WebP / 其它格式原样放行，绝不误伤 */
+
+  var v = verdict(sz, bytes.length, host);
+
+  if (CFG.verbose) {
+    console.log('[国聘净化] ' + v.act + ' ' + v.why + ' ' +
+      sz.w + 'x' + sz.h + ' ' + bytes.length + 'B ' + host.split('.')[0]);
+  }
+
+  if (v.act === 'KILL') return fail();
+  return $done({});
+})();
