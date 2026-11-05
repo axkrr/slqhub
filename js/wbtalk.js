@@ -1,6 +1,6 @@
 /**
  * @name wbch
- * @desc cookie
+ * @desc checkin
  * @author Evilbutcher，toulanboy，fmz200，axkrr
  * @update 2026-09-08
 */
