@@ -16,4 +16,4 @@ DOMAIN,iguopin-base.oss-cn-beijing.aliyuncs.com,REJECT-TINYGIF
 guopin-api-clean = type=http-response, pattern=^https://appv5-api\.iguopin\.com/api$, requires-body=true, max-size=262144, script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/guopin.js, timeout=20, argument=
 
 [MITM]
-hostname = appv5-api.iguopin.com
+hostname = %APPEND% appv5-api.iguopin.com
