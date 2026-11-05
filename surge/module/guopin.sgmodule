@@ -5,15 +5,8 @@
 #!icon=https://raw.githubusercontent.com/axkrr/slqhub/main/icon/gp.png
 #!update=2026-11-05
 
-
-
-[Rule]
-# 广告素材域名
-DOMAIN,iguopin-base.oss-cn-beijing.aliyuncs.com,REJECT-TINYGIF
-
 [Script]
-# 拦截业务接口响应
-guopin-api-clean = type=http-response, pattern=^https://appv5-api\.iguopin\.com/api$, requires-body=true, max-size=262144, script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/guopin.js, timeout=20, argument=
+http-response ^https?://(iguopin-base|hdjz-private)\.oss-cn-beijing\.aliyuncs\.com/ requires-body=1,binary-body-mode=1,max-size=0,script-path=guopin-ad-clean.js,timeout=15
 
 [MITM]
-hostname = %APPEND% appv5-api.iguopin.com
+hostname = %APPEND% iguopin-base.oss-cn-beijing.aliyuncs.com, hdjz-private.oss-cn-beijing.aliyuncs.com
