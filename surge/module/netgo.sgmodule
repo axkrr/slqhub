@@ -1,12 +1,24 @@
 #!name=去上网
-#!desc=应用净化
+#!desc=应用净化，卸载重装app后生效
 #!category=axkrr
 #!author=axkrr
 #!icon=https://raw.githubusercontent.com/axkrr/slqhub/main/icon/qsw.png
 #!update=2026-05-18
 
-[Script]
-qdpure = type=http-response,pattern=^https?:\/\/api\.shanghailingye\.cn\/ad\/map,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/qsw.js
+[Rule]
+# 智课广告SDK
+DOMAIN-SUFFIX,sdk.hzzfcm.com,REJECT
+DOMAIN-SUFFIX,inner.hzzfcm.com,REJECT
+DOMAIN-SUFFIX,report.hzzfcm.com,REJECT
 
-[MITM]
-hostname = %APPEND% api.shanghailingye.cn
+# 竞价链路供的开屏素材
+DOMAIN,pic6.iqiyipic.com,REJECT
+DOMAIN-SUFFIX,adimage.bwton.com,REJECT
+DOMAIN,images.pinduoduo.com,REJECT
+
+# 广告曝光/点击上报
+DOMAIN-SUFFIX,inner-report.shunchangzhixing.com,REJECT
+DOMAIN-SUFFIX,sspapi.qingxuntech.cn,REJECT
+DOMAIN,track.1b1tech.com,REJECT
+DOMAIN,track.whongtec.com,REJECT
+DOMAIN,alsc-ug-monitor-callback.alibaba.com,REJECT
