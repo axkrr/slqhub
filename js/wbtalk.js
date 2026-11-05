@@ -1,72 +1,10 @@
-/**********
- 微博超话签到修改版
- 适配新版微博客户端 (16.x+)
- 更新时间：2026-09-08
+/**
+ * @name wbch
+ * @desc cookie
+ * @author Evilbutcher，toulanboy，fmz200，axkrr
+ * @update 2026-09-08
+*/
 
-⚠️ 若从旧版升级，请先在BoxJS或代理工具中清空旧cookie（wb_delete_cookie=true），再重新获取。
-⚠️ 新版列表请求为POST，必须配置 requires-body=true（QX用script-request-body），否则无法捕获POST body。
-
-🐬作者
-@Evilbutcher。 https://github.com/evilbutcher
-@toulanboy。https://github.com/toulanboy/scripts
-@fmz200 重构代码，支持多账号和青龙环境
-
-📌不定期更新各种签到、有趣的脚本，欢迎star🌟
-
-***********************************
-【配置步骤，请认真阅读，每一个细节都很重要】
-***********************************
-1. 根据你当前的软件，配置好script。由于是远程文件，记得顺便更新文件。
-2. 打开微博APP --> 底部栏"我的" --> 中间的"超话社区" --> 底部栏"我的" --> "关注"，弹出通知，提示获取已关注超话列表成功。
-3. 点进一个超话页面，手动签到一次。弹出通知，提示获取超话签到链接成功。 若之前所有已经签到，请关注一个新超话进行签到。
-4. 回到quanx等软件，关掉获取cookie的rewrite。（loon是关掉获取cookie的脚本）
-
-📌 配置第2个账号方法：第1个账号获取cookie结束后。在微博app中切换到第2个号，进行相同的获取逻辑。
-
-***************************************
-【boxjs 订阅， 用于修改脚本配置】
-***************************************
-box订阅链接：https://raw.githubusercontent.com/toulanboy/scripts/master/toulanboy.boxjs.json
-订阅后，可以在box里面进行 cookie清空、通知个数、签到延迟 等设置.
-
-*************************
-【Surge 4.2+ 脚本配置】
-*************************
-微博超话cookie获取 = type=http-request,pattern=^https?://m?api\.weibo\.c(n|om)\/2\/(flowlist|page\/button),requires-body=true,script-path=https://raw.githubusercontent.com/fmz200/wool_scripts/main/Scripts/weibo/weibotalk.cookie.js
-微博超话 = type=cron,cronexp="5 0  * * *",script-path=https://raw.githubusercontent.com/fmz200/wool_scripts/main/Scripts/weibo/weibotalk_signin.js,wake-system=true,timeout=600
-
-*************************
-【Loon 2.1+ 脚本配置】
-*************************
-[script]
-cron "5 0 * * *" script-path=https://raw.githubusercontent.com/fmz200/wool_scripts/main/Scripts/weibo/weibotalk_signin.js, timeout=600, tag=微博超话
-http-request ^https?://m?api\.weibo\.c(n|om)\/2\/(flowlist|page\/button) script-path=https://raw.githubusercontent.com/fmz200/wool_scripts/main/Scripts/weibo/weibotalk.cookie.js,requires-body=true, tag=微博超话cookie获取
-
-*************************
-【 QX 1.0.10+ 脚本配置 】
-*************************
-[rewrite_local]
-^https?://m?api\.weibo\.c(n|om)\/2\/(flowlist|page\/button) url script-request-body https://raw.githubusercontent.com/fmz200/wool_scripts/main/Scripts/weibo/weibotalk.cookie.js
-[task]
-5 0 * * * https://raw.githubusercontent.com/fmz200/wool_scripts/main/Scripts/weibo/weibotalk_signin.js, tag=微博超话
-
-
-[MITM]
-hostname = api.weibo.cn, mapi.weibo.com
-
-*************************
-【Shadowrocket 脚本配置】
-*************************
-[Script]
-微博超话cookie获取 = type=http-request,pattern=^https?://m?api\.weibo\.c(n|om)\/2\/(flowlist|page\/button),requires-body=true,script-path=https://raw.githubusercontent.com/fmz200/wool_scripts/main/Scripts/weibo/weibotalk.cookie.js
-微博超话 = type=cron,cronexp="5 0  * * *",script-path=https://raw.githubusercontent.com/fmz200/wool_scripts/main/Scripts/weibo/weibotalk_signin.js,wake-system=true,timeout=600
-
-[MITM]
-hostname = api.weibo.cn, mapi.weibo.com
-
-*********/
-
-// 通知美化版：自动昵称/缓存、三类统计、纯文字通知；原签到请求参数不变。
 const $ = new Env("微博超话签到");
 const isNode = $.isNode();
 const notify = isNode ? require('../qinglong/sendNotify') : '';
