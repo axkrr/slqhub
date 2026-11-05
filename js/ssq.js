@@ -1,7 +1,7 @@
 /**
  * @name cpcx
  * @desc 彩票查询
- * @author @evilbutcher, @Phantom，axkrr
+ * @author evilbutcher, Phantom，axkrr
  * @update 2026-09-11
 */
 
