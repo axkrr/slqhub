@@ -1,0 +1,16 @@
+#!name=国家医保服务平台
+#!desc=应用净化
+#!category=axkrr
+#!author=axkrr
+#!icon=https://raw.githubusercontent.com/axkrr/slqhub/main/icon/gjybfwpt.png
+#!date=2026-11-05
+
+[Rule]
+# 开屏配置接口
+URL-REGEX, "^https://mfuwu\.nhsa\.gov\.cn/ebus/fuwu/api/base/cms/iep/web/cms/hmpgcfg/queryLatestHomePage", REJECT
+
+# 开屏图
+URL-REGEX, "^https://fuwu\.nhsa\.gov\.cn/bucket-iep-usc/ZYWS1790228922317\.png", REJECT
+
+[MITM]
+hostname = %APPEND% fuwu.nhsa.gov.cn, mfuwu.nhsa.gov.cn
