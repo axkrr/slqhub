@@ -6,8 +6,9 @@
 */
 
 var CFG = {
+  // 'full'       : 开屏(8000) + 首页广告位(8012) + 我的页 banner(8009)
+  //                + 职位列表浮窗(8221) + 订阅页广告(8687)  ← 默认，真机验证过不留白
   // 'splash'     : 只清开屏（action 8000 的 3 个 splash_* 字段）
-  // 'full'       : 开屏 + 首页广告位(8012) + 我的页 banner(8009)
   preset:  'full',
 
   // splash_* 字段的清理方式：
@@ -17,6 +18,12 @@ var CFG = {
   //            可能仍会走开屏分支去加载空图，出现白屏。优先用 delete。
   splashFill: 'delete',
 
+  // 对象型广告字段（8221 window_floating_ad / 8687 major_job_ad、gp_subscription_ad）的清理方式：
+  // 'delete' : 删 key，App 取到 nil（默认，与 splash 同一套已验证机制）
+  // 'null'   : 置 null。服务端自己就会给 gp_subscription_ad 发 null，
+  //            说明 App 的模型能接受 null。若删 key 后出现灰块，改这个。
+  adFill: 'delete',
+
   // false = 只记「已清 N 项」这类关键行（省日志）
   // true  = 另外记录每条响应的 action 判定结果（真机排查用）
   verbose: true
@@ -24,7 +31,7 @@ var CFG = {
 
 var HOST_API = 'appv5-api.iguopin.com';
 
-// 单条响应最大处理上限，超过直接放行（防极端情况 CPU 打满）
+// 单条响应最大处理上限
 var MAX_BODY = 600000;
 
 var KEY_STR = 'ly@9Hzp4hi$4T#Jhg@Y^cDayE!iqtSli';
@@ -180,7 +187,7 @@ var Te0 = new Uint32Array(256), Te1 = new Uint32Array(256),
   }
 })();
 
-// AES-256：Nk=8, Nr=14, 轮密钥60个字
+// AES-256：Nk=8, Nr=14, 轮密钥 60 个字
 function expandKeyU32(keyU8) {
   var Nk = 8, Nr = 14, total = 4 * (Nr + 1);
   var w = new Uint32Array(total), i, t, t0, t1, t2, t3;
@@ -217,7 +224,7 @@ function expandKeyU32(keyU8) {
 
 function xt(a) { return ((a << 1) ^ (a & 0x80 ? 0x1b : 0)) & 0xFF; }
 
-// 就地加密一个块：s是16字节，写到out（偏移 off）
+// 就地加密一个块：s 是 16 字节，写到 out（偏移 off）
 function encBlock(s, w, out, off) {
   var s0 = ((s[0] << 24) | (s[1] << 16) | (s[2] << 8) | s[3]) ^ w[0];
   var s1 = ((s[4] << 24) | (s[5] << 16) | (s[6] << 8) | s[7]) ^ w[1];
@@ -389,7 +396,7 @@ function peekBlocks(ct, nBlocks) {
   return out;
 }
 
-// 取密文前144字节并解出前96字节明文
+// 取密文前 144 字节并解出前 96 字节明文
 function headPlainFrom(cipherB64Head) {
   var raw = b64dec(cipherB64Head);
   var usable = (raw.length >> 4) << 4;
@@ -397,18 +404,18 @@ function headPlainFrom(cipherB64Head) {
   return utf8dec(peekBlocks(raw, usable / 16));
 }
 
-// 返回{ layers, action }或null。只看头部，不解全文。
+// 返回 { layers, action } 或 null。只看头部，不解全文。
 function peekAction(text) {
   initKey();
   var s = String(text).replace(/^[\s\r\n]+|[\s\r\n]+$/g, '');
 
-  // 第1层：密文 base64 直接是响应体
+  // 第 1 层：密文 base64 直接是响应体
   var h1 = headPlainFrom(s.slice(0, 192));
   if (h1 && looksJson(h1)) {
     return { layers: 1, action: readAction(h1) };
   }
 
-  // 第2层：响应体是「密文base64再base64 一次」
+  // 第 2 层：响应体是「密文 base64 再 base64 一次」
   var innerHeadRaw = b64dec(s.slice(0, 192));
   if (innerHeadRaw.length >= 32) {
     var innerB64Head = utf8dec(innerHeadRaw);
@@ -425,7 +432,7 @@ function readAction(headText) {
   return m ? parseInt(m[1], 10) : -1;
 }
 
-// 完整编解码
+/* ---------------- 完整编解码（只对目标 action 调用） ---------------- */
 
 function decodeBody(text) {
   initKey();
@@ -449,7 +456,7 @@ function encodeBody(txt, layers) {
   return enc;
 }
 
-// 业务清理
+/* ---------------- 业务清理 ---------------- */
 
 function parseJson(txt) { try { return JSON.parse(txt); } catch (e) { return null; } }
 
@@ -491,25 +498,71 @@ function cleanMineBanner(obj) {
   return n;
 }
 
+// 职位列表浮窗广告（8221 data.window_floating_ad）
+// 同一层还有 is_subscribe / expired_time / live_info / dictionary 等业务字段，只动这一个 key
+var JOBLIST_AD_KEYS = ['window_floating_ad'];
+
+function cleanJobListAd(obj) {
+  var d = obj.data;
+  if (!d || typeof d !== 'object') return 0;
+  var n = 0, i, k, v;
+  for (i = 0; i < JOBLIST_AD_KEYS.length; i++) {
+    k = JOBLIST_AD_KEYS[i];
+    if (!Object.prototype.hasOwnProperty.call(d, k)) continue;
+    v = d[k];
+    if (v === null || v === undefined) continue;   // 服务端本来就没广告，不计入
+    if (typeof v !== 'object' && typeof v !== 'string') continue;
+    if (v === '') continue;
+    if (CFG.adFill === 'null') { d[k] = null; n++; }
+    else { delete d[k]; n++; }
+  }
+  return n;
+}
+
+// 订阅页两个广告位（8687 data.major_job_ad / data.gp_subscription_ad）
+// 同层 announcement / major_job / gp_subscription / permission_* 是业务开关，必须保留
+var SUBSCRIBE_AD_KEYS = ['major_job_ad', 'gp_subscription_ad'];
+
+function cleanSubscribeAd(obj) {
+  var d = obj.data;
+  if (!d || typeof d !== 'object') return 0;
+  var n = 0, i, k, v;
+  for (i = 0; i < SUBSCRIBE_AD_KEYS.length; i++) {
+    k = SUBSCRIBE_AD_KEYS[i];
+    if (!Object.prototype.hasOwnProperty.call(d, k)) continue;
+    v = d[k];
+    // 实测 gp_subscription_ad 服务端本身就发 null；null/空值不算「清了广告」
+    if (v === null || v === undefined) continue;
+    if (typeof v === 'object' && Object.keys(v).length === 0) continue;
+    if (CFG.adFill === 'null') { d[k] = null; n++; }
+    else { delete d[k]; n++; }
+  }
+  return n;
+}
+
 function isTargetAction(act) {
   if (act === 8000) return true;
-  if (CFG.preset === 'full' && (act === 8012 || act === 8009)) return true;
+  if (CFG.preset === 'full') {
+    if (act === 8012 || act === 8009 || act === 8221 || act === 8687) return true;
+  }
   return false;
 }
 
-// 按actio 分发到具体清理函数，返回改变的字段数
+// 按 action 分发到具体清理函数，返回改变的字段数
 function applyClean(obj) {
   var act = obj.action;
   if (act === 8000) return { n: cleanSplash(obj), what: '开屏' };
   if (act === 8012) return { n: cleanHomeAd(obj), what: '首页广告位' };
   if (act === 8009) return { n: cleanMineBanner(obj), what: '我的页 banner' };
+  if (act === 8221) return { n: cleanJobListAd(obj), what: '职位列表浮窗' };
+  if (act === 8687) return { n: cleanSubscribeAd(obj), what: '订阅页广告位' };
   return { n: 0, what: '' };
 }
 
 function runApi(bodyText) {
   if (bodyText.length > MAX_BODY) { log('响应过大(' + bodyText.length + 'B)，跳过'); return null; }
 
-  // 快照判定：解不动或不是目标action，立刻放行，不做任何全量解密
+  // 快照判定：解不动或不是目标 action，立刻放行，不做任何全量解密
   var peek = peekAction(bodyText);
 
   // 明文兜底：服务端哪天关了加密，本模块依然有效（只在头部像 JSON 时才试）
@@ -555,7 +608,7 @@ function runApi(bodyText) {
   log('action ' + act + ' 已清' + what + ' ' + changed + ' 项 (' + bodyText.length + 'B→' + enc.length + 'B)');
   return enc;
 }
-// 入口
+/* ---------------- 入口 ---------------- */
 
 var finished = false;
 function finish(o) { if (finished) return; finished = true; try { $done(o); } catch (e) {} }
