@@ -8,7 +8,7 @@
 var CFG = {
   // 'splash'     : 只清开屏（action 8000 的 3 个 splash_* 字段）
   // 'full'       : 开屏 + 首页广告位(8012) + 我的页 banner(8009)
-  preset:  'splash',
+  preset:  'full',
 
   // splash_* 字段的清理方式：
   // 'delete' : 整个 key 从 JSON 里删掉（默认，最稳）
