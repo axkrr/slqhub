@@ -3,10 +3,10 @@
 #!category=axkrr
 #!author=axkrr
 #!icon=https://raw.githubusercontent.com/axkrr/slqhub/main/icon/gp.png
-#!update=2026-11-05
+#!update=2026-11-06
 
 [Script]
-http-response ^https?://(iguopin-base|hdjz-private)\.oss-cn-beijing\.aliyuncs\.com/ requires-body=1,binary-body-mode=1,max-size=0,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/guopin.js,timeout=15
+国聘净化 = type=http-response,pattern=^https?:\/\/appv5-api\.iguopin\.com\/api(\?|$),requires-body=1,max-size=0,timeout=20,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/guopin.js
 
 [MITM]
-hostname = %APPEND% iguopin-base.oss-cn-beijing.aliyuncs.com, hdjz-private.oss-cn-beijing.aliyuncs.com
+hostname = %APPEND% appv5-api.iguopin.com
