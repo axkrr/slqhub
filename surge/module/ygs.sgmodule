@@ -1,0 +1,12 @@
+#!name=应届生求职
+#!desc=应用净化
+#!category=axkrr
+#!author=axkrr
+#!icon=
+#!update=2026-11-10
+
+[Script]
+yjs = type=http-response,pattern=^https?:\/\/(youngapi\.yingjiesheng\.com|cupid\.51jobapp\.com|cupid\.51job\.com)\/(open|job|launch-hub)\/,requires-body=1,max-size=0,timeout=20,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/yjs.js
+
+[MITM]
+hostname = %APPEND% youngapi.yingjiesheng.com, cupid.51jobapp.com, cupid.51job.com
