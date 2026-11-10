@@ -1,4 +1,4 @@
-#!name=Apple证书屏蔽验证
+#!name=apple证书屏蔽验证
 #!desc=精准屏蔽p12证书验证
 #!author=Salem
 #!category=tools
@@ -6,22 +6,22 @@
 #!update=2026-05-26
 
 [Rule]
-# Apple OCSP
+# apple ocsp
 DOMAIN,ocsp.apple.com,REJECT
 DOMAIN,ocsp2.apple.com,REJECT
-# Apple Validation
+# apple validation
 DOMAIN,valid.apple.com,REJECT
 DOMAIN,ppq.apple.com,REJECT
 DOMAIN,ppq-ext.v.aaplimg.com,REJECT
-# Apple CRL
+# apple crl
 DOMAIN,crl.apple.com,REJECT
 DOMAIN,certs.apple.com,REJECT
-# DigiCert
+# digicert
 DOMAIN,ocsp.digicert.com,REJECT
 DOMAIN,ocsp.digicert.cn,REJECT
 DOMAIN,crl3.digicert.com,REJECT
 DOMAIN,crl4.digicert.com,REJECT
-# Entrust
+# entrust
 DOMAIN,ocsp.entrust.net,REJECT
 DOMAIN,crl.entrust.net,REJECT
 # Sectigo / USERTrust
