@@ -1,0 +1,103 @@
+#!name=车来了
+#!desc=应用净化
+#!author=CaoXiaoMann,axkrr
+#!category=pure
+#!icon=https://raw.githubusercontent.com/axkrr/slqhub/main/icon/cll.png
+#!update=2026-11-10
+
+[Rule]
+# 自有广告、埋点、统计
+DOMAIN,ad.chelaile.net.cn,REJECT
+DOMAIN,atrace.chelaile.net.cn,REJECT
+DOMAIN,logs.chelaile.net.cn,REJECT
+# 智能营销素材CDN
+DOMAIN-SUFFIX,smartimg.chelaile.net.cn,REJECT
+# 亿广广告联盟
+DOMAIN-SUFFIX,yg84.com,REJECT
+# 穿山甲广告SDK
+DOMAIN-SUFFIX,pangolin-sdk-toutiao.com,REJECT
+DOMAIN-SUFFIX,pangolin-sdk-toutiao1.com,REJECT
+DOMAIN-SUFFIX,pangolin-sdk-toutiao-b.com,REJECT
+DOMAIN-SUFFIX,pglstatp-toutiao.com,REJECT
+DOMAIN-SUFFIX,ctobsnssdk.com,REJECT
+DOMAIN,lf-cdn-tos.bytescm.com,REJECT
+DOMAIN,webcast-open.douyin.com,REJECT
+# 巨量/火山引擎广告SDK
+DOMAIN,mssdk.volces.com,REJECT
+DOMAIN,apmplus.volces.com,REJECT
+DOMAIN,vod-license-m.volccdn.com,REJECT
+# 腾讯广点通
+DOMAIN,mi.gdt.qq.com,REJECT
+DOMAIN,win.gdt.qq.com,REJECT
+DOMAIN,v2mi.gdt.qq.com,REJECT
+DOMAIN,c3.gdt.qq.com,REJECT
+DOMAIN,v.gdt.qq.com,REJECT
+DOMAIN,t.gdt.qq.com,REJECT
+DOMAIN,v3.gdt.qq.com,REJECT
+DOMAIN,sdk.e.qq.com,REJECT
+DOMAIN,sdkquic.e.qq.com,REJECT
+DOMAIN,tdid.m.qq.com,REJECT
+DOMAIN,pgdt.ugdtimg.com,REJECT
+DOMAIN,adsmind.ugdtimg.com,REJECT
+DOMAIN,qzs.gdtimg.com,REJECT
+DOMAIN,tencent-ssp.66mobi.com,REJECT
+# 百度广告
+DOMAIN-SUFFIX,mobads.baidu.com,REJECT
+DOMAIN,mobads-logs.baidu.com,REJECT
+DOMAIN-SUFFIX,pos.baidu.com,REJECT
+DOMAIN-SUFFIX,sofire.baidu.com,REJECT
+DOMAIN,nadvideo2.baidu.com,REJECT
+DOMAIN,feed-image.baidu.com,REJECT
+# 若发现影响其他App的视频加载可单独删除这一行
+DOMAIN-SUFFIX,jomoxc.com,REJECT
+# 其他联盟/归因
+DOMAIN-SUFFIX,1rtb.com,REJECT
+DOMAIN,rtb.julang.taobao.com,REJECT
+DOMAIN,qh-material.taobao.com,REJECT
+DOMAIN,gungnir.xiaojukeji.com,REJECT
+DOMAIN,orzonera.yingt.fun,REJECT
+# 推送SDK统计上报
+DOMAIN,ali-stats.jpush.cn,REJECT
+DOMAIN,gd-stats.jpush.cn,REJECT
+# 可选开关
+# 顶部横幅有两条素材通道都已在上面用DOMAIN 拦住
+# 1) cdn.smartimg.chelaile.net.cn  7.6.7 起的横幅位 bigIcon 主地址
+# 2) image3.chelaile.net.cn        旧版横幅图（如 qb5ZXXzk.png）
+DOMAIN-SUFFIX,image3.chelaile.net.cn,REJECT
+
+[URL Rewrite]
+# 广告配置、任务、开屏资源
+^https?:\/\/(api|cdn\.api)\.chelaile\.net\.cn\/goocity\/flowPos\/home\?.* - reject
+^https?:\/\/(api|cdn\.api)\.chelaile\.net\.cn\/goocity\/flowPos\/listByPos\?.* - reject
+^https?:\/\/(api|cdn\.api)\.chelaileapp\.cn\/goocity\/flowPos\/home\?.* - reject
+^https?:\/\/(api|cdn\.api)\.chelaileapp\.cn\/goocity\/flowPos\/listByPos\?.* - reject
+^https?:\/\/(api|cdn\.api)\.chelaile\.net\.cn\/adpub\/sdk\/adConfig\?.* - reject
+^https?:\/\/(api|cdn\.api)\.chelaileapp\.cn\/adpub\/sdk\/adConfig\?.* - reject
+^https?:\/\/(api|cdn\.api)\.chelaileapp\.cn\/encourage\/activity\/control\?.* - reject
+^https?:\/\/(api|cdn\.api)\.chelaile\.net\.cn\/encourage\/activity\/control\?.* - reject
+^https?:\/\/(api|cdn\.api)\.chelaile\.net\.cn\/adpub\/.* - reject
+^https?:\/\/(api|cdn\.api)\.chelaileapp\.cn\/adpub\/.* - reject
+# 埋点：UDID过滤/数据分析
+^https?:\/\/(api|cdn\.api)\.chelaile(?:app)?(?:\.net)?\.cn\/DataAnalysisInfo\/.* - reject
+# 广告图片
+^https?:\/\/pic1\.chelaile\.net\.cn\/adv\/.* - reject
+# 固定广告图片
+^https?:\/\/land\.yg84\.com\/jdl\/assets\/.*\.(?:jpe?g|png|webp).* - reject
+^https?:\/\/image3\.chelaile\.net\.cn\/qb5ZXXzk\.png.* - reject
+# 广告落地页资源
+^https?:\/\/land\.yg84\.com\/jdl\/.* - reject
+^https?:\/\/quanyi\.yh-jiudian\.com\/activity8\/.* - reject
+# 活动广告与第三方SDK
+^https?:\/\/[^\/]*chelaileapp\.cn\/goocity\/advert\/.* - reject
+^https?:\/\/[^\/]*chelaileapp\.cn\/feserver\/vip-page\/images\/.* - reject
+^https?:\/\/[^\/]*chelaile\.net\.cn\/goocity\/advert\/.* - reject
+^https?:\/\/[^\/]*chelaile\.net\.cn\/feserver\/vip-page\/images\/.* - reject
+# 穿山甲、亿广、百度广告接口
+^https?:\/\/api-access\.pangolin-sdk-toutiao(?:1)?\.com\/api\/ad\/union\/sdk\/.* - reject
+^https?:\/\/adx\.yg84\.com\/sdk\/ad\/.* - reject
+^https?:\/\/mobads\.baidu\.com\/.* - reject
+
+[MITM]
+hostname = %APPEND% ad.chelaile.net.cn,atrace.chelaile.net.cn,api.chelaile.net.cn,cdn.api.chelaile.net.cn,cdn.api.chelaileapp.cn,web.chelaile.net.cn,image3.chelaile.net.cn,land.yg84.com,cdn.*.chelaileapp.cn
+#   wcp.taobao.com / 124.70.194.16 / 110.43.121.3
+#                             广告追踪的共用 CDN 与裸 IP 回源，误伤风险高于收益
