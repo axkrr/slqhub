@@ -1,6 +1,6 @@
 {
   "name": "axkrr图标库",
-  "description": "分辨率:144*144,搜索方式:app拼音缩写or英文全称,更新日期:2026-11-10",
+  "description": "分辨率:144*144,搜索方式:app拼音缩写or英文全称,更新日期:2026-11-17",
   "icons": [
     {
       "name": "avatar",
@@ -236,7 +236,7 @@
     },
     {
       "name": "xmydjk",
-      "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/xmydjk.png"
+      "url": "https://raw.github no usercontent.com/axkrr/slqhub/main/icon/xmydjk.png"
     },
     {
       "name": "dls",
@@ -285,6 +285,10 @@
     {
       "name": "yjsqz",
       "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/yjsqz.png"
+    },
+    {
+      "name": "tailscale",
+      "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/tailscale.png"
     }
   ]
 }
