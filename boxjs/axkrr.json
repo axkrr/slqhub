@@ -4,9 +4,9 @@
   "author": "@axkrr",
   "icon": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/avatar.png",
   "repo": "https://github.com/axkrr/slqhub",
-  "desc": "一卡通余额查询",
+  "desc": "一卡通余额查询、Dilkan 会员凭证",
   "raw": "https://raw.githubusercontent.com/axkrr/slqhub/main/boxjs/axkrr.json",
-  "date": "更新日期：2026-10-14",
+  "date": "更新日期：2026-11-27",
   "apps": [
     {
       "id": "CQU.CardBalance",
@@ -44,6 +44,82 @@
       ],
       "icons": [
         "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/card.png"
+      ],
+      "author": "@axkrr",
+      "repo": "https://github.com/axkrr/slqhub"
+    },
+    {
+      "id": "dilkan",
+      "name": "Dilkan 会员凭证",
+      "keys": [
+        "@dilkan.token",
+        "@dilkan.uid",
+        "@dilkan.vip",
+        "@dilkan.seenAt",
+        "@dilkan.tv",
+        "@dilkan.pushed",
+        "@dilkan.reject"
+      ],
+      "settings": [
+        {
+          "id": "@dilkan.token",
+          "name": "会员 Token",
+          "type": "text",
+          "val": "",
+          "desc": "脚本自动从请求头 authorization 抓取，64 位 URL-safe base64。抓到即写入，无需手填；手填会覆盖自动抓取的值。",
+          "placeholder": "在手机 Dilkan 中打开任意页面自动获取"
+        },
+        {
+          "id": "@dilkan.uid",
+          "name": "账号 UID",
+          "type": "text",
+          "val": "",
+          "desc": "从会员接口响应自动读取，用于确认当前是哪一枚凭证。",
+          "placeholder": "自动记录"
+        },
+        {
+          "id": "@dilkan.vip",
+          "name": "会员状态",
+          "type": "text",
+          "val": "",
+          "desc": "自动记录：会员 / 非会员。非会员时播放只能拿到试看片段。",
+          "placeholder": "自动记录"
+        },
+        {
+          "id": "@dilkan.seenAt",
+          "name": "最近抓取时间",
+          "type": "text",
+          "val": "",
+          "desc": "token 最后一次被写入的时间戳（毫秒），用于判断凭证是否还新鲜。",
+          "placeholder": "自动记录"
+        },
+        {
+          "id": "@dilkan.tv",
+          "name": "电视/投影仪地址",
+          "type": "text",
+          "val": "",
+          "desc": "形如 192.168.1.2/hcwpj2iepf，密钥来自电视端录入页二维码。扫码打开录入页即自动记住。",
+          "placeholder": "扫码电视录入页自动获取"
+        },
+        {
+          "id": "@dilkan.pushed",
+          "name": "已推送标记",
+          "type": "text",
+          "val": "",
+          "desc": "记录 token 与电视地址的组合，相同则不重复推送。",
+          "placeholder": "自动记录"
+        },
+        {
+          "id": "@dilkan.reject",
+          "name": "最近一次拒绝原因",
+          "type": "text",
+          "val": "",
+          "desc": "抓到但未采纳时会记录原因，如 length-63 / charset / not-dilkan-api。排查抓不到 token 时先看这里。",
+          "placeholder": "自动记录"
+        }
+      ],
+      "icons": [
+        "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/avatar.png"
       ],
       "author": "@axkrr",
       "repo": "https://github.com/axkrr/slqhub"
