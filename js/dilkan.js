@@ -5,14 +5,14 @@
  * @update 2026-11-27
  */
 
-var K_TOKEN = "dilkan_token";
-var K_TV = "dilkan_tv";
-var K_PUSHED = "dilkan_pushed";
-var K_TRY = "dilkan_try";
-var K_UID = "dilkan_uid";
-var K_VIP = "dilkan_vip";
-var K_SEEN_AT = "dilkan_seen_at";
-var K_REJECT = "dilkan_reject";
+var K_TOKEN = "dilkan.token";
+var K_TV = "dilkan.tv";
+var K_PUSHED = "dilkan.pushed";
+var K_TRY = "dilkan.try";
+var K_UID = "dilkan.uid";
+var K_VIP = "dilkan.vip";
+var K_SEEN_AT = "dilkan.seenAt";
+var K_REJECT = "dilkan.reject";
 
 var TOKEN_RE = /^[A-Za-z0-9_-]{64}$/;
 var API_RE = /^https?:\/\/api\.(?:dilkan\.com\.cn|ulunix\.cn)\/apiv[0-9_]+(?:\/[0-9]+)*\/dilkan\//;
