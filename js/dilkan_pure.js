@@ -5,16 +5,15 @@
  * @update 2026-11-27
  */
 
-// 广告数据自身带type=elan，据此判定而非按路径猜测
+// 以type=elan判定广告
 var AD_KEYS = ["welcome", "user_center_header", "user_center_footer", "dialog_ad", "dialog_messenge"];
-// 明文接口直接处理；密文接口需先解密
+// 密文接口密钥
 var CIPHER_KEYS = (function () {
   var k = "9285740461331009", out = [];
   for (var i = 0; i < 16; i++) out.push(k.charCodeAt(i));
   return out;
 })();
 
-// AES-128 ECB，Surge/Loon无crypto库，需自带实现
 var SBOX = [], INV_SBOX = [], RCON = [];
 (function () {
   var p = 1, q = 1;
@@ -109,7 +108,6 @@ function b64decode(text) {
   var clean = text.replace(/[^A-Za-z0-9+/]/g, "");
   var groups = Math.floor(clean.length / 4);
   var rem = clean.length % 4;
-  // 末尾不成组的字符数决定末组产出字节数：3个字符产2字节，2个字符产1字节
   var out = [];
   for (var i = 0; i < groups; i++) {
     var n = 0;
@@ -234,14 +232,14 @@ if (!body) {
     $done({});
   }
 } else {
-  // 密文：base64的AES-128-ECB，解密处理后重新加密
+  // 密文分支
   try {
     var key = expandKey(CIPHER_KEYS);
     var bytes = aesDecrypt(b64decode(body), key);
     var text = bytesToUtf8(bytes);
     var obj = JSON.parse(text);
     clean(obj, 0);
-    // 服务端将斜杠转义为\/，保持同一形式以免响应体特征变化
+    // 保持服务端的\/转义形式
     var packed = JSON.stringify(obj).replace(/\//g, "\\/");
     var sealed = aesEncrypt(utf8ToBytes(packed), key);
     $done({ body: b64encode(sealed) });
