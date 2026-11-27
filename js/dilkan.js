@@ -156,12 +156,16 @@ if (arg("reset") === "1") {
     var reason = manual ? (TOKEN_RE.test(manual) ? "" : "manual-format") : validate(live, url);
     if (reason) {
       if (live || reason !== "empty") write(K_REJECT, reason + "@" + Date.now());
-    } else if (read(K_TOKEN) !== live) {
+    } else {
+      // 每次匹配都写入：token未变时也刷新，避免首次写入早于BoxJS订阅生效而丢失
+      var changed = read(K_TOKEN) !== live;
       write(K_TOKEN, live);
-      write(K_PUSHED, "");
-      write(K_TRY, "");
       write(K_SEEN_AT, String(Date.now()));
-      notify("已抓取token", mask(live));
+      if (changed) {
+        write(K_PUSHED, "");
+        write(K_TRY, "");
+        notify("已抓取token", mask(live));
+      }
     }
     if (typeof $response !== "undefined" && $response) {
       recordMember(String($response.body || ""));
