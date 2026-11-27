@@ -5,14 +5,16 @@
  * @update 2026-11-27
  */
 
-var K_TOKEN = "dilkan.token";
-var K_TV = "dilkan.tv";
-var K_PUSHED = "dilkan.pushed";
-var K_TRY = "dilkan.try";
-var K_UID = "dilkan.uid";
-var K_VIP = "dilkan.vip";
-var K_SEEN_AT = "dilkan.seenAt";
-var K_REJECT = "dilkan.reject";
+// BoxJS存储键
+var BOX_KEY = "#dilkan";
+var K_TOKEN = "token";
+var K_TV = "tv";
+var K_PUSHED = "pushed";
+var K_TRY = "try";
+var K_UID = "uid";
+var K_VIP = "vip";
+var K_SEEN_AT = "seenAt";
+var K_REJECT = "reject";
 
 var TOKEN_RE = /^[A-Za-z0-9_-]{64}$/;
 var API_RE = /^https?:\/\/api\.(?:dilkan\.com\.cn|ulunix\.cn)\/apiv[0-9_]+(?:\/[0-9]+)*\/dilkan\//;
@@ -22,11 +24,26 @@ var LAN_RE = /^http:\/\/([0-9]{1,3}(?:\.[0-9]{1,3}){3}):8199\/([a-z0-9]{6,32})\/
 var SECRET_RE = /^[a-z0-9]{6,32}$/;
 var RETRY_MS = 60000;
 
+// 读存储
+function loadBox() {
+  try {
+    var raw = $persistentStore.read(BOX_KEY);
+    var obj = raw ? JSON.parse(raw) : {};
+    return obj && typeof obj === "object" ? obj : {};
+  } catch (e) { return {}; }
+}
+// 写存储
+function saveBox(box) {
+  try { $persistentStore.write(JSON.stringify(box), BOX_KEY); } catch (e) {}
+}
 function read(key) {
-  try { return $persistentStore.read(key) || ""; } catch (e) { return ""; }
+  var v = loadBox()[key];
+  return v == null ? "" : String(v);
 }
 function write(key, value) {
-  try { $persistentStore.write(value == null ? "" : String(value), key); } catch (e) {}
+  var box = loadBox();
+  if (value == null || value === "") { delete box[key]; } else { box[key] = String(value); }
+  saveBox(box);
 }
 function notify(sub, body) {
   try { $notification.post("dilkan", sub, body); } catch (e) {}
@@ -42,11 +59,22 @@ function header(headers, name) {
   for (var k in headers) if (String(k).toLowerCase() === name) return headers[k] || "";
   return "";
 }
+// 掩码
 function mask(token) {
   return token.slice(0, 6) + "…" + token.slice(-4);
 }
 
-// 返回失败原因，空串表示通过
+// 通知摘要
+function summary(token) {
+  var lines = [mask(token)];
+  var uid = read(K_UID);
+  if (uid) lines.push("UID " + uid);
+  var vip = read(K_VIP);
+  if (vip) lines.push(vip);
+  return lines.join("\n");
+}
+
+// 校验token
 function validate(candidate, url) {
   if (!candidate) return "empty";
   if (!API_RE.test(url)) return "not-dilkan-api";
@@ -55,6 +83,7 @@ function validate(candidate, url) {
   return "";
 }
 
+// 记电视地址
 function learn(host, secret) {
   var fresh = host + "/" + secret;
   if (read(K_TV) !== fresh) {
@@ -112,6 +141,7 @@ function push(token, box, stamp, done) {
   });
 }
 
+// 同步电视
 function sync(done) {
   var token = read(K_TOKEN);
   var box = splitTv();
@@ -123,6 +153,7 @@ function sync(done) {
   push(token, box, stamp, done);
 }
 
+// 入口
 var request = (typeof $request !== "undefined" && $request) || {};
 var headers = request.headers || {};
 var url = String(request.url || "");
@@ -150,25 +181,23 @@ if (arg("reset") === "1") {
   if (lan && SECRET_RE.test(lan[2])) {
     if (learn(lan[1], lan[2])) notify("已记住电视", lan[1]);
   } else {
-    // 手填只校验格式，抓包需同时来自dilkan接口
     var manual = arg("token");
     var live = manual || header(headers, "authorization");
     var reason = manual ? (TOKEN_RE.test(manual) ? "" : "manual-format") : validate(live, url);
     if (reason) {
       if (live || reason !== "empty") write(K_REJECT, reason + "@" + Date.now());
     } else {
-      // 每次匹配都写入：token未变时也刷新，避免首次写入早于BoxJS订阅生效而丢失
       var changed = read(K_TOKEN) !== live;
       write(K_TOKEN, live);
       write(K_SEEN_AT, String(Date.now()));
+      if (typeof $response !== "undefined" && $response) {
+        recordMember(String($response.body || ""));
+      }
       if (changed) {
         write(K_PUSHED, "");
         write(K_TRY, "");
-        notify("已抓取token", mask(live));
+        notify("已抓取token", summary(live));
       }
-    }
-    if (typeof $response !== "undefined" && $response) {
-      recordMember(String($response.body || ""));
     }
   }
   sync(function () { $done({}); });
