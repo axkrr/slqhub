@@ -19,27 +19,24 @@
       "settings": [
         {
           "id": "@CQU.CardBalance.Tokens.AccessToken",
-          "name": "AccessToken (JWT)",
+          "name": "AccessToken",
           "type": "text",
           "val": "",
-          "desc": "脚本自动从oauth/token抓取，无需手动填写。有效期约70天。",
-          "placeholder": "在今日校园app中打开余额页面自动获取"
+          "desc": "自动抓取"
         },
         {
           "id": "@CQU.CardBalance.Tokens.RefreshToken",
           "name": "RefreshToken",
           "type": "text",
           "val": "",
-          "desc": "用于刷新AccessToken，同样自动获取",
-          "placeholder": "自动获取"
+          "desc": "自动抓取"
         },
         {
           "id": "@CQU.CardBalance.Tokens.UpdatedAt",
-          "name": "最后更新时间",
+          "name": "更新时间",
           "type": "text",
           "val": "",
-          "desc": "令牌最后更新时间戳，自动记录",
-          "placeholder": "自动记录"
+          "desc": "自动记录"
         }
       ],
       "icons": [
@@ -63,59 +60,52 @@
       "settings": [
         {
           "id": "@dilkan.token",
-          "name": "会员Token",
+          "name": "会员token",
           "type": "text",
           "val": "",
-          "desc": "脚本自动抓取，64位URL-safe base64。手填将覆盖抓取值。",
-          "placeholder": "在手机Dilkan中打开任意页面自动获取"
+          "desc": "自动抓取"
         },
         {
           "id": "@dilkan.uid",
-          "name": "账号UID",
+          "name": "UID",
           "type": "text",
           "val": "",
-          "desc": "取自会员接口响应",
-          "placeholder": "自动记录"
+          "desc": "自动记录"
         },
         {
           "id": "@dilkan.vip",
           "name": "会员状态",
           "type": "text",
           "val": "",
-          "desc": "会员或非会员，非会员仅可播放试看片段",
-          "placeholder": "自动记录"
+          "desc": "自动记录"
         },
         {
           "id": "@dilkan.seenAt",
-          "name": "最近抓取时间",
+          "name": "抓取时间",
           "type": "text",
           "val": "",
-          "desc": "token写入时间戳（毫秒）",
-          "placeholder": "自动记录"
+          "desc": "自动记录"
         },
         {
           "id": "@dilkan.tv",
           "name": "电视地址",
           "type": "text",
           "val": "",
-          "desc": "格式为IP/密钥，密钥来自电视端录入页二维码",
-          "placeholder": "扫码录入页自动获取"
+          "desc": "扫码获取"
         },
         {
           "id": "@dilkan.pushed",
-          "name": "已推送标记",
+          "name": "推送标记",
           "type": "text",
           "val": "",
-          "desc": "token与电视地址的组合，相同则不重复推送",
-          "placeholder": "自动记录"
+          "desc": "自动记录"
         },
         {
           "id": "@dilkan.reject",
           "name": "拒绝原因",
           "type": "text",
           "val": "",
-          "desc": "未采纳的原因，如length-63、charset、not-dilkan-api",
-          "placeholder": "自动记录"
+          "desc": "自动记录"
         }
       ],
       "icons": [
