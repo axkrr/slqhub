@@ -6,7 +6,7 @@
  */
 
 // BoxJS存储键
-var BOX_KEY = "#dilkan";
+var BOX_KEY = "dilkan";
 var K_TOKEN = "token";
 var K_TV = "tv";
 var K_PUSHED = "pushed";
