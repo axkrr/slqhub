@@ -297,6 +297,10 @@
     {
       "name": "tailscale",
       "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/tailscale.png"
+    },
+    {
+      "name": "dilkan",
+      "url": "https://raw.githubusercontent.com/axkrr/slqhub/main/icon/dilkan.png"
     }
   ]
 }
