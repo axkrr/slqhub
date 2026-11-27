@@ -1,1 +1,13 @@
-https://raw.githubusercontent.com/axkrr/slqhub/main/js/dilkan.js
+#!name=Dilkan
+#!desc=会员token抓取与同步
+#!category=axkrr
+#!author=axkrr
+#!update=2026-11-27
+
+[Script]
+dilkan_token = type=http-request,pattern=^https?:\/\/api\.(?:dilkan\.com\.cn|ulunix\.cn)\/apiv[0-9_]+\/(?:[0-9]+\/)*dilkan\//,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/dilkan.js,max-size=131072
+dilkan_member = type=http-response,pattern=^https?:\/\/api\.(?:dilkan\.com\.cn|ulunix\.cn)\/apiv[0-9_]+\/(?:[0-9]+\/)*dilkan\/(?:ios\/)?member_info_arhip,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/dilkan.js,requires-body=1,max-size=131072
+dilkan_tv = type=http-request,pattern=^http:\/\/\d+\.\d+\.\d+\.\d+:8199\/,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/dilkan.js,max-size=8192
+
+[MITM]
+hostname = %APPEND% api.dilkan.com.cn, api.ulunix.cn
