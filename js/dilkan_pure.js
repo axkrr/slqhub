@@ -2,13 +2,12 @@
  * @name dilkan_ios_clean
  * @desc Dilkan iOS端净化
  * @author axkrr
- * @update 2026-11-27
+ * @update 2026-11-28
  */
 
-// 广告字段
 var AD_KEYS = ["welcome", "user_center_header", "user_center_footer", "dialog_ad", "dialog_messenge",
                "afterElan", "selecttvElan", "footerElan"];
-// 密文密钥
+
 var CIPHER_KEYS = (function () {
   var k = "9285740461331009", out = [];
   for (var i = 0; i < 16; i++) out.push(k.charCodeAt(i));
@@ -104,7 +103,7 @@ function decryptBlock(input, w) {
   }
   return s;
 }
-// base64解码
+
 function b64decode(text) {
   var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
   var clean = text.replace(/[^A-Za-z0-9+/]/g, "");
@@ -126,7 +125,6 @@ function b64decode(text) {
   return out;
 }
 
-// base64编码
 function b64encode(bytes) {
   var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
   var out = "";
@@ -173,7 +171,6 @@ function bytesToUtf8(bytes) {
   return out;
 }
 
-// AES解密
 function aesDecrypt(bytes, w) {
   var out = [];
   for (var off = 0; off < bytes.length; off += 16) {
@@ -185,7 +182,6 @@ function aesDecrypt(bytes, w) {
   return out;
 }
 
-// AES加密
 function aesEncrypt(bytes, w) {
   var pad = 16 - (bytes.length % 16);
   var data = bytes.slice();
@@ -198,13 +194,11 @@ function aesEncrypt(bytes, w) {
   return out;
 }
 
-// 判断广告
 function isAd(node) {
   if (!node || typeof node !== "object" || Array.isArray(node)) return false;
   return node.type === "elan" || typeof node.elan_text === "string";
 }
 
-// 清理广告
 function clean(node, depth) {
   if (!node || typeof node !== "object" || depth > 8) return node;
   if (Array.isArray(node)) {
@@ -234,35 +228,29 @@ function clean(node, depth) {
 var BLOCK_RE = /^https?:\/\/(?:[a-z0-9-]+\.)?(?:umeng\.com|jpush\.cn|oceanengine\.com|bdurl\.net)\//;
 var reqUrl = (typeof $request !== "undefined" && $request && $request.url) || "";
 
-if (reqUrl && BLOCK_RE.test(reqUrl)) {
-  // 角标放行
-  if (!/^https?:\/\/user\.jpush\.cn\//.test(reqUrl)) {
-    $done({ status: 200, headers: { "Content-Type": "application/json" }, body: "{}" });
-  } else {
-    $done({});
-  }
-} else {
-  handle();
-}
-
 function handle() {
-var body = typeof $response !== "undefined" && $response ? String($response.body || "") : "";
-var head = body.replace(/^\s+/, "").charAt(0);
-
-if (!body) {
-  $done({});
-} else if (head === "{") {
-  try {
-    var plain = JSON.parse(body);
-    clean(plain, 0);
-    $done({ body: JSON.stringify(plain) });
-  } catch (e) {
+  var raw = typeof $response !== "undefined" && $response ? $response.body : "";
+  if (raw === undefined || raw === null || raw === "") {
     $done({});
+    return;
   }
-} else {
+  var body = String(raw);
+  var head = body.replace(/^\s+/, "").charAt(0);
+
+  if (head === "{") {
+    try {
+      var plain = JSON.parse(body);
+      clean(plain, 0);
+      $done({ body: JSON.stringify(plain) });
+    } catch (e) {
+      $done({});
+    }
+    return;
+  }
+
   try {
     var key = expandKey(CIPHER_KEYS);
-    var bytes = aesDecrypt(b64decode(body), key);
+    var bytes = aesDecrypt(b64decode(body.trim()), key);
     var text = bytesToUtf8(bytes);
     var obj = JSON.parse(text);
     clean(obj, 0);
@@ -270,7 +258,19 @@ if (!body) {
     var sealed = aesEncrypt(utf8ToBytes(packed), key);
     $done({ body: b64encode(sealed) });
   } catch (e) {
+    // 记录失败原因
+    try { $persistentStore.write(String(e), "dilkan_clean_err"); } catch (ignore) {}
     $done({});
   }
 }
+
+if (reqUrl && BLOCK_RE.test(reqUrl)) {
+  // 角标放行
+  if (/^https?:\/\/user\.jpush\.cn\//.test(reqUrl)) {
+    $done({});
+  } else {
+    $done({ status: 200, headers: { "Content-Type": "application/json" }, body: "{}" });
+  }
+} else {
+  handle();
 }
