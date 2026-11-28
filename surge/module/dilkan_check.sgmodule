@@ -6,8 +6,8 @@
 #!update=2026-11-28
 
 [Script]
-dilkan_clean = type=http-response,pattern=dilkan/ios/,script-path=dilkan_ios_clean_1.2.js,requires-body=1,max-size=4194304
-dilkan_block = type=http-request,pattern=umeng\.com|jpush\.cn|oceanengine\.com|bdurl\.net,script-path=dilkan_ios_clean_1.2.js,max-size=65536
+dilkan_clean = type=http-response,pattern=dilkan/ios/,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/dilkan_pure.js,requires-body=1,max-size=4194304
+dilkan_block = type=http-request,pattern=umeng\.com|jpush\.cn|oceanengine\.com|bdurl\.net,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/dilkan_pure.js,max-size=65536
 
 [MITM]
 hostname = %APPEND% api.dilkan.com.cn, api.ulunix.cn, *.umeng.com, *.jpush.cn, analytics.oceanengine.com, dig.bdurl.net
