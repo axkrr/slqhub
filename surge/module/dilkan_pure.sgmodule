@@ -1,5 +1,5 @@
 #!name=Dilkan净化
-#!desc=去除iOS端开屏、推广与播放广告
+#!desc=去除iOS端广告并拦截统计上报
 #!category=axkrr
 #!author=axkrr
 #!icon=https://raw.githubusercontent.com/axkrr/slqhub/main/icon/dilkan.png
@@ -7,6 +7,7 @@
 
 [Script]
 dilkan_clean = type=http-response,pattern=^https?:\/\/api\.(?:dilkan\.com\.cn|ulunix\.cn)\/apiv[0-9_]+\/(?:[0-9]+\/)*dilkan\/(?:ios\/)?(?:movie2_home2|movie2_goods|movie2_detail|movie_detail|elan_info_v0|history_movie_list),script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/dilkan_pure.js,requires-body=1,max-size=2097152
+dilkan_block = type=http-request,pattern=^https?:\/\/(?:[a-z0-9-]+\.)?(?:umeng\.com|jpush\.cn|oceanengine\.com|bdurl\.net)\/,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/dilkan_pure.js,max-size=65536
 
 [MITM]
-hostname = %APPEND% api.dilkan.com.cn, api.ulunix.cn
+hostname = %APPEND% api.dilkan.com.cn, api.ulunix.cn, *.umeng.com, *.jpush.cn, analytics.oceanengine.com, dig.bdurl.net
