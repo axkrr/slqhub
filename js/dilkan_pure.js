@@ -6,7 +6,8 @@
  */
 
 // 广告字段
-var AD_KEYS = ["welcome", "user_center_header", "user_center_footer", "dialog_ad", "dialog_messenge"];
+var AD_KEYS = ["welcome", "user_center_header", "user_center_footer", "dialog_ad", "dialog_messenge",
+               "afterElan", "selecttvElan", "footerElan"];
 // 密文密钥
 var CIPHER_KEYS = (function () {
   var k = "9285740461331009", out = [];
@@ -199,7 +200,8 @@ function aesEncrypt(bytes, w) {
 
 // 判断广告
 function isAd(node) {
-  return node && typeof node === "object" && !Array.isArray(node) && node.type === "elan";
+  if (!node || typeof node !== "object" || Array.isArray(node)) return false;
+  return node.type === "elan" || typeof node.elan_text === "string";
 }
 
 // 清理广告
@@ -214,9 +216,13 @@ function clean(node, depth) {
       var value = node[k];
       if (Array.isArray(value)) {
         node[k] = value.filter(function (item) { return !isAd(item); });
+      } else if (typeof value === "boolean") {
+        node[k] = false;
       } else if (isAd(value)) {
         node[k] = null;
       }
+    } else if (k === "ads" && node[k] === true) {
+      node[k] = false;
     } else {
       clean(node[k], depth + 1);
     }
