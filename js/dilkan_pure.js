@@ -230,6 +230,22 @@ function clean(node, depth) {
   return node;
 }
 
+// 上报拦截
+var BLOCK_RE = /^https?:\/\/(?:[a-z0-9-]+\.)?(?:umeng\.com|jpush\.cn|oceanengine\.com|bdurl\.net)\//;
+var reqUrl = (typeof $request !== "undefined" && $request && $request.url) || "";
+
+if (reqUrl && BLOCK_RE.test(reqUrl)) {
+  // 角标放行
+  if (!/^https?:\/\/user\.jpush\.cn\//.test(reqUrl)) {
+    $done({ status: 200, headers: { "Content-Type": "application/json" }, body: "{}" });
+  } else {
+    $done({});
+  }
+} else {
+  handle();
+}
+
+function handle() {
 var body = typeof $response !== "undefined" && $response ? String($response.body || "") : "";
 var head = body.replace(/^\s+/, "").charAt(0);
 
@@ -256,4 +272,5 @@ if (!body) {
   } catch (e) {
     $done({});
   }
+}
 }
