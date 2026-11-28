@@ -1,0 +1,13 @@
+#!name=Dilkan净化
+#!desc=去除iOS端广告并拦截统计上报
+#!category=axkrr
+#!author=axkrr
+#!icon=
+#!update=2026-11-28
+
+[Script]
+dilkan_clean = type=http-response,pattern=dilkan/ios/,script-path=dilkan_ios_clean_1.2.js,requires-body=1,max-size=4194304
+dilkan_block = type=http-request,pattern=umeng\.com|jpush\.cn|oceanengine\.com|bdurl\.net,script-path=dilkan_ios_clean_1.2.js,max-size=65536
+
+[MITM]
+hostname = %APPEND% api.dilkan.com.cn, api.ulunix.cn, *.umeng.com, *.jpush.cn, analytics.oceanengine.com, dig.bdurl.net
