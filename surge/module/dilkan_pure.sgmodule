@@ -6,7 +6,11 @@
 #!update=2026-11-28
 
 [Script]
-dilkan_clean = type=http-response,pattern=^https?:\/\/api\.(?:dilkan\.com\.cn|ulunix\.cn)\/apiv[0-9_]+\/(?:[0-9]+\/)*dilkan\/(?:ios\/)?(?:movie2_home2|movie2_goods|movie2_detail|movie_detail|elan_info_v0|history_movie_list),script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/dilkan_pure.js,requires-body=1,max-size=2097152
+dilkan_clean_detail = type=http-response,pattern=^https?:\/\/api\.dilkan\.com\.cn\/apiv3_0\/dilkan\/ios\/movie2_detail,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/dilkan_pure.js,requires-body=1,max-size=4194304
+dilkan_clean_home = type=http-response,pattern=^https?:\/\/api\.dilkan\.com\.cn\/apiv3_0\/dilkan\/ios\/movie2_home2,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/dilkan_pure.js,requires-body=1,max-size=4194304
+dilkan_clean_goods = type=http-response,pattern=^https?:\/\/api\.dilkan\.com\.cn\/apiv3_0\/dilkan\/ios\/movie2_goods,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/dilkan_pure.js,requires-body=1,max-size=4194304
+dilkan_clean_elan = type=http-response,pattern=^https?:\/\/api\.dilkan\.com\.cn\/apiv3_0\/dilkan\/ios\/elan_info_v0,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/dilkan_pure.js,requires-body=1,max-size=4194304
+dilkan_clean_hist = type=http-response,pattern=^https?:\/\/api\.dilkan\.com\.cn\/apiv3_0\/dilkan\/ios\/history_movie_list,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/dilkan_pure.js,requires-body=1,max-size=4194304
 dilkan_block = type=http-request,pattern=^https?:\/\/(?:[a-z0-9-]+\.)?(?:umeng\.com|jpush\.cn|oceanengine\.com|bdurl\.net)\/,script-path=https://raw.githubusercontent.com/axkrr/slqhub/main/js/dilkan_pure.js,max-size=65536
 
 [MITM]
