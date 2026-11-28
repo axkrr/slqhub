@@ -269,7 +269,8 @@ if (reqUrl && BLOCK_RE.test(reqUrl)) {
   if (/^https?:\/\/user\.jpush\.cn\//.test(reqUrl)) {
     $done({});
   } else {
-    $done({ status: 200, headers: { "Content-Type": "application/json" }, body: "{}" });
+    // 须包裹返回
+    $done({ response: { status: 200, headers: { "Content-Type": "application/json" }, body: "{}" } });
   }
 } else {
   handle();
